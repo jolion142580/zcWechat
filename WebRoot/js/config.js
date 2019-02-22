@@ -1,6 +1,6 @@
 window.weChat={
- APPID : 'wx38df0e22682f9d12',
- APPSECRET : '2dbed8dbe0fd655a2cde81ed2a03c9c9',
+ APPID : 'wxb01880d47c255669',
+ APPSECRET : '459511a62974570c78125863dcad0070',
  TOKEN : 'zcxzfwwx',
- WeChatDNSURL : 'http://fa279387.ngrok.io/zcWechat/'
+ WeChatDNSURL : 'http://zcxzfwzx.chancheng.gov.cn/zcWechat/'
 }
