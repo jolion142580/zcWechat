@@ -1,0 +1,6 @@
+2019-01-31 09:00:02  [ main:112 ] - [ ERROR ]  生成激活码出错！
+java.io.FileNotFoundException: d:\code\identityCode.txt (系统找不到指定的路径。)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:194)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:84)
+	at com.gdyiko.tool.CodeUtil.main(CodeUtil.java:100)

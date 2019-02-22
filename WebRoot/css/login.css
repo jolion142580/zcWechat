@@ -1,0 +1,30 @@
+.bg{
+width:970px;
+height:504px;
+background:url(../images/bg.jpg) no-repeat;
+}
+
+.usercss{
+width:250px;
+height:25px;
+
+font-size: 16px;
+color: #006BB3;
+font-weight:800;
+
+}
+
+
+
+.froooa{
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	color: #006BB3;
+}
+
+.butbg{
+width:59px;
+height:21px;
+background:url(../images/btn_Cancel.png) no-repeat;
+}

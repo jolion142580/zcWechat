@@ -1,0 +1,78 @@
+body, html {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.demos-title {
+  text-align: center;
+  font-size: 34px;
+  color: #3cc51f;
+  font-weight: 400;
+  margin: 0 15%;
+}
+
+.demos-sub-title {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.demos-header {
+  padding: 35px 0;
+}
+
+.demos-content-padded {
+  padding: 15px;
+}
+
+.demos-second-title {
+  text-align: center;
+  font-size: 24px;
+  color: #3cc51f;
+  font-weight: 400;
+  margin: 0 15%;
+}
+
+footer {
+  text-align: center;
+  font-size: 14px;
+  padding: 20px;
+}
+
+footer a {
+  color: #999;
+  text-decoration: none;
+}
+
+.bar-nav~.content {
+    top: 2.8rem;
+}
+
+.header-bar div{
+	font-size:12px; 
+	-webkit-transform: scale(0.70);
+}
+
+.header-bar{
+	color:#FFF;
+	position: absolute;
+	right: 0;
+    left: 0;
+	top: 2.2rem;
+	line-height:.6rem;
+	height:.6rem;
+	text-align:center;
+}
+
+.weui-cell{
+	background-color:#FFF;
+}
+
+.weui-grids {
+    background-color: #FFF;
+}
+
+.weui-article {
+	background-color: #FFF;
+    margin: 10px;
+    border-radius: 10px;
+}

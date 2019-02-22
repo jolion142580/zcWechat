@@ -1,0 +1,58 @@
+.form-horizontal .control-label{ 
+	text-align:left;
+}
+
+@media all and (min-width: 240px){
+	.blist ul li{ height:34px;line-height:34px;}
+	 .form-control { height:34px;}
+	#c_office_id_1{font-size:5px;}
+}
+@media all and (min-width: 320px){
+	.blist ul li{ height:34px; line-height:34px;}
+	 .form-control { height:34px;}
+	#c_office_id_1{font-size:10px;}
+}
+
+@media all and (min-width: 480px){
+	 .blist ul li{ height:34px; line-height:34px;}
+	 .form-control { height:34px;}
+	#c_office_id_1{font-size:15px;}
+}
+
+@media all and (min-width: 700px){
+	.blist ul li{ height:50px; line-height:50px;}
+ 	 .form-control { height:50px;}
+	 #c_office_id_1{font-size:25px;}
+	.col-md-12 {
+		padding-right:35px\9;
+		width:70%;
+		width:90%\9;
+	}
+	
+	.col-md-7 {
+	padding-right:35px\9;
+	}
+	
+	.form-horizontal .control-label{ 
+	text-align:left;
+	}
+	.form-group {
+		margin-bottom: 50px;
+	}
+}
+
+@media all and (min-width: 1080px){
+ 
+	 .form-control { height:55px; }
+	 .blist ul li{ height:55px; line-height:55px;}
+	 #c_office_id_1{font-size:30px;}
+	
+}
+
+@media all and (min-width: 1280px){
+	 
+	 #c_office_id_1{font-size:35px;}
+	.form-control { height:60px; line-height:60px;}
+	.blist ul li{ height:60px;}
+}
+
