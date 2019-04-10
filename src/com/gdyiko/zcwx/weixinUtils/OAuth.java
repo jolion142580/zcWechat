@@ -94,7 +94,7 @@ public class OAuth {
 		String accessToken = "";
 
 		try {
-			accessToken = TokenThread.accessToken.getAccessToken();
+			accessToken = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
 //			System.out.println("---accessToken---" + accessToken);
 
 			// 通过获取凭证接口获取到jsapi_ticket

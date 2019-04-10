@@ -9,6 +9,7 @@ import com.gdyiko.tool.service.impl.GenericServiceImpl;
 import com.gdyiko.zcwx.dao.FileInfoDao;
 import com.gdyiko.zcwx.po.FileInfo;
 import com.gdyiko.zcwx.service.FileInfoService;
+import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import com.gdyiko.zcwx.weixinUtils.TokenThread;
 import com.gdyiko.zcwx.weixinUtils.WxJSSignUtil;
 import org.apache.commons.lang.StringUtils;
@@ -112,7 +113,7 @@ public class FileInfoServiceImpl extends
      */
     private InputStream getMedia(String mediaId) {
         String url = "https://api.weixin.qq.com/cgi-bin/media/get";
-        String access_token = TokenThread.accessToken.getAccessToken();
+        String access_token = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
         String params = "access_token=" + access_token + "&media_id=" + mediaId;
         InputStream is = null;
         try {

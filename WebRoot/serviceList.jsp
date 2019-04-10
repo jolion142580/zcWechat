@@ -2,7 +2,6 @@
          pageEncoding="UTF-8" %>
 <%@page import="com.gdyiko.zcwx.weixinUtils.OAuth" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="com.gdyiko.zcwx.weixinUtils.TokenThread" %>
 <%@ page import="com.gdyiko.zcwx.weixinUtils.WxJSSignUtil" %>
 <%@ page import="java.util.Map" %>
 

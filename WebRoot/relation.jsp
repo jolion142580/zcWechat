@@ -2,14 +2,14 @@
          pageEncoding="UTF-8" %>
 <%@page import="com.gdyiko.zcwx.weixinUtils.OAuth" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="com.gdyiko.zcwx.weixinUtils.TokenThread" %>
 <%@ page import="com.gdyiko.zcwx.weixinUtils.WxJSSignUtil" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="com.gdyiko.zcwx.weixinUtils.TokenHepl" %>
 
 
 <%
-    String token = TokenThread.accessToken.getAccessToken();
-    String jsapi_ticket = TokenThread.jsapi_ticket;
+    String token = TokenHepl.getaccessToken().getAccessToken();
+    String jsapi_ticket = TokenHepl.jsapi_ticket;
     String url = WxJSSignUtil.getUrl();
     System.out.println("==url==" + url);
     System.out.println("jsapi_ticket==" + jsapi_ticket);

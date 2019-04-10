@@ -45,7 +45,9 @@ public class SendTemplateAction {
     public String sendTemplateMessage() {
 
         System.out.println("【推送消息进来了】");
+        System.out.println("------------------templateData1:"+getTemplateData());
         JSONObject jsonObject = JSONObject.fromObject(getTemplateData());
+        System.out.println("------------------templateData2:");
         WxTemplate template = (WxTemplate) JSONObject.toBean(jsonObject, WxTemplate.class);
 
         CustomMessageAPI api = new CustomMessageAPI();

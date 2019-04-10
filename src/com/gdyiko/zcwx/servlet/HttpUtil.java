@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,16 +55,16 @@ public class HttpUtil extends HttpServlet {
 		// http://www.fsyiko.com/ssWechat/affairProgress.jsp
 		// String str =
 		// "jsapi_ticket="+TokenThread.jsapi_ticket+"&noncestr="+nonceStr+"×tamp="+timestamp+"&url=http://www.fsyiko.com/ssWechat/HttpUtil";
-		String string1 = "jsapi_ticket=" + TokenThread.jsapi_ticket
+		String string1 = "jsapi_ticket=" + TokenHepl.jsapi_ticket  //TokenThread.jsapi_ticket
 				+ "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url="
 				+ url;// "http://www.fsyiko.com/ssWechat/HttpUtil.servlet";
 
 		String signature = httpconnect.sha1Encrypt(string1);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("affairProgress.jsp");
-		 String accerssToken =TokenThread.accessToken.getAccessToken();
+		 String accerssToken = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
 //		 System.out.println("--accerssToken:-"+accerssToken);
-		String jsApiTicket = TokenThread.jsapi_ticket;
+		String jsApiTicket = TokenHepl.jsapi_ticket; //TokenThread.jsapi_ticket;
 		request.setAttribute("timestamp", timestamp);
 		request.setAttribute("nonceStr", nonceStr);
 		request.setAttribute("signature", signature);

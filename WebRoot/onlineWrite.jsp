@@ -50,7 +50,7 @@ String objindex=(String)session.getAttribute("objindex");
 
 					} },
 				{ text: "上传表格", onClick: function(){
-						location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"onlineApply!isrelation?affairid=<%=affairid%>_affairMaterialsByWrite_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+						location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"onlineApply!isrelation?affairid=<%=affairid%>_affairMaterials_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
 					} },
 
 			]

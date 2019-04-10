@@ -1,10 +1,11 @@
 ﻿function IsMobile(s) {
 
+    var field = /^0?(13|14|15|17|18|19)[0-9]{9}$/g;
     var flg = false;
     var field13 = /^13\d{9}$/g;
     var field15 = /^15[0,2,1,3,5,6,7,8,9]\d{8}$/g;
     var field16 = /^17[0,2,1,3,5,6,7,8,9]\d{8}$/g;
-    var field18 = /^18[6,8,9,0]\d{8}$/g;
+    var field18 = /^18[6,7,8,9,0]\d{8}$/g;
     if ((field13.exec(s)) || (field15.exec(s)) || (field18.exec(s)) || field16.exec(s)) {
         flg = true;
     }

@@ -16,7 +16,7 @@ public class Shorturl {
 		
 		String url ="https://api.weixin.qq.com/cgi-bin/shorturl?access_token=ACCESS_TOKEN";
 		
-		String access_token = TokenThread.accessToken.getAccessToken();
+		String access_token = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
 		
 		String rsurl = url.replace("ACCESS_TOKEN", access_token);
 		
@@ -55,7 +55,7 @@ public String getpic(String long_url){
 		
 		String url ="https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=TOKENPOST";
 		
-		String access_token = TokenThread.accessToken.getAccessToken();
+		String access_token = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
 		
 		String rsurl = url.replace("TOKENPOST", access_token);
 		

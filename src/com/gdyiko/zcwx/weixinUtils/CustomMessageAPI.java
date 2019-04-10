@@ -34,7 +34,7 @@ public class CustomMessageAPI {
        
        try {
 //    	   String accessToken=CompareQueue.readTxtFile(path.substring(6,path.indexOf("WEB-INF"))+"access_token.txt");
-    	   String accessToken = TokenThread.accessToken.getAccessToken();
+    	   String accessToken = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
     	   
 //	       System.out.println("accessToken-------"+accessToken);
 	       //获取请求路径
@@ -47,7 +47,7 @@ public class CustomMessageAPI {
            JSONObject jo=JSONObject.fromObject(result);
            String errcode= jo.getString("errcode");
            if(errcode.equals("42001")){
-        	   accessToken=TokenThread.accessToken.getAccessToken();
+        	   accessToken=TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
         	   
         	   action = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token="+accessToken;
 
@@ -124,15 +124,15 @@ public class CustomMessageAPI {
     /**
      * 发送模板消息
      * @param t
-     * @param accessToken
+     * @param
      * @return
      */
     public String sendTemplateMessage(WxTemplate t) {
         String sendTemplateMessage_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";  
         String result = "";
-        String accessToken = TokenThread.accessToken.getAccessToken();
+        String accessToken = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
         // 拼装创建菜单的url
-
+        System.out.println("accessToken---wx--"+accessToken);
         //bymao token
         String url = sendTemplateMessage_url.replace("ACCESS_TOKEN", accessToken);
         // 将菜单对象转换成json字符串

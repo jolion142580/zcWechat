@@ -129,8 +129,8 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
 
         }
         //System.out.println("====----"+openid);
-        SsUserInfo ssUserInfo = new SsUserInfo();
-        ssUserInfo.setId(openid);
+//        SsUserInfo ssUserInfo = new SsUserInfo();
+//        ssUserInfo.setId(openid);
 
         SsUserInfo ssUserInfo1 = ssUserInfoService.findById(openid);
 

@@ -6,6 +6,7 @@ import com.gdyiko.tool.action.BaseAction;
 import com.gdyiko.tool.service.GenericService;
 import com.gdyiko.zcwx.po.FileInfo;
 import com.gdyiko.zcwx.service.FileInfoService;
+import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import com.gdyiko.zcwx.weixinUtils.TokenThread;
 import net.sf.json.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
@@ -236,7 +237,7 @@ public class WeChatUploadAction extends BaseAction<FileInfo, String> {
      */
     private InputStream getMedia(String mediaId) {
         String url = "https://api.weixin.qq.com/cgi-bin/media/get";
-        String access_token = TokenThread.accessToken.getAccessToken();
+        String access_token = TokenHepl.getaccessToken().getAccessToken();;
         String params = "access_token=" + access_token + "&media_id=" + mediaId;
         InputStream is = null;
         try {
