@@ -214,7 +214,7 @@ function IsPC() {
 			break;
 		}
 	}
-	console.log(flag)
+	// console.log(flag)
 	// alert(flag)
 	if(flag){
 		$('head').append('<link rel="stylesheet" href="content/interaction_pc.css" />')
@@ -257,7 +257,7 @@ function autoH_screensaver(){
 
 $(document).ready(function(){
 	//replaceHref();//正式版删除该行！！！！！！！！！！！！！
-	shieldselect();//屏蔽右键
+	// shieldselect();//屏蔽右键
 	whatBrowser();
 	containMinH();
 	searchInputW();
@@ -320,7 +320,7 @@ $(document).ready(function(){
 
 		if($(this).parents('.content').hasClass('content_subcontent')==false){
 			$(this).parents('.contain').addClass('show_subcontent show_review');
-			console.log(false)
+			// console.log(false)
 		}
 		if($(this).parents('.content').hasClass('content_matter')){
 			$('.content_subcontent').css('left','20%');
@@ -361,7 +361,7 @@ $(document).ready(function(){
 
 	/*——————————侧边栏快速导航点击——————————*/
 	$('.group_word p').click(function(){
-		console.log("navclick");
+		// console.log("navclick");
 		this_=$(this);
 		index=this_.index();
 		letter=this_.text();

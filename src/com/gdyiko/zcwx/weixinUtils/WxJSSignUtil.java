@@ -189,4 +189,23 @@ public class WxJSSignUtil {
         String strRandom = buildRandom(4) + "";
         return strTime + strRandom;
     }
+
+    public static String getMediaId() {
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
+        String strAll = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
+        for (int i = 0; i < 64; i++) {
+            int f = (int) (Math.random() * 64);
+            sb.append(strAll.charAt(f));
+
+        }
+        String str = sb.toString();
+        if(str.startsWith("_") || str.startsWith("-")){
+            str = str.substring(1);
+        }
+        if(str.endsWith("_")|| str.endsWith("-")){
+            str = str.substring(0,str.length()-1);
+        }
+        return str;
+    }
 }

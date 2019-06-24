@@ -117,7 +117,7 @@ public class SsAffairsAction extends BaseAction<SsAffairs, String> {
             this.model.setLevel("10");
             ssAffairsList = ssAffairsService.findEqualByEntity(this.model, BeanUtilEx.getNotNullEscapePropertyNames(this.model));
         }
-        ServletActionContext.getRequest().setAttribute("isOnline","false");
+        ServletActionContext.getRequest().setAttribute("isOnline", "false");
         ServletActionContext.getRequest().setAttribute("ssAffairsList", ssAffairsList);
         return "success";
     }
@@ -147,13 +147,19 @@ public class SsAffairsAction extends BaseAction<SsAffairs, String> {
             String onlineApplyId = request.getParameter("onlineApplyId");
             String objindex = request.getParameter("objindex");
             //String openid = "oEyt00yz55O7DYPXt6fVGQIjYZmo";
-            String openid = (String)session.getAttribute("openid");
-            if(openid==null){//电脑端扫码登录获取表单信息
-            	String uuid = (String)session.getAttribute("uuid");
-            	openid = (String)ActionContext.getContext().getApplication().get(uuid);
+            String openid = (String) session.getAttribute("openid");
+            if (openid == null) {//电脑端扫码登录获取表单信息
+                String uuid = (String) session.getAttribute("uuid");
+                openid = (String) ActionContext.getContext().getApplication().get(uuid);
             }
-
-            JSONObject jo = ssAffairsService.findConfigByAffairId(onlineApplyId, this.model.getAffairid(), objindex,openid);
+            JSONObject jo = ssAffairsService.findConfigByAffairId(onlineApplyId, this.model.getAffairid(), objindex, openid);
+            if (jo != null && !jo.equals("") && !jo.equals("null")) {
+                //pc端
+                String userAgent = request.getHeader("user-agent");
+                if (userAgent != null && userAgent.indexOf("Windows") != -1) {
+                    jo.put("labelWidth", "28%");
+                }
+            }
             Struts2Utils.renderText(jo.toString());
         } catch (Exception e) {
             e.printStackTrace();

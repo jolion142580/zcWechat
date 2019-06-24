@@ -105,7 +105,7 @@
                             <label class="weui-label">身份证号码</label>
                         </div>
                         <div class="weui-cell__bd">
-                            <input id="idCard" name="idCard" class="weui-input" type="text" placeholder="请输入身份证号码"/>
+                            <input id="idCard" name="idCard" onblur="writeToBrithday()" class="weui-input" type="text" placeholder="请输入身份证号码"/>
                         </div>
 
                     </div>
@@ -253,7 +253,7 @@
 
 <script type="text/javascript">
     var maxCount = 2;
-
+    var count = 0;
     function commit() {
 
         if ($("#random_sms").val() == "") {
@@ -354,9 +354,9 @@
 
 //多图上传
         $('#uploaderInput').on('click', function () {
-
+            checkCount();
             wx.chooseImage({
-                count: 2, // 默认9
+                count: maxCount -count, // 默认9
                 sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function (res) {
@@ -367,7 +367,6 @@
             });
         });
         var syncUpload = function (localIds) {
-
             var localId = localIds.pop();
             wx.uploadImage({
                 localId: localId,
@@ -447,6 +446,30 @@
 
     });
 
+    function checkCount() {
+        $.ajax({
+            type: "post",
+            async: false,
+            url: "WeChatUpload!count",
+            data: {
+                "openid": "<%=openid%>",
+                "remark": "身份证正反面"
+            },
+            success: function (data) {
+                data = eval("(" + data + ")");
+                count = data.size;
+            }
+        });
+    }
+
+    function writeToBrithday(){
+        var idCard = $("#idCard").val();
+        if(idCard.length<17){
+            return ;
+        }
+        var brith = idCard.substring(6,10)+"-"+idCard.substring(10,12)+"-"+idCard.substring(12,14);
+       $("#brithday").val(brith)
+    }
 
 </script>
 

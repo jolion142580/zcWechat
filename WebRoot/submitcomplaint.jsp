@@ -2,7 +2,7 @@
 <%@ page import="com.gdyiko.zcwx.weixinUtils.OAuth" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+   String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
     String openid =(String) session.getAttribute("openid");
     System.out.println(openid);
 %>
@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="<%=basePath %>css/style.css"/>
     <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
 
     <style type="text/css">
         .weui-media-box__desc {
@@ -240,7 +241,7 @@
                 url: "<%=basePath %>complaint!save",
                 data: {
                     complaint_Content: content,
-                    complaintTime: time,
+                    complaintTime: time, //时间后台生成，这个取消
                     complaint_Num: num,
                     complaint_Title: title,
                     complaint_Status: status,
@@ -250,7 +251,8 @@
                 dataType: "text",
                 success: function (data) {
                     alert("留言成功");
-                    location.reload();
+                    // location.reload();
+                    location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"complaint.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
                     return;
                 },
                 error: function () {

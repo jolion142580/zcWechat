@@ -7,10 +7,10 @@
 
     <session-factory>
         <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
-        <property name="connection.url">jdbc:sqlserver://19.134.193.95:1433;failoverPartner = 19.133.185.92;databaseName=QUEUE_ZC</property>
-        <!--<property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=QUEUE_ZC</property>-->
+       <!-- <property name="connection.url">jdbc:sqlserver://19.134.193.95:1433;failoverPartner = 19.133.185.92;databaseName=QUEUE_ZC</property>-->
+        <property name="connection.url">jdbc:sqlserver://192.168.127.128:1433;databaseName=QUEUE_ZC</property>
         <property name="connection.username">sa</property>
-        <property name="connection.password">abc123@#</property>
+        <property name="connection.password">frh1487521</property>
         <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
         <property name="myeclipse.connection.profile">com.microsoft.sqlserver.jdbc.SQLServerDriver2</property>
     

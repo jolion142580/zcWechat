@@ -228,7 +228,7 @@
                     $("#accountform")
                         .css('display', 'block');
                     var t = "<div align=\"center\" style=\" margin:15px; padding:15px 0 200px 0; background:#fff;\">"
-                        + result.data.msg + "</div>";
+                        + result.msg + "</div>";
                     $("#accountform").append(t);
                 }
             }

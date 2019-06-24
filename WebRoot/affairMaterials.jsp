@@ -130,7 +130,7 @@
 </html>
 <script type="text/javascript">
     var maxCount = 9;
-
+    var count = 0; //记录该事项材料上传数
     function loadData() {
 
         var affairMaterial = "";
@@ -228,21 +228,46 @@
         })
     }
 
-    function uploaderInput(id, matname) {
+    function checkCount(id, matname) {
+        $.ajax({
+            type: "post",
+            async: false,
+            url: "WeChatUpload!count",
+            data: {
+                "materialid": id,
+                "onlineApplyId": "<%=onlineApplyId%>",
+                "openid": "<%=openid%>",
+                "affairid": "<%=affairid%>",
+                "remark": matname
+            },
+            success: function (data) {
+                data = eval("(" + data + ")");
+                count = data.size;
+            }
+        });
+    }
 
+    function uploaderInput(id, matname) {
+        checkCount(id, matname);
         wx.ready(function () {
             wx.chooseImage({
-                count: maxCount, // 默认9
+                // count: maxCount, // 最多9张 默认9
+                count: maxCount - count, // 最多9张 默认9
                 sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function (res) {
                     var localIds = res.localIds;
+                    checkCount();
                     syncUpload(localIds);
                 }
             });
 
             var syncUpload = function (localIds) {
-
+                checkCount(id, matname);
+                if (count + localIds.length > maxCount) {
+                    alert("该材料上传图片过多！")
+                    return;
+                }
                 var localId = localIds.pop();
                 wx.uploadImage({
                     localId: localId,
@@ -259,9 +284,8 @@
                             onlineApplyId: '<%=onlineApplyId%>'
                         }, function (res) {
                             res = eval('(' + res + ')');
-                            if(res.res == 'true'){
+                            if (res.res == 'true') {
                                 $('#' + id + 'uploaderFiles').append("<li id='" + serverId + "' name='" + id + "uploaderFile'  class='weui-uploader__file' style='background-image:url(WeChatUpload!IoReadImage?mediaId=" + serverId + ")' onclick='lookFile(this)'></li>");
-
                             }
                             //alert($("li[name='"+id+"uploaderFile']").length);
                             $('#' + id + 'uploaderInfo').text($("li[name='" + id + "uploaderFile']").length + "/" + maxCount);

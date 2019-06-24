@@ -76,8 +76,8 @@ public class AffairProgressAction extends ActionSupport {
 	}*/
 
     public String findUserName() {
-        String sessionOpenid = (String) session.getAttribute("openid");
-        SsUserInfo ssUserInfo = ssUserInfoService.findById(sessionOpenid);
+        String openid = (String) session.getAttribute("openid");
+        SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
         HashMap<String, String> userInfo = new HashMap<String, String>();
         userInfo.put("userName", ssUserInfo.getName());
         String result = JSONObject.fromObject(userInfo).toString();
@@ -92,7 +92,42 @@ public class AffairProgressAction extends ActionSupport {
         System.out.println(affairProgressgURL);
         HttpContent httpContent = new HttpContent();
         String content = httpContent.getHttpContent(affairProgressgURL, "", "", "GET");
-
+    /*    String content = "{\n" +
+                "    \"status\":1,\n" +
+                "    \"data\":{\n" +
+                "        \"result\":\"办结\",\n" +
+                "        \"user_name\":\"测试\",\n" +
+                "        \"auditrecords\":[\n" +
+                "            {\n" +
+                "                \"flow_result\":\"予以受理\",\n" +
+                "                \"operatortime\":\"2014-08-31 15:52:56\",\n" +
+                "                \"flow_name\":\"受理\",\n" +
+                "                \"depart_name\":null\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"flow_result\":\"已签收\",\n" +
+                "                \"operatortime\":\"2014-08-31 19:57:14\",\n" +
+                "                \"flow_name\":\"签收\",\n" +
+                "                \"depart_name\":null\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"flow_result\":\"办结通过\",\n" +
+                "                \"operatortime\":\"2014-08-31 19:56:54\",\n" +
+                "                \"flow_name\":\"办结\",\n" +
+                "                \"depart_name\":null\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"flow_result\":\"已回复\",\n" +
+                "                \"operatortime\":\"2014-12-04 11:16:06\",\n" +
+                "                \"flow_name\":\"回复\",\n" +
+                "                \"depart_name\":null\n" +
+                "            }\n" +
+                "        ],\n" +
+                "        \"affair_short_name\":\"公共场所卫生许可证新办\",\n" +
+                "        \"affair_name\":\"公共场所卫生许可证新办\",\n" +
+                "        \"cur_affaircode\":\"12342341234123412341234\"\n" +
+                "    }\n" +
+                "}\n";*/
 
         Struts2Utils.renderText(content);
 

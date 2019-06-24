@@ -34,7 +34,7 @@ a:focus {outline:none;}
 
 /* Base */
 html {}
-body {background:#FFF;color:#333;font-size:12px;font-family:"微软雅黑","宋体", Arial, Helvetica, sans-serif;position:relative;}
+body {height:100%;background:#FFF;color:#333;font-size:12px;font-family:"微软雅黑","宋体", Arial, Helvetica, sans-serif;position:relative;}
 .transition {transition:all .3s ease;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-o-transition:all .3s ease;}
 .main {width:680px;margin:0 auto;}
 .left {float:left;}

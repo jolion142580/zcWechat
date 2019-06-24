@@ -63,19 +63,18 @@
     }
 
 
-
     function affairsSerach() {
 //alert($("#affairname").val());
         var affairname = $("#affairname").val();
-        var departid =   GetQueryString("departid"); //部门id
-        if(departid=="all"){
+        var departid = GetQueryString("departid"); //部门id
+        if (departid == "all") {
             departid = null;
         }
         var data = {
-            affairname : affairname,
-            departid : departid
+            affairname: affairname,
+            departid: departid
         }
-        $.post("ssAffairsInfo!findByAffairName", data , function (data) {
+        $.post("ssAffairsInfo!findByAffairName", data, function (data) {
             //alert(data);
             $("#affairsItem").empty();
 
@@ -114,7 +113,7 @@
 
                 <c:otherwise>
                     <h1 class="title main_color">办事指南</h1>
-                   <p/>
+                    <p/>
                     <div></div>
                 </c:otherwise>
             </c:choose>
@@ -122,26 +121,26 @@
 
         <div class="content">
             <%-- ssAffairsInfo!findByBaseDicId传过来  取消只能全局搜索 --%>
-          <%--  <c:if test="${not empty isOnline}">--%>
-                <div class="weui-search-bar" id="searchBar">
-                    <form class="weui-search-bar__form" name="form1" method="post" action="">
-                        <div class="weui-search-bar__box">
-                            <i class="weui-icon-search"></i>
+            <%--  <c:if test="${not empty isOnline}">--%>
+            <div class="weui-search-bar" id="searchBar">
+                <form class="weui-search-bar__form" name="form1" method="post" action="">
+                    <div class="weui-search-bar__box">
+                        <i class="weui-icon-search"></i>
 
-                            <input type="search" name="affairname" class="weui-search-bar__input" id="affairname"
-                                   value=""
-                                   oninput="affairsSerach();" placeholder="搜索">
-                            <a href="javascript:"
-                               class="weui-icon-clear" id="searchClear"></a>
-                        </div>
-                        <label class="weui-search-bar__label" id="searchText"
-                               style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            <i class="weui-icon-search"></i> <span>搜索</span> </label>
-                    </form>
-                    <a href="javascript:" class="weui-search-bar__cancel-btn"
-                       id="searchCancel">取消</a>
-                </div>
-          <%--  </c:if>--%>
+                        <input type="search" name="affairname" class="weui-search-bar__input" id="affairname"
+                               value=""
+                               oninput="affairsSerach();" placeholder="搜索">
+                        <a href="javascript:"
+                           class="weui-icon-clear" id="searchClear"></a>
+                    </div>
+                    <label class="weui-search-bar__label" id="searchText"
+                           style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                        <i class="weui-icon-search"></i> <span>搜索</span> </label>
+                </form>
+                <a href="javascript:" class="weui-search-bar__cancel-btn"
+                   id="searchCancel">取消</a>
+            </div>
+            <%--  </c:if>--%>
             <div class="weui-cells" id="affairsItem">
                 <s:iterator value="ssAffairsList">
                     <a href="ssAffairsGuideInfo!findByAffairId?affairid=<s:property value="affairid" /> "

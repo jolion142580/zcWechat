@@ -16,6 +16,7 @@ public class QueueInfoAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
 
     public String send() {
+        System.out.println("查询现场办理情况");
         Struts2Utils.renderText(timedTaskData.getContent() == null ? "" : timedTaskData.getContent());
         return null;
     }

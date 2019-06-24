@@ -6,6 +6,7 @@ import com.gdyiko.tool.service.GenericService;
 import com.gdyiko.zcwx.po.SsBaseDic;
 import com.gdyiko.zcwx.service.SsBaseDicService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -88,7 +89,6 @@ public class SsBaseDicAction extends BaseAction<SsBaseDic, String> {
         ssBaseDicsList = ssBaseDicService.findEqualByEntity(this.model, BeanUtilEx.getNotNullEscapePropertyNames(this.model));
         return "web";
     }
-
     public String findAllByLeftItem() {
         //valid 1为有效，0为无效
         this.model.setBaseDicType("life");

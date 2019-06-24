@@ -114,7 +114,7 @@
                     </div>
                     <div class="weui-cell__bd">
 
-                        <input name="name" class="weui-input"
+                        <input name="name" class="weui-input" readonly
                                id="name" type="text" placeholder="请输入办事人姓名">
                         <span class="help-block"></span>
                     </div>
@@ -175,7 +175,13 @@
     function commit() {
         //$("#accountform").submit();
         //$("#currCode").val();
-        location.href = "affairProgressResult.jsp?currCode=" + $("#currCode").val() + "&username=" + encodeURI(encodeURI($("#name").val()));
+        var currCode = $("#currCode").val();
+        var name = $("#name").val();
+        if (currCode == null || currCode == undefined || currCode == "") {
+            alert("请输入受理编号!");
+            return;
+        }
+        location.href = "affairProgressResult.jsp?currCode=" + currCode + "&username=" + encodeURI(encodeURI(name));
     }
 
     $(function () {

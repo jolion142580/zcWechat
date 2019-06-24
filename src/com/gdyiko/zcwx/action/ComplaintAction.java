@@ -1,6 +1,8 @@
 package com.gdyiko.zcwx.action;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -37,6 +39,8 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
     @Resource(name = "ssUserInfoService")
     SsUserInfoService ssUserInfoService;
 
+    //留言时间
+    private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private static final long serialVersionUID = -8210055429850148097L;
     HttpSession session = null;
@@ -61,14 +65,14 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
             throws IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         this.model.setComplaint_Show("是");
         String openid = (String) this.session.getAttribute("openid");
-        if(openid != null) {
+//            openid取消使用查询全部留言
+        try {
             List<Complaint> list = complaintService.findByConditionShow(openid, "是");
             this.model.setComplaintReplyTime("orderby_desc_");
             JSONObject jo = new JSONObject(list);
             String json = JSONArray.fromObject(list).toString();
             Struts2Utils.renderText(json.toString());
-        }
-        else{
+        } catch (RuntimeException e) {
             throw new RuntimeException("ComplaintAction->findLikeByEntitypy openid 不存在");
         }
         return null;
@@ -76,16 +80,15 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
 
     public String save() {
         String openid = (String) this.session.getAttribute("openid");
-        if(openid != null) {
+        if (openid != null) {
             SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
             String phone = ssUserInfo.getPhone();
             complaintService.saveByElement(this.model.getComplaint_Content(), phone,
-                    this.model.getComplaintTime(), this.model.getComplaint_Num(), this.model.getComplaint_Title(),
+                    format.format(new Date()), this.model.getComplaint_Num(), this.model.getComplaint_Title(),
                     this.model.getComplaint_Status(), this.model.getComplaint_Show(), openid);
             System.out.println(this.model.getComplaint_Show());
             System.out.println(this.model.getComplaint_Content());
-        }
-        else{
+        } else {
             throw new RuntimeException("compliaintAction->save openid不存在");
         }
       /*

@@ -295,7 +295,8 @@ public class CoreService {
                         article2.setDescription("");
                         article2.setPicUrl(path + "images/weixin/yuyuejilu2.png");
                         //article2.setUrl("http://zcxzfwzx.chancheng.gov.cn/zcWechat/newwdyy_2.jsp");
-                        article2.setUrl(path+"newwdyy_2.jsp");
+//                        article2.setUrl(path+"newwdyy_2.jsp");
+                        article2.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WeChatPropertieService.getPropertieByStatic("APPID")+"&redirect_uri="+path+"newwdyy_2.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
 
                         articleList.add(article);
                         articleList.add(article1);

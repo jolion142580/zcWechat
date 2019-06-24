@@ -28,29 +28,29 @@ import com.gdyiko.tool.service.impl.GenericServiceImpl;
 
 @Service("ssAffairsService")
 public class SsAffairsServiceImpl extends
-		GenericServiceImpl<SsAffairs, String> implements
-		SsAffairsService {
-	
-	@Resource(name = "onlineApplyDao")
-	OnlineApplyDao onlineApplyDao;
-	
-	@Resource(name = "ssAffairsGuideDao")
-	SsAffairsGuideDao ssAffairsGuideDao;
-	
-	@Resource(name = "ssAffairsDao")
-	SsAffairsDao ssAffairsDao;
-	
-	@Resource(name = "ssAffairsObjectDao")
-	SsAffairsObjectDao ssAffairsObjectDao;
-	
-	@Resource(name = "ssUserInfoDao")
-	SsUserInfoDao ssUserInfoDao;
+        GenericServiceImpl<SsAffairs, String> implements
+        SsAffairsService {
 
-	@Resource(name = "ssAffairsDao")
-	@Override
-	public void setGenericDao(GenericDao<SsAffairs, String> genericDao) {
-		super.setGenericDao(genericDao);
-	}
+    @Resource(name = "onlineApplyDao")
+    OnlineApplyDao onlineApplyDao;
+
+    @Resource(name = "ssAffairsGuideDao")
+    SsAffairsGuideDao ssAffairsGuideDao;
+
+    @Resource(name = "ssAffairsDao")
+    SsAffairsDao ssAffairsDao;
+
+    @Resource(name = "ssAffairsObjectDao")
+    SsAffairsObjectDao ssAffairsObjectDao;
+
+    @Resource(name = "ssUserInfoDao")
+    SsUserInfoDao ssUserInfoDao;
+
+    @Resource(name = "ssAffairsDao")
+    @Override
+    public void setGenericDao(GenericDao<SsAffairs, String> genericDao) {
+        super.setGenericDao(genericDao);
+    }
 
 /*	public List<SsAffairs> findTwoLevelAffairByType(String type) {
 		String hql="";
@@ -62,86 +62,91 @@ public class SsAffairsServiceImpl extends
 		return this.getGenericDao().findByHql(hql);
 	}*/
 
-	public JSONObject findConfigByAffairId(String onlineApplyId,String affairid,String objindex,String openid) {
-		JSONObject jo = null;
-		try {
-			OnlineApply onlineApply = new OnlineApply();
-			String onlineData=""; 
-			
-			if(onlineApplyId==null){
-				SsUserInfo ssUserInfo = ssUserInfoDao.findById(openid);
-				onlineData = new JSONObject(ssUserInfo).toString();
-			}
-			
-			if(onlineApplyId!=null && !onlineApplyId.equals("")){
-				onlineApply = onlineApplyDao.findById(onlineApplyId);
-				onlineData = onlineApply.getOnlineData();
-			}
+    public JSONObject findConfigByAffairId(String onlineApplyId, String affairid, String objindex, String openid) {
+        JSONObject jo = null;
+        try {
+            OnlineApply onlineApply = new OnlineApply();
+            String onlineData = "";
 
-			SsAffairs ssAffairs = ssAffairsDao.findById(affairid);
-			
-			SsAffairObject ssAffairObject = new SsAffairObject();
-			ssAffairObject.setAffairid(affairid);
-			ssAffairObject.setObjindex(objindex);
-			List<SsAffairObject> ssAffairObjectList = ssAffairsObjectDao.findEqualByEntity(ssAffairObject, BeanUtilEx.getNotNullEscapePropertyNames(ssAffairObject));	
-			jo = new JSONObject(ssAffairObjectList.get(0).getConfig());
-			//System.out.println("''''1111'''''"+jo.getJSONArray("formItemList"));
-			org.json.JSONArray ja = jo.getJSONArray("formItemList");
-			for (int i = 0; i < ja.length(); i++) {
-				JSONObject job = ja.getJSONObject(i);
-				//System.out.println("-=-=-=-="+job.get("key"));
-				
-				if(!onlineData.equals("")){
-					JSONObject onlineDataObject = new JSONObject(onlineData);
-					Iterator<String> it = onlineDataObject.keys(); 
-					while(it.hasNext()){
-						// 获得key
-						String key = it.next(); 
-						String value = onlineDataObject.getString(key);    
-						//System.out.println("key: "+key+",value:"+value);
-						//System.out.println("---job key--"+job.get("key"));
-						if(job.get("key").toString().equalsIgnoreCase(key)){
-							job.put("value", value);
-						}
-					}
-				}
-				
-			}
-			
-			
-			jo.put("title", ssAffairs.getAffairname());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return jo;
-	}
+            if (onlineApplyId == null) {
+                SsUserInfo ssUserInfo = ssUserInfoDao.findById(openid);
+                onlineData = new JSONObject(ssUserInfo).toString();
+            }
 
-	public List<SsAffairs> findAffairByIsonline() {
-		
-		SsAffairs ssAffairs1 = new SsAffairs();
-		ssAffairs1.setIsonline("true");
+            if (onlineApplyId != null && !onlineApplyId.equals("")) {
+                onlineApply = onlineApplyDao.findById(onlineApplyId);
+                onlineData = onlineApply.getOnlineData();
+            }
 
-		List<SsAffairs> ssAffairsList1 = ssAffairsDao.findEqualByEntity(ssAffairs1, BeanUtilEx.getNotNullEscapePropertyNames(ssAffairs1));
-		List<SsAffairs> ssAffairsList = new ArrayList<SsAffairs>();
-		
-		for (SsAffairs ssAffairs : ssAffairsList1) {
-			
-			SsAffairGuide ssAffairGuide = new SsAffairGuide();
-			ssAffairGuide.setAffairid(ssAffairs.getAffairid());
-			
-			List<SsAffairGuide> ssAffairGuides = ssAffairsGuideDao.findEqualByEntity(ssAffairGuide, BeanUtilEx.getNotNullEscapePropertyNames(ssAffairGuide));
-			
-			String condition="";
-			if(ssAffairGuides.size()>0){
-				condition=ssAffairGuides.get(0).getCondition();
-			}
-			ssAffairs.setCondition(condition);
+            SsAffairs ssAffairs = ssAffairsDao.findById(affairid);
 
-			ssAffairsList.add(ssAffairs);
-			
-		}
-		return ssAffairsList;
-	}
+            SsAffairObject ssAffairObject = new SsAffairObject();
+            ssAffairObject.setAffairid(affairid);
+            ssAffairObject.setObjindex(objindex);
+            List<SsAffairObject> ssAffairObjectList = ssAffairsObjectDao.findEqualByEntity(ssAffairObject, BeanUtilEx.getNotNullEscapePropertyNames(ssAffairObject));
+            String config = ssAffairObjectList.get(0).getConfig();
+            if (config == null || config.equals("")) {
+                return new JSONObject();
+            }
+            jo = new JSONObject(ssAffairObjectList.get(0).getConfig());
+            //System.out.println("''''1111'''''"+jo.getJSONArray("formItemList"));
+
+            org.json.JSONArray ja = jo.getJSONArray("formItemList");
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject job = ja.getJSONObject(i);
+                //System.out.println("-=-=-=-="+job.get("key"));
+
+                if (!onlineData.equals("")) {
+                    JSONObject onlineDataObject = new JSONObject(onlineData);
+                    Iterator<String> it = onlineDataObject.keys();
+                    while (it.hasNext()) {
+                        // 获得key
+                        String key = it.next();
+                        String value = onlineDataObject.getString(key);
+                        //System.out.println("key: "+key+",value:"+value);
+                        //System.out.println("---job key--"+job.get("key"));
+                        if (job.get("key").toString().equalsIgnoreCase(key)) {
+                            job.put("value", value);
+                        }
+                    }
+                }
+
+            }
+
+
+            jo.put("title", ssAffairs.getAffairname());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jo;
+    }
+
+    public List<SsAffairs> findAffairByIsonline() {
+
+        SsAffairs ssAffairs1 = new SsAffairs();
+        ssAffairs1.setIsonline("true");
+
+        List<SsAffairs> ssAffairsList1 = ssAffairsDao.findEqualByEntity(ssAffairs1, BeanUtilEx.getNotNullEscapePropertyNames(ssAffairs1));
+        List<SsAffairs> ssAffairsList = new ArrayList<SsAffairs>();
+
+        for (SsAffairs ssAffairs : ssAffairsList1) {
+
+            SsAffairGuide ssAffairGuide = new SsAffairGuide();
+            ssAffairGuide.setAffairid(ssAffairs.getAffairid());
+
+            List<SsAffairGuide> ssAffairGuides = ssAffairsGuideDao.findEqualByEntity(ssAffairGuide, BeanUtilEx.getNotNullEscapePropertyNames(ssAffairGuide));
+
+            String condition = "";
+            if (ssAffairGuides.size() > 0) {
+                condition = ssAffairGuides.get(0).getCondition();
+            }
+            ssAffairs.setCondition(condition);
+
+            ssAffairsList.add(ssAffairs);
+
+        }
+        return ssAffairsList;
+    }
 
 }

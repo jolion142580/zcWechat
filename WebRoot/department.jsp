@@ -168,6 +168,9 @@
 
     </div>
 </div>
+<marquee id=go1 onMouseOver=go1.stop() onMouseOut=go1.start() scrollamount=2 scrolldelay=100
+         direction=left>电脑端网址: <a href="http://zcxzfwzx.chancheng.gov.cn/">http://zcxzfwzx.chancheng.gov.cn/</a>
+</marquee>
 <div class=" foot fixPosition width100 bottomPosition iff">
     <div align="center" style="line-height:25px;">
         <span style='font-size:12px;'>张槎街道行政服务中心授权使用&nbsp;&nbsp;南邮信息联合开发</span>

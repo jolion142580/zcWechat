@@ -18,11 +18,16 @@
             <type>click</type>
             <key>online</key>
         </sub_button>
-        <!--<sub_button>-->
-            <!--<name>网上预约</name>-->
-            <!--<type>click</type>-->
-            <!--<key>onlinebooking</key>-->
-        <!--</sub_button>-->
+        <sub_button>
+            <name>网上预约</name>
+            <type>click</type>
+            <key>onlinebooking</key>
+        </sub_button>
+        <!--<sub_button>
+            <name>PC端操作</name>
+            <type>view</type>
+            <url><![CDATA[https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${WeChatDNSURL}/web/SYS.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect]]></url>
+        </sub_button>-->
         <sub_button>
             <name>办件跟踪</name>
             <type>view</type>
@@ -54,7 +59,7 @@
         <sub_button>
             <name>中心简介</name>
             <type>view</type>
-            <url>http://gdyiko.com/wxfb/zxjj/index.htm</url>
+            <url>http://zcxzfwzx.chancheng.gov.cn/wxfb/zxjj/index.htm</url>
         </sub_button>
         <sub_button>
             <name>联系方式</name>

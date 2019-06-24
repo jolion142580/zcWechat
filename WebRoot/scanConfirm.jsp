@@ -4,6 +4,10 @@
 <%@page import="com.gdyiko.zcwx.weixinUtils.OAuth" %>
 <%@ page import="com.gdyiko.zcwx.weixinUtils.WxJSSignUtil" %>
 <%@ page import="java.util.Map" %>
+<%
+    String path = request.getContextPath();
+   String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
+%>
 
 <%
 
@@ -20,11 +24,11 @@
 	} 
 	//String openid="111";
 	//String uuid="2222";
-	 System.out.println("----openid---"+openid);
-	System.out.println("--=-=-uuid===="+uuid); 
+	 System.out.println("----网页扫一扫获取openid---"+openid);
+	System.out.println("--=-=-网页uuid===="+uuid);
 
 	//todo  增加了	application.setAttribute(uuid, openid);
-    application.setAttribute(uuid, openid);
+    //    application.setAttribute(uuid, openid);
 
 	
 
@@ -39,7 +43,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>张槎街道行政服务中心</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
-    <link rel="shortcut icon" href="/favicon.ico"/>
+    <%--<link rel="shortcut icon" href="/favicon.ico"/>--%>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <link rel="stylesheet" href="css/sm-extend.min.css" type="text/css"/>
@@ -52,6 +56,7 @@
     <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="js/jquery-weui.js"></script>
     <script type="text/javascript" src="lib/zepto.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
 
 
 </head>
@@ -79,10 +84,11 @@ $.modal({
 		    		});	
 	    		}
 	    		if(data1.state=="fail"){
+	    		    location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"relation.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+	    			/*$.alert("请关注\"张槎街道行政服务中心\"微信公众号并进行认证绑定！", function() {
 
-	    			$.alert("请关注\"张槎街道行政服务中心\"微信公众号并进行认证绑定！", function() {
 	    				wx.closeWindow();
-	    			});
+	    			});*/
 	    		}
 	    		    		
 	    	});

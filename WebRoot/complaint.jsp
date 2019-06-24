@@ -4,7 +4,7 @@
 <%@ page import="com.gdyiko.zcwx.weixinUtils.TokenHepl" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+   String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
 %>
 
 <%
@@ -216,7 +216,7 @@
                     //alert(data);
                     //obj = JSON.parse(data);
 
-
+                    var loginOpenId = '<%=openid%>';
                     var p = "";
                     var a = "<div align='center'><span onclick='gotoUp()'>上一页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                     console.log(data);
@@ -249,7 +249,7 @@
                     a += "<span onclick='gotoDown()' >下一页</span></div>";
                     for (i = iy; i < ih; i++) {
                         //alert("111");
-
+                        var openid = data[i].open_Id;
                         for (j = 0; j < data[i].ssUserInfo.name.length; j++) {
                             var na = data[i].ssUserInfo.name[0];
 
@@ -260,6 +260,9 @@
                             na = "匿名用户";
                         } else {
                             na = na + "**";
+                        }
+                        if(openid == loginOpenId){
+                            na = "我";
                         }
 //								    var name =data[i].name;
 //								    var name =(data[i].name.substring(1,0))+"**";

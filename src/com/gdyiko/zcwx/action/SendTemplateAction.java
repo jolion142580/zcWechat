@@ -43,7 +43,6 @@ public class SendTemplateAction {
     }
 
     public String sendTemplateMessage() {
-
         System.out.println("【推送消息进来了】");
         System.out.println("------------------templateData1:"+getTemplateData());
         JSONObject jsonObject = JSONObject.fromObject(getTemplateData());

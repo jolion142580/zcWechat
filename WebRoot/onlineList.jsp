@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="generator"
-          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>张槎街道行政服务中心</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <!--     <link rel="stylesheet" href="css/sm-extend.min.css" type="text/css"/>
         <link rel="stylesheet" href="css/sm.min.css" type="text/css"/> -->
     <link rel="stylesheet" href="css/guide-style.css" type="text/css"/>
@@ -25,10 +25,14 @@
     <script type="text/javascript" src="yms/window/weiXinAppointment/js/common.js"></script>
 
     <style type="text/css">
-        .main_color{ color:#35af98; }
-        .weui-grid__label{
+        .main_color {
+            color: #35af98;
+        }
+
+        .weui-grid__label {
             white-space: normal;
         }
+
         .weui-grid {
             height: 5rem;
         }
@@ -40,43 +44,39 @@
         var areaId_ = '';
 
 
-
-
         //控制页面 matterType 1法人，3 人事
-        function controlPage(listDivId,matterType,isShowBar, isShowHeader){
+        function controlPage(listDivId, matterType, isShowBar, isShowHeader) {
             $('[class *= "mark_div"]').hide();
-            $('[class *= "li_page_tab"]').attr('class','left li_page_tab');
-            $('#'+listDivId+'_li').attr('class','left cur li_page_tab');
+            $('[class *= "li_page_tab"]').attr('class', 'left li_page_tab');
+            $('#' + listDivId + '_li').attr('class', 'left cur li_page_tab');
 
-            $('#'+listDivId).show();
+            $('#' + listDivId).show();
             $('#matterType').val(matterType);
             $('#matterName').val('');
-            if(isShowBar == 1){
+            if (isShowBar == 1) {
                 $('#search_bar').show();
-            }else{
+            } else {
                 $('#search_bar').hide();
             }
 
-            if(isShowHeader == 1){
+            if (isShowHeader == 1) {
                 $('#header_').show();
-            }else{
+            } else {
                 $('#header_').hide();
             }
         }
 
 
+        function resetList() {
 
-
-        function resetList(){
-
-            $.post("ssBaseDicInfo!findAllByLeftItem" ,function(data) {
+            $.post("ssBaseDicInfo!findAllByLeftItem", function (data) {
                 //alert(data);
                 $("#LifeItem").empty();
 
-                var content="";
-                $.each(data, function(k, v) {
+                var content = "";
+                $.each(data, function (k, v) {
 
-                    content+="<a href=\"ssAffairsInfo!findByItem?sortid="+v.baseDicId+"\" class=\"weui-grid js_grid\"><div class=\"weui-grid__icon\" style=\"width:45px;height:45px\"><img src=\""+v.iconPath+"\" alt=\"\" ></div><p class=\"weui-grid__label\">"+v.cname+"</p></a>";
+                    content += "<a href=\"ssAffairsInfo!findByItem?sortid=" + v.baseDicId + "\" class=\"weui-grid js_grid\"><div class=\"weui-grid__icon\" style=\"width:45px;height:45px\"><img src=\"" + v.iconPath + "\" alt=\"\" ></div><p class=\"weui-grid__label\">" + v.cname + "</p></a>";
 
                 });
                 $("#LifeItem").append(content);
@@ -85,22 +85,22 @@
         }
 
 
-
     </script>
 
 </head>
 
 
-
-<body >
+<body>
 
 <div class="header" id="header_">
     <div class="special-tabs clear">
         <div class="tabs left" style='width:100%'>
             <div class="clear">
                 <ul>
-                    <li class="left cur li_page_tab" style='width:25%' id="personal_list_div_li"><a onclick="controlPage('personal_list_div',3,1,1);">职能部门事项</a></li>
-                    <li class="left li_page_tab" style='width:25%' id="legalPerson_list_div_li"><a onclick="controlPage('legalPerson_list_div',1,1,1);resetList()">人生事项</a></li>
+                    <li class="left cur li_page_tab" style='width:25%' id="personal_list_div_li"><a
+                            onclick="controlPage('personal_list_div',3,1,1);">职能部门事项</a></li>
+                    <li class="left li_page_tab" style='width:25%' id="legalPerson_list_div_li"><a
+                            onclick="controlPage('legalPerson_list_div',1,1,1);resetList()">人生事项</a></li>
                     <!-- <li class="left li_page_tab" style='width:25%' id="common_list_div_li"><a onclick="controlPage('common_list_div','',0,1);commonEvent()">常用事项</a></li>
                     <li class="left li_page_tab" style='width:25%' id="his_list_div_li"><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/affairhis!findbyopenid&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect">历史查询</a></li> -->
                 </ul>
@@ -124,15 +124,16 @@
 
         <div class="weui-grids" style="background-color: white;">
             <form name="searchForm" method="post" action="">
-                <s:iterator value="ssBaseDicsList" >
+                <s:iterator value="ssBaseDicsList">
                     <%-- <a href="ssAffairsGuideInfo!findByAffairCodeId?baseDicId=<s:property value="cname" />" class="weui-grid js_grid"> --%>
-                    <a href="onlineApply!getLevelAffairs?departid=<s:property value="baseDicId" />" class="weui-grid js_grid">
+                    <a href="onlineApply!getLevelAffairs?departid=<s:property value="baseDicId" />"
+                       class="weui-grid js_grid">
                         <div class="weui-grid__icon">
-                            <img src="<s:property value="iconPath" />" alt="" />
+                            <img src="<s:property value="iconPath" />" alt=""/>
                         </div>
                         <font class="weui-grid__label">
 
-                            <s:property escape="false" value="cname" /><br/>
+                            <s:property escape="false" value="cname"/><br/>
 
 
                         </font>
@@ -164,6 +165,9 @@
 
     </div>
 </div>
+<marquee id=go1 onMouseOver=go1.stop() onMouseOut=go1.start() scrollamount=2 scrolldelay=100 direction=left>
+    电脑端网址: <a href="http://zcxzfwzx.chancheng.gov.cn/">http://zcxzfwzx.chancheng.gov.cn/</a>
+</marquee>
 <div class=" foot fixPosition width100 bottomPosition iff">
     <div align="center" style="line-height:25px;">
         <span style='font-size:12px;'>张槎街道行政服务中心授权使用&nbsp;&nbsp;南邮信息联合开发</span>

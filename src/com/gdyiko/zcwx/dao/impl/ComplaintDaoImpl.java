@@ -27,8 +27,10 @@ public class ComplaintDaoImpl extends GenericDaoImpl<Complaint, String> implemen
         List<Complaint> list = null;
         try {
             /*String sql = "from Complaint c left join SsUserInfo s on c.open_Id = s.id where  c.complaint_Show = ?";*/
-            String sql = "from Complaint c  where c.open_Id =? and c.complaint_Show = ? order by c.complaintTime desc";
-            list = this.getHibernateTemplate().find(sql, openId, complaintShow);
+//            String sql = "from Complaint c  where c.open_Id =? and c.complaint_Show = ? order by c.complaintTime desc";
+//            list = this.getHibernateTemplate().find(sql,openId, complaintShow);
+            String sql = "from Complaint c  where  c.complaint_Show = ? order by c.complaintTime desc";
+            list = this.getHibernateTemplate().find(sql, complaintShow);
         } catch (DataAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

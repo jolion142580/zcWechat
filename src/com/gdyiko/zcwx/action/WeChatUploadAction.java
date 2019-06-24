@@ -8,6 +8,7 @@ import com.gdyiko.zcwx.po.FileInfo;
 import com.gdyiko.zcwx.service.FileInfoService;
 import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import com.gdyiko.zcwx.weixinUtils.TokenThread;
+import com.handau.util.StringUtil;
 import net.sf.json.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts2.ServletActionContext;
@@ -15,6 +16,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.json.JSONException;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springside.modules.web.struts2.Struts2Utils;
 
 import javax.annotation.Resource;
@@ -44,6 +47,7 @@ import java.util.List;
 // interceptorRefs = {@InterceptorRef(value = "mydefault")})
 public class WeChatUploadAction extends BaseAction<FileInfo, String> {
 
+    private File file;
     /**
      *
      */
@@ -103,17 +107,28 @@ public class WeChatUploadAction extends BaseAction<FileInfo, String> {
     public void savePicture() throws JSONException {
 
 
-        if(fileInfoService.uploadByIdCardOrMaterials(this.model)){
+        if (fileInfoService.uploadByIdCardOrMaterials(this.model)) {
             Struts2Utils.renderText("{\"res\":\"true\"}");
             return;
 
-        }else {
+        } else {
             Struts2Utils.renderText("{\"res\":\"false\"}");
             return;
         }
+    }
 
+    public void savePictureToWeb() {
+        String mediaId = fileInfoService.saveImg(file, this.model);
+        Struts2Utils.renderText("{\"mediaId\":\"" + mediaId + "\"}");
 
     }
+
+    public void count() {
+        System.out.println(this.model);
+        List<FileInfo> list = fileInfoService.findEqualByEntity(this.model, BeanUtilEx.getNotNullPropertyNames(this.model));
+        Struts2Utils.renderText("{\"size\":" + list.size() + "}");
+    }
+
 
     /**
      * 保存图片至服务器
@@ -237,7 +252,8 @@ public class WeChatUploadAction extends BaseAction<FileInfo, String> {
      */
     private InputStream getMedia(String mediaId) {
         String url = "https://api.weixin.qq.com/cgi-bin/media/get";
-        String access_token = TokenHepl.getaccessToken().getAccessToken();;
+        String access_token = TokenHepl.getaccessToken().getAccessToken();
+        ;
         String params = "access_token=" + access_token + "&media_id=" + mediaId;
         InputStream is = null;
         try {
@@ -336,6 +352,13 @@ public class WeChatUploadAction extends BaseAction<FileInfo, String> {
         return null;
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 
 }
 

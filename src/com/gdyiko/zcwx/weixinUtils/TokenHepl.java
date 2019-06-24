@@ -20,7 +20,7 @@ public class TokenHepl {
 
     public static Token accessToken = null;
     public static String jsapi_ticket=null;
-    public static final long cacheTime = 1000 * 60 * 30 * 2; //1小时
+    public static final long cacheTime = 1000 * 60 * 30 * 1; //o.5小时
 
     public static Token getaccessToken(){
         long curTime = System.currentTimeMillis();

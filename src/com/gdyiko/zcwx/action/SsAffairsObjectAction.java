@@ -45,7 +45,7 @@ import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
         @Result(name = "affairObject", location = "/affairObject.jsp"),
         //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/relation.jsp?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect
         @Result(name = "affairObjectToWeb", location = "/web/affairObject.jsp"),
-        @Result(name = "webIndex", type = "redirect", location = "/web/Index.jsp"),
+        @Result(name = "webIndex", type = "redirect", location = "/web/QRCodeImg.jsp"),
         @Result(name = "affair", location = "/affairs.jsp"),
         // 失败
         @Result(name = "fail", location = "/")
@@ -93,6 +93,9 @@ public class SsAffairsObjectAction extends BaseAction<SsAffairObject, String> {
     public String findByAffairIdToWeb() {
 
         String uuid = (String) session.getAttribute("uuid");
+        if(uuid == null){
+            return "webIndex";
+        }
         String openid = (String) ActionContext.getContext().getApplication().get(uuid);
         if (openid == null) {
             return "webIndex";

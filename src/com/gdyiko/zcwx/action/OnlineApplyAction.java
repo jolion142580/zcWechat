@@ -18,6 +18,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springside.modules.web.struts2.Struts2Utils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -125,7 +126,7 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
 
         if (code != null && openid == null) {
             openid = oauth.getOppenid(code);
-            System.out.println("【session中openid为空】"+openid);
+            System.out.println("【session中openid为空】" + openid);
 
         }
         //System.out.println("====----"+openid);
@@ -147,6 +148,7 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         if (ssUserInfo1 != null && type.equals("affairMaterials")) {
             //if(session.getAttribute("onlineApplyId")==null){
             this.model.setId(PrimaryProduce.produce());
+//            this.model.setIscommit("true");
             this.model.setAffairid(affairid);
             this.model.setObjindex(objindex);
             this.model.setOpenid(openid);
@@ -162,6 +164,22 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         //System.out.println("-=-=-=111111-="+type+"==2222"+ssUserInfo1);
         if (ssUserInfo1 != null && type.equals("affairMaterialsByWrite")) {
             //System.out.println("上传附件");
+            return "afairMaterials";
+        }
+        //PC填表微信扫一扫上传资料
+        if (ssUserInfo1 != null && type.equals("affairMaterialsByPC2Wechart")) {
+            String onlineApplyId = affairidType[3];
+            //判断是否同一个账号上传资料
+            OnlineApply onlineApply = onlineApplyService.findById(onlineApplyId);
+            if (!openid.equals(onlineApply.getOpenid())) {
+                return "permitted";
+            }
+            //判断该事项是否提交
+            /*if (onlineApply.getIscommit() != null && onlineApply.getIscommit().equals("true")) {
+                return "permitted";
+            }*/
+
+            session.setAttribute("onlineApplyId", onlineApplyId);
             return "afairMaterials";
         }
         return null;
@@ -181,21 +199,33 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         super.save();
         //获取填单id插入上传附件表
         session.setAttribute("onlineApplyId", this.model.getId());
-
     }
 
     public void onlineApplySaveToWeb() throws JSONException {
 
         this.model.setState("待资料上传");
         this.model.setCreattime(df.format(new java.util.Date()));
-        String onlineDataTemp = this.model.getOnlineData().replaceAll("null", "\"\"");
-        this.model.setOnlineData(onlineDataTemp);
+        String onlineDataTemp = this.model.getOnlineData();
+        if (onlineDataTemp != null && !onlineDataTemp.equals("null")) {
+            onlineDataTemp = this.model.getOnlineData().replaceAll("null", "\"\"");
+            this.model.setOnlineData(onlineDataTemp);
+        }
+        if (this.model.getId() == null || "".equals(this.model.getId())) {
+            this.model.setId(PrimaryProduce.produce());
+        }
+        try {
+            onlineApplyService.save(model);
+            session.setAttribute("onlineApplyId", this.model.getId());
+            Struts2Utils.renderText("{\"onlineApplyId\":\"" + this.model.getId() + "\"}");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Struts2Utils.renderText(getResultJson(FLAG_FAIL));
 
-        super.save();
+        }
+        //防止pc直接提交表格导致onlineApplyId为空
 
         //避免浏览器返回时还能显示到表单
-        session.removeAttribute("uuid");
-
+//        session.removeAttribute("uuid");
     }
 
     public String getOnlineDepart() {
@@ -248,11 +278,13 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         List<OnlineApply> onlineApplyList1 = onlineApplyService.findLikeByEntity(this.model, BeanUtilEx.getNotNullEscapePropertyNames(this.model));
         for (OnlineApply onlineApply : onlineApplyList1) {
             SsAffairs ssAffairs = ssAffairsService.findById(onlineApply.getAffairid());
-
-            onlineApply.setAffairName(ssAffairs.getAffairname());
-            onlineApplyList.add(onlineApply);
-            System.out.println(String.format("==================state%s=====================",onlineApply.getState()));
-            System.out.println(String.format("==================app%s=====================",onlineApply.getApprovedOrNot()));
+            //删除旧事项 不存在报错
+            if (ssAffairs != null) {
+                onlineApply.setAffairName(ssAffairs.getAffairname());
+                onlineApplyList.add(onlineApply);
+                System.out.println(String.format("==================state%s=====================", onlineApply.getState()));
+                System.out.println(String.format("==================app%s=====================", onlineApply.getApprovedOrNot()));
+            }
 
         }
 
@@ -264,6 +296,7 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
     public String modify() {
         this.model.setIscommit("true");
         this.model.setState("预审中");
+        this.model.setApprovedOrNot("");
         super.modify();
 
         String openid = (String) session.getAttribute("openid");
@@ -311,7 +344,7 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         String APPID = weChatPropertieService.getPropertie("APPID");
         String weChatDNSURL = weChatPropertieService.getPropertie("WeChatDNSURL");
 
-        template.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid="+APPID+"&redirect_uri="+weChatDNSURL+"onlineApply!onlineApplyHistory&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
+        template.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APPID + "&redirect_uri=" + weChatDNSURL + "onlineApply!onlineApplyHistory&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
         template.setTouser(openid);
         template.setTopcolor("#000000");
         template.setTemplate_id("WLkSsDqQtqCeJyy33EbwFyC_CrOHi_FjS1WfaTtYhdM");
@@ -411,9 +444,13 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         this.ssBaseDicsList = ssBaseDicsList;
     }
 
-    public String getAPPID(){return APPID;}
+    public String getAPPID() {
+        return APPID;
+    }
 
-    public void setAPPID(String APPID){this.APPID = APPID;}
+    public void setAPPID(String APPID) {
+        this.APPID = APPID;
+    }
 
 
     public String getWeChatDNSURL() {

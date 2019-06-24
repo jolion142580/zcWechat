@@ -1,16 +1,13 @@
 package com.gdyiko.zcwx.service.impl;
 
 import com.gdyiko.base.service.PropertieService;
-import com.gdyiko.tool.DateUtil;
-import com.gdyiko.tool.PrimaryProduce;
-import com.gdyiko.tool.ReduceImg;
+import com.gdyiko.tool.*;
 import com.gdyiko.tool.dao.GenericDao;
 import com.gdyiko.tool.service.impl.GenericServiceImpl;
 import com.gdyiko.zcwx.dao.FileInfoDao;
 import com.gdyiko.zcwx.po.FileInfo;
 import com.gdyiko.zcwx.service.FileInfoService;
 import com.gdyiko.zcwx.weixinUtils.TokenHepl;
-import com.gdyiko.zcwx.weixinUtils.TokenThread;
 import com.gdyiko.zcwx.weixinUtils.WxJSSignUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Date;
+import java.util.*;
 
 @Service("fileInfoService")
 public class FileInfoServiceImpl extends
@@ -40,7 +37,7 @@ public class FileInfoServiceImpl extends
         super.setGenericDao(genericDao);
     }
 
-    @Override
+    //    @Override
 //    public void uploadByIdCardOrMaterials(String openId, String onlineApplyId, String mediaId, String remark, String materialId) {
     public boolean uploadByIdCardOrMaterials(FileInfo fileInfo) {
         String uploadPath = propertieService.getPropertie("filePath") + fileInfo.getOpenid() + "/";
@@ -135,4 +132,124 @@ public class FileInfoServiceImpl extends
         }
         return is;
     }
+
+    /**
+     * @param openid
+     * @return @
+     * -------- 事项名称--------
+     * |  ------备注1---------- |
+     * | | ...图片...         | |
+     * | ---------------------- |
+     * | -------备注2---------  |
+     * | |  ...图片...       |  |
+     * |---------------------  |
+     * -------------------------
+     */
+    public List<Map<String, List<Map<String, List<Map<String, String>>>>>> informationToList(String openid) {
+        List<Map<String, List<Map<String, List<Map<String, String>>>>>> result = new LinkedList<Map<String, List<Map<String, List<Map<String, String>>>>>>();
+        List<Map<String, String>> list = fileInfoDao.informationToList(openid);
+        if (list.size() == 0) {
+            return result;
+        }
+        //事务分类
+        Set<String> onlineApplyS = new LinkedHashSet<String>();
+
+        for (Map<String, String> map : list) {
+            onlineApplyS.add(map.get("onlineApplyId")); //记录事务ID
+        }
+
+        for (String applyId : onlineApplyS) {
+
+            //一个事项 对应的上传资料备注分类
+            Map<String, List<Map<String, List<Map<String, String>>>>> onlineApplyMap = new LinkedHashMap<String, List<Map<String, List<Map<String, String>>>>>();
+
+            List<Map<String, List<Map<String, String>>>> onLineApplyList = new LinkedList<Map<String, List<Map<String, String>>>>();
+            List<Map<String, String>> temp = new LinkedList<Map<String, String>>();
+            //备注分类
+            Set<String> remarkS = new LinkedHashSet<String>();
+            //事务名称
+            String affairname = null;
+            //事务申请时间
+            String creattime = null;
+            for (Map<String, String> map : list) {
+                String onlineApplyId = map.get("onlineApplyId");
+                if (onlineApplyId.equals(applyId)) {
+                    temp.add(map);
+                    remarkS.add(map.get("remark")); //记录备注分类
+                    affairname = map.get("affairname"); //记录事务名称
+                    creattime = map.get("creattime");
+                }
+            }
+            for (String remark : remarkS) {
+                Map<String, List<Map<String, String>>> remarkMap = new LinkedHashMap<String, List<Map<String, String>>>();
+                List<Map<String, String>> remarkList = new LinkedList<Map<String, String>>();
+                for (Map<String, String> map : temp) {
+                    String r = map.get("remark");
+                    if (r.equals(remark)) {
+                        remarkList.add(map);
+                    }
+                }
+                remarkMap.put(remark, remarkList);
+                onLineApplyList.add(remarkMap);
+
+            }
+            onlineApplyMap.put("[ " + affairname + " ] 申请时间为：" + creattime, onLineApplyList);
+            result.add(onlineApplyMap);
+        }
+        return result;
+    }
+
+    public List<Map<String, List<FileInfo>>> listByOnlineApply(String onlineApplyId) {
+        List<Map<String, List<FileInfo>>> result = new LinkedList<Map<String, List<FileInfo>>>();
+        FileInfo model = new FileInfo();
+        model.setOnlineApplyId(onlineApplyId);
+        List<FileInfo> fileInfoList = this.findEqualByEntity(model, BeanUtilEx.getNotNullPropertyNames(model));
+        Set<String> remarkSet = new LinkedHashSet<String>();
+        for (FileInfo fileInfo : fileInfoList) {
+            if (fileInfo.getFilename().indexOf(".pdf") != -1) {
+                continue;
+            }
+            remarkSet.add(fileInfo.getRemark());
+
+        }
+        for (String set : remarkSet) {
+            Map<String, List<FileInfo>> resultMap = new LinkedHashMap<String, List<FileInfo>>();
+            List<FileInfo> temp = new LinkedList<FileInfo>();
+            for (FileInfo fileInfo : fileInfoList) {
+                if (fileInfo.getRemark().equals(set)) {
+                    temp.add(fileInfo);
+                }
+            }
+            resultMap.put(set, temp);
+            result.add(resultMap);
+        }
+
+        return result;
+    }
+
+    public String saveImg(File file,FileInfo fileInfo) {
+        String prefix = System.currentTimeMillis() + WxJSSignUtil.getNonceStr();
+        String mediaId =WxJSSignUtil.getMediaId(); //返回结果
+        String fileName = prefix +".jpg";
+        String uploadPath = propertieService.getPropertie("filePath") + fileInfo.getOpenid() + "/";
+        //网上办事上传的路径
+        if (StringUtils.isNotBlank(fileInfo.getOnlineApplyId())) {
+            uploadPath += fileInfo.getOnlineApplyId() + "/";
+        }
+        System.out.println("【附件上传】附件地址：" + uploadPath);
+        //创建附件路径
+        File uploadFile = new File(uploadPath);
+        if (!uploadFile.exists()) {
+            uploadFile.mkdirs();
+        }
+        FileUtil.copy(file,new File(uploadPath+fileName));
+        fileInfo.setId(PrimaryProduce.produce());
+        fileInfo.setFilename(fileName);
+        fileInfo.setLocalpath(uploadPath + fileName);
+        fileInfo.setMediaId(mediaId);
+        fileInfo.setCreattime(DateUtil.getDateStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
+        fileInfoDao.save(fileInfo);
+        return mediaId;
+    }
+
 }
