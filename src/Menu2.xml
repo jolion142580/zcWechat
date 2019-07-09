@@ -18,11 +18,11 @@
             <type>click</type>
             <key>online</key>
         </sub_button>
-        <sub_button>
+        <!--<sub_button>
             <name>网上预约</name>
             <type>click</type>
             <key>onlinebooking</key>
-        </sub_button>
+        </sub_button>-->
         <!--<sub_button>
             <name>PC端操作</name>
             <type>view</type>

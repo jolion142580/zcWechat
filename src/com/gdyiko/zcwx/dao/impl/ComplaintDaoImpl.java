@@ -31,6 +31,8 @@ public class ComplaintDaoImpl extends GenericDaoImpl<Complaint, String> implemen
 //            list = this.getHibernateTemplate().find(sql,openId, complaintShow);
             String sql = "from Complaint c  where  c.complaint_Show = ? order by c.complaintTime desc";
             list = this.getHibernateTemplate().find(sql, complaintShow);
+//            String sql = "select * from Complaint c  where  c.complaint_Show = '"+complaintShow+"' order by c.complaintTime desc";
+//            list = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(sql).list();
         } catch (DataAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

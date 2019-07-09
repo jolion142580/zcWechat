@@ -368,7 +368,7 @@
                         <p class="pt">三、申请材料：</p>
                         <p id="material"><%=ssAffairGuide.getMaterial() == null ? "" : ssAffairGuide.getMaterial() %>
                         </p>
-                        <p class="pt">四、办理程序：</p>
+                        <p class="pt">四、办理流程：</p>
                         <p id="procedures"><%=ssAffairGuide.getProcedures() == null ? "" : ssAffairGuide.getProcedures() %>
                         </p>
                         <p class="pt">五、办理部门：</p>

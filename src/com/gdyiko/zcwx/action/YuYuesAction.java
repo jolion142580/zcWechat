@@ -9,7 +9,9 @@ import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.gdyiko.zcwx.service.BlackWhiteListService;
 import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
@@ -42,7 +44,7 @@ import com.opensymphony.xwork2.ActionContext;
         //未绑定，不允许预约
         //@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx481172387f6fb7c5&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/ssUserInfo!userlist?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
 //	@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/relation.jsp?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
-        @Result(name = "notPermitted",type = "redirect",location = "/relation.jsp?type=yuyue"),
+        @Result(name = "notPermitted", type = "redirect", location = "/relation.jsp?type=yuyue"),
         //已绑定，允许预约
         @Result(name = "userYuYues", location = "/wdyy_2.jsp"),
         //已绑定，允许预约
@@ -94,6 +96,9 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
     @Resource(name = "interfaceService")
     InterfaceService ifs;
 
+    @Resource(name = "blackWhiteListService")
+    BlackWhiteListService blackWhiteListService;
+
     @Resource(name = "yuYuesService")
     @Override
     public void setGenericService(GenericService<YuYues, String> genericService) {
@@ -102,20 +107,25 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
     }
     /*
      *
-	 * 传入code，再获得openid，判断这个openid是否已绑定
-	 * @return
-	 * */
+     * 传入code，再获得openid，判断这个openid是否已绑定
+     * @return
+     * */
 
-//    预约确认
+    //    预约确认
     public String yuYues() {
 
 
         HttpServletRequest request = ServletActionContext.getRequest();
-
-        String paramVal = request.getParameter("paramVal");
+        String affairname = request.getParameter("affairname");
+       /* if(affairname == null || "null".equals(affairname)){
+            ActionContext.getContext().getSession().remove("businessName");
+        }else{
+            ActionContext.getContext().getSession().put("businessName",affairname);
+        }*/
+//        String paramVal = request.getParameter("paramVal"); //选择办理业务 -->统一综合业务不需要限制
 //		System.out.println("===paramVal=="+paramVal);
 
-        ActionContext.getContext().getSession().put("paramVal", paramVal);
+//        ActionContext.getContext().getSession().put("paramVal", paramVal);
 
 
         //校验是否已绑定
@@ -168,14 +178,14 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 		return "permitted";*/
 
 
-		OAuth oauth=new OAuth();
-		openid=oauth.getOppenid(code);
-		this.model.setOpenid(openid);
-		//todo openid 要换
+        OAuth oauth = new OAuth();
+        openid = oauth.getOppenid(code);
+        this.model.setOpenid(openid);
+        //todo openid 要换
 //        String openid = "2222";
         //System.out.println("---openid---"+openid);
         //bymao
-		SsUserInfo ssUserInfo = ssUserInfoService.findById(this.model.getOpenid());
+        SsUserInfo ssUserInfo = ssUserInfoService.findById(this.model.getOpenid());
 //        SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
         //System.out.println("----ssUserInfo---"+ssUserInfo.getName());
         if (ssUserInfo == null) {
@@ -185,6 +195,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
         this.model.setName(ssUserInfo.getName());
         this.model.setIdcard(ssUserInfo.getIdCard());
         this.model.setPhone(ssUserInfo.getPhone());
+        this.model.setBusinessName("null".equals(affairname) ? "" : affairname);
 
         return "permitted";
     }
@@ -209,39 +220,52 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
         try {
             String result = "";
-            String idCard = this.model.getIdcard();
-            HttpContent httpContent = new HttpContent();
+            //查看黑白名单
+            JSONObject json = blackWhiteListService.check(model);
+            String flag = json.get("flag").toString();
+//            String forever = json.getString("forever");
+            String forever = json.get("forever").toString();
+            if ("1".equals(flag)) {
+                result = yuYuesService.saveYuYues(this.model);
+            } else if ("1".equals(forever) && "0".equals(flag)) {
+                //永久黑名单
+                result = "{\"msg\":\"您在黑名单中，不能使用预约功能！\"}";
+            } else {
+                //今年进入黑名单
+                result = "{\"msg\":\"您在一年内超过3次失约，被限制使用预约功能！\"}";
+            }
+
+//            String idCard = this.model.getIdcard();
+//            HttpContent httpContent = new HttpContent();
             //黑名单：
             //是,返回1；
             //条件错误,返回2；
             //不是,返回3;
             //报错,返回错误信息;
-            String blackContent = httpContent.getHttpContent("http://19.127.14.204:8080/pjcms/BlackList!hasBlackListNow.action?idCard=" + idCard, "", "", "POST");
+//            String blackContent = httpContent.getHttpContent("http://19.127.14.204:8080/pjcms/BlackList!hasBlackListNow.action?idCard=" + idCard, "", "", "POST");
             //String blackContent = httpContent.getHttpContent("http://192.168.1.35:8088/pjcms/BlackList!hasBlackListNow.action?idCard="+idCard, "", "", "POST");
-             /*
-			 * 白名单
-			 * 是,返回1;
-			 * idCard为空,返回2;
-			 * 不是,返回3;
-			 * 报错,返回错误信息;
-               */
+            /*
+             * 白名单
+             * 是,返回1;
+             * idCard为空,返回2;
+             * 不是,返回3;
+             * 报错,返回错误信息;
+             */
 
-            String whiteContent = httpContent.getHttpContent("http://19.127.14.204:8080/pjcms/WhiteList!hasWhiteList.action?idCard=" + idCard, "", "", "POST");
+//            String whiteContent = httpContent.getHttpContent("http://19.127.14.204:8080/pjcms/WhiteList!hasWhiteList.action?idCard=" + idCard, "", "", "POST");
             //String whiteContent = httpContent.getHttpContent("http://192.168.1.35:8088/pjcms/WhiteList!hasWhiteList.action?idCard="+idCard, "", "", "POST");
 //			System.out.println(BlackContent);
-            JSONObject joBlack = new JSONObject(blackContent);
-            JSONObject joWhite = new JSONObject(whiteContent);
-            //System.out.println("============"+joBlack.getString("flag"));
-            if ("1".equals(joWhite.getString("flag"))) {
-                result = yuYuesService.saveYuYues(this.model);
-            }
-
-            if ("1".equals(joBlack.getString("flag")) && "3".equals(joWhite.getString("flag"))) {
-                //System.out.println(idCard+"是黑名单");
-                result = "{\"msg\":\"您在一年内超过3次失约，被限制使用预约功能！\"}";
-            } else {
-                result = yuYuesService.saveYuYues(this.model);
-            }
+//            JSONObject joBlack = new JSONObject(blackContent);
+//            JSONObject joWhite = new JSONObject(whiteContent);
+//            if ("1".equals(joWhite.getString("flag"))) {
+//                result = yuYuesService.saveYuYues(this.model);
+//            }
+//            if ("1".equals(joBlack.getString("flag")) && "3".equals(joWhite.getString("flag"))) {
+            //System.out.println(idCard+"是黑名单");
+//                result = "{\"msg\":\"您在一年内超过3次失约，被限制使用预约功能！\"}";
+//            } else {
+//                result = yuYuesService.saveYuYues(this.model);
+//            }
 
 //			System.out.println("result---->"+result);
             Struts2Utils.renderText(result);
@@ -256,7 +280,8 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
     //通过日期获得剩余号数
     public String getCount() {
         //System.out.println("-=-==weight-="+this.model.getWeight());
-        String result = yuYuesService.getCount(this.model.getStreet(), this.model.getYdate(), businessType, this.model.getWeight());
+//        String result = yuYuesService.getCount(this.model.getStreet(), this.model.getYdate(), businessType, this.model.getWeight());
+        String result = yuYuesService.getCount(this.model.getStreet(), this.model.getYdate());
 //		System.out.println("result---->"+result);
         Struts2Utils.renderText(result);
         return null;
@@ -265,6 +290,8 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
     //取消预约
     public String cancelYuYue() {
+        String result = yuYuesService.cancelYuYue(model);
+        Struts2Utils.renderText(result);
         /*String result = "";
         String s_time = this.model.getYdate() + " " + this.model.getYstime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -287,10 +314,10 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
         }
 
 
-		System.out.println("result---->"+result);
+        System.out.println("result---->" + result);
         Struts2Utils.renderText(result);
         return null;*/
-        String appointId=this.model.getNo();
+      /*  String appointId=this.model.getNo();
         String url = "http://192.168.1.207:8089/cancelAppointment?appointId="+appointId;
         HttpContent httpContent = new HttpContent();
         try {
@@ -299,7 +326,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
 
 
         return null;
@@ -311,13 +338,16 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
     public String userYuYuesJson() {
         //System.out.println("---yuyueListOpenid---"+this.model.getOpenid());
         //this.model.setOpenid("ovh5dxGh-9EXBe-fFYD5IU1fSW4k");
-       /* String result = yuYuesService.yuYueList(this.model.getOpenid());
-		System.out.println("result---->"+result);
-        Struts2Utils.renderText(result);*/
+        if (this.model.getOpenid().equals("")) {
+            this.model.setOpenid("oxFMm1hm4FmIDGvwIeRJk7iA-D3A");
+        }
+        String result = yuYuesService.yuYueList(this.model.getOpenid());
+        System.out.println("result---->" + result);
+        Struts2Utils.renderText(result);
 
         //todo openid要换
 //        String openid = "2222";
-        String openid =this.model.getOpenid();
+/*        String openid =this.model.getOpenid();
         SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
         if (ssUserInfo != null) {
             String idCard = ssUserInfo.getIdCard();
@@ -329,7 +359,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
 
         return null;
@@ -337,16 +367,16 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
     //获得单个预约的详细信息(返回json字符串)
     public String singleYuYueJson() {
-        String no =this.model.getNo();
-        String url = "http://192.168.1.207:8089/queryAppointmentByappointmentId?APPOINTMENT_ID="+no;
-       /* String result = yuYuesService.singleYuYue(this.model);
-		System.out.println("result---->"+result);
-        Struts2Utils.renderText(result);*/
-        HttpContent httpContent = new HttpContent();
+//        String no =this.model.getNo();
+//        String url = "http://192.168.1.207:8089/queryAppointmentByappointmentId?APPOINTMENT_ID="+no;
+        String result = yuYuesService.singleYuYue(this.model);
+//        System.out.println("result---->" + result);
+        Struts2Utils.renderText(result);
+//        HttpContent httpContent = new HttpContent();
         try {
-            String content = httpContent.getHttpContent(url, "", "", "post");
-            Struts2Utils.renderText(content);
-        } catch (JSONException e) {
+//            String content = httpContent.getHttpContent(url, "", "", "post");
+//            Struts2Utils.renderText(content);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -365,7 +395,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
     }
 
-    //查询预约时间段剩余
+    //查询预约时间段剩余 停用
     public String queryAppointmentQueue() {
 //        String url = String.format("http://192.168.1.207:8089/queryAppointmentQueue?officeId=%d &appointment_type=%d &appointDate=%d &appointType=%d", officeId, appointment_type, appointDate, appointType);
         String url = "http://192.168.1.207:8089/queryAppointmentQueue?officeId=" + officeId + "&appointment_type=" + appointmentType + "&appointDate=" + appointDate + "&appointType=" + appointType;

@@ -81,8 +81,8 @@ public class InterfaceServiceImpl implements InterfaceService {
 			data.put("s_time", s_time);
 			data.put("e_time", e_time);
 			data.put("openid", openid);
-			data.put("businessName", businessName);
-			data.put("weight", weight);
+//			data.put("businessName", businessName);
+//			data.put("weight", weight);
 			
 			//组合参数
 			JSONObject obj = new JSONObject();
@@ -203,7 +203,8 @@ public class InterfaceServiceImpl implements InterfaceService {
 	}
 
 	//网点预约情况查询接口
-	public String onlineQuery(String street, String date, String s_time, String e_time,String businessType,int weight) {
+//	public String onlineQuery(String street, String date, String s_time, String e_time,String businessType,int weight) {
+	public String onlineQuery(String street, String date, String s_time, String e_time) {
 		try{
 			JSONObject header = new JSONObject();
 			//请求头
@@ -219,8 +220,8 @@ public class InterfaceServiceImpl implements InterfaceService {
 			data.put("date", date);
 			data.put("s_time", s_time);
 			data.put("e_time", e_time);
-			data.put("businessType", businessType);
-			data.put("weight", weight);
+//			data.put("businessType", businessType);
+//			data.put("weight", weight);
 			
 			//组合参数
 			JSONObject obj = new JSONObject();

@@ -244,7 +244,7 @@
                     <p id="condition"></p>
                     <p class="pt">三、申请材料：</p>
                     <p id="material"></p>
-                    <p class="pt">四、办理程序：</p>
+                    <p class="pt">四、办理流程：</p>
                     <p id="procedures"></p>
                     <p class="pt">五、办理部门：</p>
                     <p id="xrndomu"></p>

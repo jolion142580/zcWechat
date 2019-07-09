@@ -27,12 +27,14 @@
     <link rel="stylesheet" href="lib/weui.min.css" type="text/css"/>
     <link rel="stylesheet" href="css/guide-style.css" type="text/css"/>
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
     <style type="text/css">
         .main_color {
             color: #911edb;
         }
-        .main_color2{
-            color:#ffffff;
+
+        .main_color2 {
+            color: #ffffff;
         }
 
         .weui-cell__bd .number {
@@ -98,33 +100,39 @@
 <body>
 <div class="page-group">
     <div class="page page-current">
-       <%-- <header class="bar bar-nav"
-                style="background-image:url(images/bar_nav_bg_purple.png);background-size: contain;background-repeat: repeat-x;background-color:#FFF">
-            <img src="images/bar_nav_left_purple.png" style="position: absolute;left: -0.5rem;height: 2.2rem;"/>
+        <%-- <header class="bar bar-nav"
+                 style="background-image:url(images/bar_nav_bg_purple.png);background-size: contain;background-repeat: repeat-x;background-color:#FFF">
+             <img src="images/bar_nav_left_purple.png" style="position: absolute;left: -0.5rem;height: 2.2rem;"/>
+             <a class="button button-link button-nav pull-left" href="javascript:;"
+                onclick="javascript:history.back(-1);">
+                 <div class="icon icon-left main_color"></div>
+             </a>
+             <h1 class="title" style="color:#911edb">办事预约</h1></header>
+         <div class="header-bar" style="background-color: #911edb">
+             <div>PERSONAL INFORMATION REGISTRATION</div>
+         </div>--%>
+        <header class="bar bar-nav"
+                style="background-size: contain;background-repeat: repeat-x;background-color:#0490E4">
             <a class="button button-link button-nav pull-left" href="javascript:;"
                onclick="javascript:history.back(-1);">
-                <div class="icon icon-left main_color"></div>
-            </a>
-            <h1 class="title" style="color:#911edb">办事预约</h1></header>
-        <div class="header-bar" style="background-color: #911edb">
-            <div>PERSONAL INFORMATION REGISTRATION</div>
-        </div>--%>
-           <header class="bar bar-nav"
-                   style="background-size: contain;background-repeat: repeat-x;background-color:#0490E4">
-               <a class="button button-link button-nav pull-left" href="javascript:;"
-                  onclick="javascript:history.back(-1);">
-                   <span class="icon icon-left main_color2" ></span></a>
-               <h1 class="title main_color2">办事预约</h1>
-           </header>
+                <span class="icon icon-left main_color2"></span></a>
+            <h1 class="title main_color2">办事预约</h1>
+        </header>
         <div class="content">
             <form id="accountform" action="" method="post" onsubmit="return checkYanzhengma()">
                 <input type="hidden" name="ystime" id="ystime" value="">
                 <input type="hidden" name="yetime" id="yetime" value="">
-                <!-- <input type="hidden" name="street" id="street" value="0"> -->
+                <%--镇街编号：3 （张槎街道办事处）--%>
+                <input type="hidden" name="street" id="street" value="3">
+                <%--权重--%>
+                <input type="hidden" name="weight" id="weight" value="2">
+                <%--事项名称--%>
+                <%--<input type="hidden" name="businessName" id="businessName" value="综合业务">--%>
+
                 <input type="hidden" name="stype" id="stype" value="ZH001">
 
                 <input type="hidden" name="openid" id="openid" value='<s:property value="openid"/>'>
-                <div class="weui-cells__title">事项名称：
+                <div class="weui-cells__title"><%--事项名称：--%>
                     <span style="color:#f39900">综合业务</span></div>
                 <div class="weui-cells weui-cells_form">
                     <div class="weui-cell">
@@ -155,6 +163,17 @@
                         <div class="weui-cell__bd">
                             <input name="phone" class="weui-input" readonly="readonly"
                                    id="phone" type="text" placeholder="请输入联系电话" value='<s:property value="phone"/>'>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label for="" class="weui-label">预约事项：</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" id="businessName" name="businessName" onclick="skipAffairname()"
+                                   placeholder="请选择办理事项" type="text" value='<s:property value="businessName"/>'
+                                   readonly="readonly">
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -213,7 +232,7 @@
                             <i class="weui-icon-checked"></i>
                         </div>
                         <div class="weui-cell__bd">
-                            <span>10:30-11:30&nbsp;&nbsp;剩余预约名额<span id="time2" class="number">0</span></span>
+                            <span>10:30-11:30&nbsp;&nbsp;剩余预约名额 <span id="time2" class="number">0</span></span>
                         </div>
                     </label>
 
@@ -223,7 +242,7 @@
                             <i class="weui-icon-checked"></i>
                         </div>
                         <div class="weui-cell__bd">
-                            <span>14:30-15:30&nbsp;&nbsp;剩余预约名额<span id="time3" class="number">0</span></span>
+                            <span>14:30-15:30&nbsp;&nbsp;剩余预约名额 <span id="time3" class="number">0</span></span>
                         </div>
                     </label>
 
@@ -233,7 +252,7 @@
                             <i class="weui-icon-checked"></i>
                         </div>
                         <div class="weui-cell__bd">
-                            <span>15:30-16:30&nbsp;&nbsp;剩余预约名额<span id="time4" class="number">0</span></span>
+                            <span>15:30-16:30&nbsp;&nbsp;剩余预约名额 <span id="time4" class="number">0</span></span>
                         </div>
                     </label>
 
@@ -264,11 +283,11 @@
                        style="background-color: #911edb">提交并保存</a>
                 </div>
             </form>
-           <%-- <div class=" foot fixPosition width100 bottomPosition iff">
-                <div align="center" style="line-height:25px;">
-                    <span style='font-size:12px;'>版权所有：三水区行政服务中心&nbsp;&nbsp;技术支持：南邮英科</span>
-                </div>
-            </div>--%>
+            <%-- <div class=" foot fixPosition width100 bottomPosition iff">
+                 <div align="center" style="line-height:25px;">
+                     <span style='font-size:12px;'>版权所有：三水区行政服务中心&nbsp;&nbsp;技术支持：南邮英科</span>
+                 </div>
+             </div>--%>
         </div>
 
     </div>
@@ -338,7 +357,7 @@
 
     //通过日期获得剩余号数
     function getCount(ydate) {
-
+        var street = $('#street').val();
         /*  var street = $('#street').val();
           if (street == "" || street == null) {
               alert("请选择预约地点！");
@@ -354,7 +373,7 @@
             $('#time5').html(0);
             return;
         }
-        /*$.ajax({
+        $.ajax({
             url: 'YuYues!getCount',
             data: {
                 ydate: ydate,
@@ -364,25 +383,30 @@
             success: function (r) {
                 //alert(r);
                 var obj = JSON.parse(r);
-                $('#time0').html(obj.time0);
-                $('#time1').html(obj.time1);
-                $('#time2').html(obj.time2);
-                $('#time3').html(obj.time3);
-                $('#time4').html(obj.time4);
-                $('#time5').html(obj.time5);
+                $('#time0').html(obj.time0 == "" ? 1 : obj.time0);
+                $('#time1').html(obj.time1 == "" ? 1 : obj.time1);
+                $('#time2').html(obj.time2 == "" ? 1 : obj.time2);
+                $('#time3').html(obj.time3 == "" ? 1 : obj.time3);
+                $('#time4').html(obj.time4 == "" ? 1 : obj.time4);
+                $('#time5').html(obj.time5 == "" ? 1 : obj.time5);
             },
             error: function (e) {
 
             }
-        });*/
+        });
         //地址
-        $.ajax({
-            url: '${path}YuYues!queryAppointmentQueue',
+        /*  $.ajax({
+              url: '
+
+
+
+        ${path}YuYues!queryAppointmentQueue',
             data: {
                 appointDate: ydate,
                 officeId: "CC00Z03C0001",
                 appointType: "G",
-                appointment_type: "ZH001"
+                // appointment_type: "ZH001"
+                appointmentType: "ZH001"
 //                street: street
             },
             type: 'POST',
@@ -397,21 +421,18 @@
             error: function (e) {
 
             }
-        });
+        });*/
     }
 
     //保存
     function save() {
         var radio = $("input[name='radio']:checked").val();
         var ydate = $("#ydate").val();
-
-        /*var street=$('#street').val();
-        var streetText = $("#street option:selected").text();
-
-        if(street==""||street==null){
-            alert("请选择预约地点！");
+        var businessName = $("#businessName").val();
+        if (businessName == "" || businessName == null) {
+            alert("请选择办理事项");
             return;
-        }*/
+        }
         //必须选择预约时间
         if (ydate == "" || ydate == null) {
             alert("请选择预约时间日期");
@@ -464,33 +485,34 @@
             $("#ystime").val("16:30");
             $("#yetime").val("17:30");
         }
-        var officeId = "CC00Z03C0001";
-        //日期
-        var appointDate = ydate;
-        //时间
-        var v_time=$("#ystime").val()+"-"+ $("#yetime").val();
-        var people_name = $("#name").val();
-        var people_mobile = $("#phone").val();
-        var people_cardid = $("#idcard").val();
-        var v_ref_machinecode="ZH";
-        var openid =$("#openid").val();
-        var c_source="ZXWZ";
-        var v_ref_lowermachinecode='ZH001';
+        /*   var officeId = "CC00Z03C0001";
+          //日期
+           var appointDate = ydate;
+           //时间
+           var v_time = $("#ystime").val() + "-" + $("#yetime").val();
+           var people_name = $("#name").val();
+           var people_mobile = $("#phone").val();
+           var people_cardid = $("#idcard").val();
+           var v_ref_machinecode = "ZH";
+           var openid = $("#openid").val();
+           var c_source = "ZXWZ";
+           var v_ref_lowermachinecode = 'ZH001';*/
         /*var openid*/
 
-        var appointMsg = {};
-        appointMsg.officeId = officeId;
-        appointMsg.appointDate = appointDate;
-        appointMsg.v_time = v_time;
-        appointMsg.people_name=people_name;
-        appointMsg.people_mobile=people_mobile;
-        appointMsg.people_cardid=people_cardid;
-        appointMsg.v_ref_machinecode=v_ref_machinecode;
-        appointMsg.c_source=c_source;
-        appointMsg.v_ref_lowermachinecode=v_ref_lowermachinecode;
-        appointMsg.weixinhao=openid;
-        console.log(JSON.stringify(appointMsg));
-        //alert($("#accountform").serialize());
+        /* var appointMsg = {};
+         appointMsg.officeId = officeId;
+         appointMsg.appointDate = appointDate;
+         appointMsg.v_time = v_time;
+         appointMsg.people_name = people_name;
+         appointMsg.people_mobile = people_mobile;
+         appointMsg.people_cardid = people_cardid;
+         appointMsg.v_ref_machinecode = v_ref_machinecode;
+         appointMsg.c_source = c_source;
+         appointMsg.v_ref_lowermachinecode = v_ref_lowermachinecode;
+         appointMsg.weixinhao = openid;*/
+        /*  console.log(JSON.stringify(appointMsg));
+          console.log($("#accountform").serialize());
+          alert($("#accountform").serialize());*/
         //校验验证码
         var vc = checkYanzhengma();
         if (!vc) {
@@ -502,53 +524,64 @@
         //ajax提交表单
         //地址
         $.ajax({
-            /*url: 'YuYues!saveYuYues',*/
-            url: '${path}YuYues!sendAppointment',
-            data: {appointMsg:JSON.stringify(appointMsg)},
+            url: 'YuYues!saveYuYues',
+            <%--url: '${path}YuYues!sendAppointment',--%>
+            // data: {appointMsg:JSON.stringify(appointMsg)},
+            data: $("#accountform").serialize(),
             type: "POST",
             success: function (r) {
                 var result = JSON.parse(r);
-
-                //console.log(result);
-                var str = '';
-                //alert(result.code);
-                if (result.r_code == 200) {
-                    str += "预约号:" + result.data.v_appointment_id + "\n";
-                    str += "预约日期：" +result.data.v_time+ "\n";
-                    str += result.r_msg;
+                if (result.code == 1) {
+                    var str = '';
+                    str += "预约号:" + result.booking_no + "\n";
+                    str += "预约日期：" + result.date + "\n";
+                    str += "时间段：" + result.s_time + "至" + result.e_time + "\n";
+                    str += "温馨提示：请带齐业务所需材料\n";
                     alert(str);
-                    /*$.ajax({
-                    url :'sendMessage!send',
-                    data:{Title:'预约成功提醒',
-                     Msg:"您好，"+$('#name').val()+"。\n\n"+
-                     "预约业务："+"综合业务\n"+
-                     "订单号："+result.booking_no+"\n"+
-                     "预约时间："+result.date+" "+result.s_time+"至"+result.e_time+"\n"+
-                     "预约受理点："+streetText+"\n"+
-                     "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。（若要取消预约请在《政服大厅》-《政门开敞·预约》-《预约记录》中进行取消）。预约后不前来办事，累积达3次将会列入黑名单，不能再使用预约功能。",
-                    MsgUrl:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaec78dd064e22ada&redirect_uri=http://zhengqiao.ss.gov.cn/ssWechat/wdyy_2.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect',
-                    openid:$("#openid").val() },
-                    type : "post",
-                    async : false,
-                    dataType : "json",
-                    error : function(XMLHttpRequest,textStatus,errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
-                    //alert("1--erro");
-                    },
-                    success : function(json, state) {
-                    alert(str);
-                        WeixinJSBridge.call('closeWindow');
-                    }
-            });*/
                     WeixinJSBridge.call('closeWindow');
                 } else {
-                    alert(result.r_msg);
+                    alert(result.msg);
                     reloadCode();//预约失败刷新验证码
                     $("#button1id").text("保存");
                     $("#button1id").attr("disabled", false);
                 }
+                /*    if (result.r_code == 200) {
+                        str += "预约号:" + result.data.v_appointment_id + "\n";
+                        str += "预约日期：" +result.data.v_time+ "\n";
+                        str += result.r_msg;
+                        alert(str);
+                        /!*$.ajax({
+                        url :'sendMessage!send',
+                        data:{Title:'预约成功提醒',
+                         Msg:"您好，"+$('#name').val()+"。\n\n"+
+                         "预约业务："+"综合业务\n"+
+                         "订单号："+result.booking_no+"\n"+
+                         "预约时间："+result.date+" "+result.s_time+"至"+result.e_time+"\n"+
+                         "预约受理点："+streetText+"\n"+
+                         "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。（若要取消预约请在《政服大厅》-《政门开敞·预约》-《预约记录》中进行取消）。预约后不前来办事，累积达3次将会列入黑名单，不能再使用预约功能。",
+                        MsgUrl:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaec78dd064e22ada&redirect_uri=http://zhengqiao.ss.gov.cn/ssWechat/wdyy_2.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect',
+                        openid:$("#openid").val() },
+                        type : "post",
+                        async : false,
+                        dataType : "json",
+                        error : function(XMLHttpRequest,textStatus,errorThrown) {
+                        alert(XMLHttpRequest.status);c
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                        //alert("1--erro");
+                        },
+                        success : function(json, state) {
+                        alert(str);
+                            WeixinJSBridge.call('closeWindow');
+                        }
+                });*!/
+                        WeixinJSBridge.call('closeWindow');
+                    } else {
+                        alert(result.r_msg);
+                        reloadCode();//预约失败刷新验证码
+                        $("#button1id").text("保存");
+                        $("#button1id").attr("disabled", false);
+                    }*/
             },
             error: function (e) {
                 alert("预约失败！请检查网络");
@@ -635,6 +668,11 @@
         } catch (e) {
 
         }
+    }
+</script>
+<script type="text/javascript">
+    function skipAffairname() {
+        window.location.href = weChat.WeChatDNSURL + "onlineApply!getAllAffairs";
     }
 </script>
 </html>

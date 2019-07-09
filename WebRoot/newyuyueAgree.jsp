@@ -8,7 +8,10 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%
+	String affairname = request.getParameter("affairname");
+//	System.out.println("预约业务："+affairname);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -116,7 +119,8 @@
 	    //添加 检测该用户是否有失约
 
 //		location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaec78dd064e22ada&redirect_uri=http://zhengqiao.ss.gov.cn/ssWechat/YuYues!yuYues&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"YuYues!yuYues&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+// 		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"YuYues!yuYues&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"YuYues!yuYues?affairname=<%=affairname%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
 	}
 </script>
 

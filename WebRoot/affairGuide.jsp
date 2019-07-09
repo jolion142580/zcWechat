@@ -99,19 +99,24 @@
                             <s:property value="ssAffairGuide.site" escape="false"/>
                         </s:else>
                     </p>
-                    <p class="bt">六、办结时限：</p>
+                    <p class="bt">六、办理流程：</p>
+                    <p>
+                        <s:property value="ssAffairGuide.procedures" escape="false"/>
+                    </p>
+                    <p class="bt">七、办结时限：</p>
                     <p>
                         <s:property value="ssAffairGuide.time" escape="false"/>
                     </p>
-                    <p class="bt">七、咨询查询：</p>
+                    <p class="bt">八、咨询查询：</p>
                     <p>
                         <s:property value="ssAffairGuide.inquire" escape="false"/>
                     </p>
-                    <p class="bt">八、收费标准（政策依据）：</p>
+                    <p class="bt">九、收费标准（政策依据）：</p>
                     <p>
-                        <s:property value="ssAffairGuide.charge" escape="false"/>
+                        <s:property value="ssAffairGuide.charge" escape="false"/><br/>
+                        <s:property value="ssAffairGuide.according" escape="false"/>
                     </p>
-                    <p class="bt">九、特别说明：</p>
+                    <p class="bt">十、特别说明：</p>
                     <p>
                         <s:property value="ssAffairGuide.sepcialversion" escape="false"/>
                     </p>
@@ -119,12 +124,12 @@
             </article>
         </div>
         <div class="weui-tabbar">
-            <%--<a href="" class="weui-tabbar__item">--%>
-                <%--<div class="weui-tabbar__icon">--%>
-                    <%--<img src="icon/icon (23).png" alt=""/>--%>
-                <%--</div>--%>
-                <%--<p class="weui-tabbar__label" style="margin:0px;color:#35af98">网上预约</p>--%>
-            <%--</a>--%>
+            <a id="yuyue_href_SET" href="" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="icon/icon (23).png" alt=""/>
+                </div>
+                <p class="weui-tabbar__label" style="margin:0px;color:#35af98">网上预约</p>
+            </a>
             <s:if test="#ssAffairGuide.isonline=='true'">
                 <%-- <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />_onlineApply&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect" class="weui-tabbar__item"> --%>
                 <%-- <a href="http://localhost:8083/zcWechat/ssAffairsObjectInfo!findByAffairId?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />" class="weui-tabbar__item"> --%>
@@ -144,8 +149,11 @@
 </html>
 <script>
     $(function () {
-        var HREF = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'ssAffairsObjectInfo!findByAffairId?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-        $("#a_href_SET").attr("href",HREF);
+        var HREF = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + weChat.APPID + '&redirect_uri=' + weChat.WeChatDNSURL + 'ssAffairsObjectInfo!findByAffairId?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+        $("#a_href_SET").attr("href", HREF);
+        var affairname = "<s:property value="ssAffairGuide.affairname" escape="false" />";
+        var href = weChat.WeChatDNSURL + "newyuyueAgree.jsp?affairname=" + affairname;
+        $("#yuyue_href_SET").attr("href", href);
     })
 
 </script>

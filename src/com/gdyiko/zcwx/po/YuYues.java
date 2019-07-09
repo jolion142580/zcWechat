@@ -13,316 +13,319 @@ import com.gdyiko.tool.po.GenericPo;
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @Table(name = "YUYUES")
 public class YuYues extends GenericPo implements java.io.Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9124526084625803232L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) 
-	@Column
-	private String id;
-	@Column
-	private String name;
-	@Column
-	private String idcard;
-	@Column
-	private String phone;
-	@Column
-	private String no;
-	@Column
-	private String street;
-	@Column
-	private String state;
-	@Column
-	private String stype;
-	@Column
-	private String terminal;
-	@Column
-	private String ystime;
-	@Column
-	private String yetime;
-	@Column
-	private String ydate;
-	@Column
-	private String cdate;
-	@Column
-	private String qdate;
-	@Column
-	private String timecode;
-	@Column
-	private String openid;
-	@Column
-	private Integer weight;
-	@Column
-	private String businessName;
-	@Column
-	private String appraiseResult;
-	@Column
-	private String appraiseAdvice;
-	@Column
-	private String queueNum;
-	@Column
-	private String USING;
-	@Column
-	private String allstart;
-	@Column
-	private String glstart;
-	@Column
-	private String fwstart;
-	@Column
-	private String tdstart;
-	@Column
-	private String UseAdvice;
-	@Column
-	private String OtherAdvice;
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9124526084625803232L;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+    @Column
+    private String name;
+    @Column
+    private String idcard;
+    @Column
+    private String phone;
+    @Column
+    private String no;
+    @Column
+    private String street;
+    @Column
+    private String state;
+    @Column
+    private String stype;
+    @Column
+    private String terminal;
+    @Column
+    private String ystime;
+    @Column
+    private String yetime;
+    @Column
+    private String ydate;
+    @Column
+    private String cdate;
+    @Column
+    private String qdate;
+    @Column
+    private String timecode;
+    @Column
+    private String openid;
+    @Column
+    private Integer weight;
+    @Column
+    private String businessName;
+    @Column
+    private String appraiseResult;
+    @Column
+    private String appraiseAdvice;
+    @Column
+    private String queueNum;
+    @Column
+    private String USING;
+    @Column
+    private String allstart;
+    @Column
+    private String glstart;
+    @Column
+    private String fwstart;
+    @Column
+    private String tdstart;
+    @Column
+    private String UseAdvice;
+    @Column
+    private String OtherAdvice;
 
-	public String getIdcard() {
-		return idcard;
-	}
+    //	操作人员
+    @Column(name = "operator")
+    private String operator;
 
-	public void setIdcard(String idcard) {
-		this.idcard = idcard;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getNo() {
-		return no;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setNo(String no) {
-		this.no = no;
-	}
+    public String getIdcard() {
+        return idcard;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public String getNo() {
+        return no;
+    }
 
-	public String getStype() {
-		return stype;
-	}
+    public void setNo(String no) {
+        this.no = no;
+    }
 
-	public void setStype(String stype) {
-		this.stype = stype;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public String getTerminal() {
-		return terminal;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public void setTerminal(String terminal) {
-		this.terminal = terminal;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public String getYstime() {
-		return ystime;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public void setYstime(String ystime) {
-		this.ystime = ystime;
-	}
+    public String getStype() {
+        return stype;
+    }
 
-	public String getYetime() {
-		return yetime;
-	}
+    public void setStype(String stype) {
+        this.stype = stype;
+    }
 
-	public void setYetime(String yetime) {
-		this.yetime = yetime;
-	}
+    public String getTerminal() {
+        return terminal;
+    }
 
-	public String getYdate() {
-		return ydate;
-	}
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
+    }
 
-	public void setYdate(String ydate) {
-		this.ydate = ydate;
-	}
+    public String getYstime() {
+        return ystime;
+    }
 
-	public String getCdate() {
-		return cdate;
-	}
+    public void setYstime(String ystime) {
+        this.ystime = ystime;
+    }
 
-	public void setCdate(String cdate) {
-		this.cdate = cdate;
-	}
+    public String getYetime() {
+        return yetime;
+    }
 
-	public String getQdate() {
-		return qdate;
-	}
+    public void setYetime(String yetime) {
+        this.yetime = yetime;
+    }
 
-	public void setQdate(String qdate) {
-		this.qdate = qdate;
-	}
+    public String getYdate() {
+        return ydate;
+    }
 
-	public String getTimecode() {
-		return timecode;
-	}
+    public void setYdate(String ydate) {
+        this.ydate = ydate;
+    }
 
-	public void setTimecode(String timecode) {
-		this.timecode = timecode;
-	}
+    public String getCdate() {
+        return cdate;
+    }
 
-	public String getOpenid() {
-		return openid;
-	}
+    public void setCdate(String cdate) {
+        this.cdate = cdate;
+    }
 
-	public void setOpenid(String openid) {
-		this.openid = openid;
-	}
-	
-	public Integer getWeight() {
-		return weight;
-	}
+    public String getQdate() {
+        return qdate;
+    }
 
-	public void setWeight(Integer weight) {
-		this.weight = weight;
-	}
+    public void setQdate(String qdate) {
+        this.qdate = qdate;
+    }
 
-	public String getBusinessName() {
-		return businessName;
-	}
+    public String getTimecode() {
+        return timecode;
+    }
 
-	public void setBusinessName(String businessName) {
-		this.businessName = businessName;
-	}
+    public void setTimecode(String timecode) {
+        this.timecode = timecode;
+    }
 
-	@Override
-	public String getCreator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getOpenid() {
+        return openid;
+    }
 
-	@Override
-	public void setCreator(String id) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
-	@Override
-	public String getCreattime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Integer getWeight() {
+        return weight;
+    }
 
-	@Override
-	public void setCreattime(String creattime) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
 
-	public String getAppraiseResult() {
-		return appraiseResult;
-	}
+    public String getBusinessName() {
+        return businessName;
+    }
 
-	public void setAppraiseResult(String appraiseResult) {
-		this.appraiseResult = appraiseResult;
-	}
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
 
-	public String getAppraiseAdvice() {
-		return appraiseAdvice;
-	}
+    @Override
+    public String getCreator() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public void setAppraiseAdvice(String appraiseAdvice) {
-		this.appraiseAdvice = appraiseAdvice;
-	}
+    @Override
+    public void setCreator(String id) {
+        // TODO Auto-generated method stub
 
-	public String getQueueNum() {
-		return queueNum;
-	}
+    }
 
-	public void setQueueNum(String queueNum) {
-		this.queueNum = queueNum;
-	}
+    @Override
+    public String getCreattime() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getUSING() {
-		return USING;
-	}
+    @Override
+    public void setCreattime(String creattime) {
+        // TODO Auto-generated method stub
 
-	public void setUSING(String uSING) {
-		USING = uSING;
-	}
+    }
 
-	public String getAllstart() {
-		return allstart;
-	}
+    public String getAppraiseResult() {
+        return appraiseResult;
+    }
 
-	public void setAllstart(String allstart) {
-		this.allstart = allstart;
-	}
+    public void setAppraiseResult(String appraiseResult) {
+        this.appraiseResult = appraiseResult;
+    }
 
-	public String getGlstart() {
-		return glstart;
-	}
+    public String getAppraiseAdvice() {
+        return appraiseAdvice;
+    }
 
-	public void setGlstart(String glstart) {
-		this.glstart = glstart;
-	}
+    public void setAppraiseAdvice(String appraiseAdvice) {
+        this.appraiseAdvice = appraiseAdvice;
+    }
 
-	public String getFwstart() {
-		return fwstart;
-	}
+    public String getQueueNum() {
+        return queueNum;
+    }
 
-	public void setFwstart(String fwstart) {
-		this.fwstart = fwstart;
-	}
+    public void setQueueNum(String queueNum) {
+        this.queueNum = queueNum;
+    }
 
-	public String getTdstart() {
-		return tdstart;
-	}
+    public String getUSING() {
+        return USING;
+    }
 
-	public void setTdstart(String tdstart) {
-		this.tdstart = tdstart;
-	}
+    public void setUSING(String uSING) {
+        USING = uSING;
+    }
 
-	public String getUseAdvice() {
-		return UseAdvice;
-	}
+    public String getAllstart() {
+        return allstart;
+    }
 
-	public void setUseAdvice(String useAdvice) {
-		UseAdvice = useAdvice;
-	}
+    public void setAllstart(String allstart) {
+        this.allstart = allstart;
+    }
 
-	public String getOtherAdvice() {
-		return OtherAdvice;
-	}
+    public String getGlstart() {
+        return glstart;
+    }
 
-	public void setOtherAdvice(String otherAdvice) {
-		OtherAdvice = otherAdvice;
-	}
-	
+    public void setGlstart(String glstart) {
+        this.glstart = glstart;
+    }
+
+    public String getFwstart() {
+        return fwstart;
+    }
+
+    public void setFwstart(String fwstart) {
+        this.fwstart = fwstart;
+    }
+
+    public String getTdstart() {
+        return tdstart;
+    }
+
+    public void setTdstart(String tdstart) {
+        this.tdstart = tdstart;
+    }
+
+    public String getUseAdvice() {
+        return UseAdvice;
+    }
+
+    public void setUseAdvice(String useAdvice) {
+        UseAdvice = useAdvice;
+    }
+
+    public String getOtherAdvice() {
+        return OtherAdvice;
+    }
+
+    public void setOtherAdvice(String otherAdvice) {
+        OtherAdvice = otherAdvice;
+    }
+
 }

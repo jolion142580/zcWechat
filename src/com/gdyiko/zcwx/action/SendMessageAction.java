@@ -63,7 +63,8 @@ public class SendMessageAction extends ActionSupport {
 	public String textmsg(){
 		//调用接口，并获取返回值
 		CustomMessageAPI api = new CustomMessageAPI();
-		String result = api.sendTextMessageToUser(this.getOpenid(), this.getMsg());
+//		String result = api.sendTextMessageToUser(this.getOpenid(), this.getMsg());
+		String result = api.sendTextMessageToUser(this.getMsg(),this.getOpenid() );
 //		System.out.println("......"+result);
 		Struts2Utils.renderText(result, new String[0]);
 		return null;

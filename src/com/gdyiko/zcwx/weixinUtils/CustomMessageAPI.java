@@ -29,7 +29,7 @@ public class CustomMessageAPI {
     	String path = getClass().getResource("/").toString();
     	
        String json = "{\"touser\": \""+toUser+"\",\"msgtype\": \"text\", \"text\": {\"content\": \""+content+"\"}}";
-       
+//         System.out.println("sendTextMessageToUser----------->:"+json);
        String result="";
        
        try {

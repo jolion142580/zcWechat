@@ -16,7 +16,8 @@ public interface InterfaceService {
 	//上传街镇排队情况查询接口
 	public String townQueueQuery(String street,String queues);
 	//网点预约情况查询接口
-	public String onlineQuery(String street,String date,String s_time,String e_time,String businessType,int weight);
+//	public String onlineQuery(String street,String date,String s_time,String e_time,String businessType,int weight);
+	public String onlineQuery(String street,String date,String s_time,String e_time);
 	//取消预约接口
 	public String cancelYuYues(String booking_no,String id_card);
 	//字典查询接口
