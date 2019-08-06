@@ -9,6 +9,7 @@ import com.gdyiko.zcwx.po.resp.Token;
 import com.gdyiko.zcwx.service.FileInfoService;
 import com.gdyiko.zcwx.service.OnlineApplyService;
 import com.gdyiko.zcwx.service.SsUserInfoService;
+import com.gdyiko.zcwx.weixinUtils.CookieUtil;
 import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import com.opensymphony.xwork2.ActionContext;
 import net.sf.json.JSONObject;
@@ -125,6 +126,7 @@ public class WebToDoAction extends BaseAction<SsUserInfo, String> {
     public String logout() {
         String result = vail();
         clearSession();
+        CookieUtil.removeCookie("user");
         return result;
     }
 
@@ -196,7 +198,7 @@ public class WebToDoAction extends BaseAction<SsUserInfo, String> {
                 String uuid = (String) session.getAttribute("uuid");
                 openid = (String) ActionContext.getContext().getApplication().get(uuid);
                 if (openid != null && !openid.equals("")) {
-                    result = true;
+                    result = true;//有效
                 }
             }
         }
