@@ -1,25 +1,31 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="com.gdyiko.zcwx.weixinUtils.WxJSSignUtil" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="com.gdyiko.zcwx.weixinUtils.TokenHepl" %>
+
+<%@ page import="com.gdyiko.zcwx.po.SsUserInfo" %>
+
 <%
     String path = request.getContextPath();
    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
 
-%>
-<%
-    //    String token = TokenHepl.getaccessToken().getAccessToken();
-//    String jsapi_ticket = TokenHepl.jsapi_ticket;
-//    String url = WxJSSignUtil.getUrl();
-//    System.out.println("==url==" + url);
-//    System.out.println("jsapi_ticket==" + jsapi_ticket);
-//    Map map = WxJSSignUtil.sign(jsapi_ticket, url);
     String affairid = (String) session.getAttribute("affairid");
     String objindex = (String) session.getAttribute("objindex");
-    String openid = (String) session.getAttribute("openid");
+    SsUserInfo user = (SsUserInfo) session.getAttribute("user");
+    String openid = user.getId();
     String onlineApplyId = (String) session.getAttribute("onlineApplyId");
+
+    //修改附件后清空onlineApplyId,否则申请不需要填表事项时会读取上一个事项内容
+    //session.removeAttribute("onlineApplyId");
+	/* if(this.model.getOnlineApplyId()==null){
+				this.model.setOnlineApplyId("onlineApplyId");//申请人办理事项
+	} */
+	/* if(affairid.equals(""))affairid="affairid";
+	if(openid.equals(""))openid="openid";
+	if(onlineApplyId.equals(""))onlineApplyId="onlineApplyId"; */
+	/* String openid="1111";
+	String code="22222";
+	String type="33333"; */
+    //System.out.println("----aaaaa1123123affairid---" + affairid + "=====" + onlineApplyId);
 %>
 
 <!DOCTYPE html>
@@ -32,21 +38,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>张槎街道行政服务中心</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
-    <%--<link rel="shortcut icon" href="/favicon.ico"/>--%>
+    <link rel="shortcut icon" href="/favicon.ico"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <link rel="stylesheet" href="css/sm-extend.min.css" type="text/css"/>
-    <link rel="stylesheet" href="css/sm.min.css" type="text/css"/>
-    <link rel="stylesheet" href="css/jquery-weui.min.css" type="text/css"/>
-    <link rel="stylesheet" href="lib/weui.min.css" type="text/css"/>
-    <link rel="stylesheet" href="css/guide-style.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/sm-extend.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/sm.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/jquery-weui.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/lib/weui.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/guide-style.css" type="text/css"/>
 
-    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript" src="js/jquery-weui.js"></script>
-    <script type="text/javascript" src="lib/zepto.js"></script>
-    <script type="text/javascript" src="js/config.js"></script>
-    <%--<script src="scripts/window.js" type="text/javascript"></script>--%>
+    <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="/js/jquery-weui.js"></script>
+    <script type="text/javascript" src="/lib/zepto.js"></script>
+    <script type="text/javascript" src="/js/config.js"></script>
+
     <style type="text/css">
         .main_color {
             color: #FFFFFF;
@@ -86,13 +92,9 @@
             <div class="weui-cells__title">上传所需材料</div>
             <div class="weui-gallery" id="gallery">
                 <span class="weui-gallery__img" id="galleryImg"></span>
-
-                <div class="weui-gallery__opr"
-                     style="right:120px;line-height: 28px;height: 28px;bottom: 64px;background: rgba(0, 0, 0, 0); ">
-                    <a href="javascript:" class="gallery__del" style="float: right;"><%--class="weui-gallery__del"--%>
-                        <img src="zcWechatImage/del.jpg" width="28px" height="28px" title="点击删除"
-                             style="background: rgba(0, 0, 0, 0.25);">
-                        <%--<i class="weui-icon-delete weui-icon_gallery-delete"></i>--%>
+                <div class="weui-gallery__opr">
+                    <a href="javascript:" class="weui-gallery__del">
+                        <i class="weui-icon-delete weui-icon_gallery-delete">点击删除</i>
                     </a>
                 </div>
             </div>
@@ -103,7 +105,7 @@
                 <a class="weui-btn weui-btn_primary" href="javascript:" onClick="commit();"
                    id="showTooltips" style="background-color: #911edb">提交并保存</a>
             </div>
-
+            <input type="hidden" id = "imgArr">
         </div>
     </div>
 </div>
@@ -113,16 +115,16 @@
 </html>
 <script type="text/javascript">
     var maxCount = 9;
-    var count = 0;
-
+    var count = 0; //记录该事项材料上传数
     function loadData() {
 
         var affairMaterial = "";
-        $.post("ssAffairsMaterialsInfo!findMaterialsByAffairid", {
+        $.post("/ssAffairsMaterialsInfo!findMaterialsByAffairid", {
             affairid: '<%=affairid%>',
             matindex: '<%=objindex%>'
         }, function (data) {
             //alert(data);
+            console.log(data);
             $("#item").empty();
 
             var sb = "";
@@ -140,7 +142,7 @@
 //
 
                 if (v.localpath != '') {
-                    sb += v.matname + '<a   href="ssAffairsMaterialsInfo!download?id=' + v.id + '"><img style="width: 70px; vertical-align: middle;display: inline-block;" src="images/weixin/table.png"></a> </p>';
+                    sb += v.matname + '<a   href="/ssAffairsMaterialsInfo!download?id=' + v.id + '"><img style="width: 70px; vertical-align: middle;display: inline-block;" src="images/weixin/table.png"></a> </p>';
                 }
                 else {
                     sb += v.matname + '</p>';
@@ -149,71 +151,68 @@
                 sb += '						        </div>';
                 sb += '						        <div class="weui-uploader__bd">';
                 sb += '						          <ul class="weui-uploader__files" id="' + v.id + 'uploaderFiles" >';
+                sb += '						              <!-- <li class="weui-uploader__file" style="background-image:url(images/pic_160.png)"></li> -->';
                 sb += '						       			';
                 sb += '						          </ul>';
                 sb += '						          <div class="weui-uploader__input-box" id="' + v.id + 'uploaderBox">';
-                sb += '						            <input id="' + v.id + 'uploaderInput" type="file" multiple="multiple" accept="image/*" class="weui-uploader__input" onchange="uploaderInput(' + v.id + ',\'' + v.matname + '\')">';
+                sb += '						            <input type="file" id="' + v.id + 'uploaderInput" accept="image/*" multiple class="weui-uploader__input" onchange="imgChange(' + v.id + ',\'' + v.matname + '\')">';
                 sb += '						          </div>';
                 sb += '						        </div>';
                 sb += '						      </div>';
                 sb += '						    </div>';
                 sb += '						  </div>';
                 sb += '						</div>';
+
+                //});
             });
             $("#item").append(sb);
         }, "json").complete(function () {
+            //完成后操作
+            //alert("加载完成");
             loadFile(affairMaterial);
         });
 
     }
 
+    /*  function download() {
+          $("#download").attr("href", "ssAffairsMaterialsInfo!download");
+      }*/
+
 
     function loadFile(affairMaterial) {
+        //alert(affairMaterial);
         $.each(affairMaterial, function (k, v) {
-            $.post('WeChatUpload!findByOpenId', {
+            $.post('/WeChatUpload!findByOpenId', {
                 openid: '<%=openid%>',
                 materialid: v.id,
                 onlineApplyId: '<%=onlineApplyId%>'
             }, function (data) {
+
                 if (data.length > 0) {
                     var d = eval("(" + data + ")")
+
                     $.each(d, function (k1, v1) {
                         if (v1.mediaId != undefined) {
-                            $('#' + v.id + 'uploaderFiles').append("<li id='" + v1.mediaId + "' name='" + v.id + "uploaderFile'  class='weui-uploader__file' style='background-image:url(WeChatUpload!IoReadImage?mediaId=" + v1.mediaId + ")' onclick='lookFile(this)'></li>");
+                            $('#' + v.id + 'uploaderFiles').append("<li id='" + v1.id  + "' name='" + v.id + "uploaderFile'  class='weui-uploader__file' style='background-image:url(/WeChatUpload!IoReadImage?myid=" + v1.id + ")' onclick='lookFile(this)'></li>");
+                            //alert($("li[name='"+id+"uploaderFile']").length);
                             $('#' + v.id + 'uploaderInfo').text($("li[name='" + v.id + "uploaderFile']").length + "/" + maxCount);
+                            if ($("li[name='" + v.id + "uploaderFile']").length >= maxCount) {
+                                $('#' + v.id + 'uploaderBox').attr("style", "display:none");
+                            }
                         }
                     })
+
                 }
-                if ($("li[name='" + v.id + "uploaderFile']").length >= maxCount) {
-                    $('#' + v.id + 'uploaderBox').attr("style", "display:none");
-                }
+
             });
         })
     }
 
-    function uploaderInput(id, matname) {
-        var size = 1024 * 1024 * 2;
-        var bol = false;
-        // var fileList = $("#"+id+"uploaderInput").files;
-        var docObj = document.getElementById(id + "uploaderInput");
-        var fileList = docObj.files;
-        //检测文件是否为图片
-        for (var i = 0; i < fileList.length; i++) {
-            var type = fileList[i]["type"];
-            if (size <= fileList[i]["size"]) {
-                alert("请选择小于2MB的图片！");
-                return;
-            }
-            if (type.indexOf("image/") == -1) {
-                alert("请选择图片类型！");
-                return;
-            }
-        }
-        //检测材料是否到达9张
+    function checkCount(id, matname) {
         $.ajax({
             type: "post",
             async: false,
-            url: "<%=basePath%>WeChatUpload!count",
+            url: "/WeChatUpload!count",
             data: {
                 "materialid": id,
                 "onlineApplyId": "<%=onlineApplyId%>",
@@ -223,75 +222,127 @@
             },
             success: function (data) {
                 data = eval("(" + data + ")");
-                if (data.size + fileList.length > 9) {
-                    alert("该材料上传图片过多！")
-                    bol = true;
-                }
+                count = data.size;
             }
         });
-        if (bol) {
+    }
+
+    var userId = "<%=openid%>";
+    //存放文件数组
+    var imgArr = [];
+    function imgChange(id, matname) {
+        checkCount(id, matname);
+        //获取点击的文本框
+        var file = document.getElementById(id+"uploaderInput");
+        //存放图片的父级元素
+        var imgContainer = document.getElementById(id+"uploaderFiles");
+        //获取的图片文件
+        var fileList = file.files;
+        //文本框的父级元素
+        var input = document.getElementsByClassName("weui-uploader__input-box")[0];
+        var s = $("#imgArr").val();
+        if (s==""){
+        } else{
+            imgArr = s.split(",");
+        }
+        console.log(imgArr);
+        checkCount(id, matname);
+        if (count + fileList.length > maxCount) {
+            alert("该材料上传图片过多！")
             return;
         }
         for (var i = 0; i < fileList.length; i++) {
-            var formData = new FormData();
-            formData.append('file', fileList[i]); // 固定格式
-            formData.append("openid", "<%=openid%>");
-            formData.append("affairid", "<%=affairid%>");
-            formData.append("remark", matname);
-            formData.append("materialid", id);
-            formData.append("onlineApplyId", "<%=onlineApplyId%>");
-            $.ajax({
-                url: "<%=basePath%>WeChatUpload!savePictureToWeb",
-                type: "POST",
-                cache: false,
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    $('#' + id + 'uploaderFiles').append("<li id='" + data.mediaId + "' name='" + id + "uploaderFile'  class='weui-uploader__file' style='background-image:url(WeChatUpload!IoReadImage?mediaId=" + data.mediaId + ")' onclick='lookFile(this)'></li>");
+            $.showLoading("图片上传中...");
+            syncUpload(id,matname,fileList[i],imgArr,fileList.length,i,imgContainer);
+        };
+    }
+
+    var syncUpload = function (id, matname,file,imgArr,filecount,i,imgContainer) {
+
+        var formData = new FormData();
+        formData.append("file",file);
+        formData.append("openid",userId);
+        formData.append("remark",matname);
+        formData.append("materialid",id);
+        formData.append("onlineApplyId",'<%=onlineApplyId%>');
+        formData.append("affairid","<%=affairid%>");
+
+        $.ajax({
+            url:"/WeChatUpload!savePicture",
+            type : 'POST',
+            data : formData,
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success: function (data) {
+                console.log(data);
+                if (data.res == true) {
+                    var imgUrl = data.filepath;
+                    var s =imgUrl.split("?myid=");
+                    imgArr.push(imgUrl);
+                    $("#imgArr").val(imgArr);
+                    var img = document.createElement("li");
+                    img.setAttribute("style", "background-image:url(/" + imgUrl + ")");
+                    img.setAttribute("class", "weui-uploader__file");
+                    img.setAttribute("name", id+"uploaderFile");
+                    img.setAttribute("id", s[1]);
+                    img.setAttribute("onclick", "lookFile(this)");
+                    imgContainer.appendChild(img);
+
                     $('#' + id + 'uploaderInfo').text($("li[name='" + id + "uploaderFile']").length + "/" + maxCount);
                     if ($("li[name='" + id + "uploaderFile']").length >= maxCount) {
                         $('#' + id + 'uploaderBox').attr("style", "display:none");
                     }
-                    //清除选中文件
-                    $("#" + id + "uploaderInput").val("");
-                },
-                fail: function (data) {
-                    alert("上传图片失败")
+                    if (i==filecount-1){
+                        $.hideLoading();
+                    }
+                }else{
+                    $.alert('上传图片失败，请重试');
+                    $.hideLoading();
                 }
-            });
-        }
-    }
+            }
+        });
+    };
 
+    //存放点击元素的name，用于获取ID
+    var uid = "";
     function lookFile(that) {
         index = $(that).index();
         $("#galleryImg").attr("style", that.getAttribute("style"));
-        $("#galleryImg").attr("data-value", that.getAttribute("id"));
+        uid = that.getAttribute("name");
         $("#gallery").fadeIn(100);
-
     }
 
     $(function () {
+
         loadData();
+
         $("#gallery").on("click", function () {
             $("#gallery").fadeOut(100);
+            uid = "";
         });
         //删除图片
-        $(".gallery__del").click(function () {
-            // var imgStyle = $("#galleryImg").attr("style");
-            var mediaId = $("#galleryImg").attr("data-value");
-            // mediaId = imgStyle.substring(imgStyle.indexOf("=") + 1, imgStyle.length - 1);
-            var id = $("#" + mediaId).parent().attr("id").replace("uploaderFiles", "");
-            $("#" + mediaId).remove();
-            $.post("WeChatUpload!delFile", {mediaId: mediaId}, function (res) {
-                $('#' + id + 'uploaderInfo').text($("li[name='" + id + "uploaderFile']").length + "/" + maxCount);
-                if ($("li[name='" + id + "uploaderFile']").length < maxCount) {
-                    $('#' + id + 'uploaderBox').attr("style", "display:block");
+        $(".weui-gallery__del").click(function () {
+            $.confirm({
+                title: '提醒',
+                text: '是否删除图片',
+                onOK: function () {
+                    var imgStyle = $("#galleryImg").attr("style");
+                    var mediaId = imgStyle.substring(imgStyle.indexOf("=") + 1, imgStyle.length - 1);
+                    var id = uid.replace("uploaderFile", "");
+
+                    $.post("/WeChatUpload!delFile", {myid: mediaId}, function (res) {
+                        if (res.res=="true"){
+                            $("#" + mediaId).remove();
+                            $('#' + id + 'uploaderInfo').text($("li[name='" + id + "uploaderFile']").length + "/" + maxCount);
+                            if ($("li[name='" + id + "uploaderFile']").length < maxCount) {
+                                $('#' + id + 'uploaderBox').attr("style", "display:block");
+                            }
+                        }
+                        uid = "";
+                    },"json");
                 }
-
-            })
-
+            });
         });
 
 
@@ -334,7 +385,7 @@
     function postAffairs() {
         // $("#showTooltips").hide();
 
-        $.post("onlineApply!modify", {myid: '<%=onlineApplyId%>'}, function (data) {
+        $.post("/onlineApply!modify", {myid: '<%=onlineApplyId%>'}, function (data) {
 
             if (eval("(" + data + ")").flag == 1) {
                 alert("提交成功");
@@ -352,3 +403,4 @@
         }
     }
 </script>
+
