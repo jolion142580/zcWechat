@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.gdyiko.zcwx.weixinUtils.UserApi;
 import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
@@ -147,7 +148,8 @@ public class SsAffairsAction extends BaseAction<SsAffairs, String> {
             String onlineApplyId = request.getParameter("onlineApplyId");
             String objindex = request.getParameter("objindex");
             //String openid = "oEyt00yz55O7DYPXt6fVGQIjYZmo";
-            String openid = (String) session.getAttribute("openid");
+            //String openid = (String) session.getAttribute("openid");
+            String openid = UserApi.getUserInfo().getId();
             if (openid == null) {//电脑端扫码登录获取表单信息
                 String uuid = (String) session.getAttribute("uuid");
                 openid = (String) ActionContext.getContext().getApplication().get(uuid);

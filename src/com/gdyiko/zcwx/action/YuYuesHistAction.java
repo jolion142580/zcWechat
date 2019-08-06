@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.gdyiko.zcwx.po.YuYuesHist;
@@ -13,7 +14,7 @@ import com.gdyiko.zcwx.service.YuYuesHistService;
 import com.gdyiko.tool.action.BaseAction;
 import com.gdyiko.tool.service.GenericService;
 
-//@ParentPackage("custom-default")
+@ParentPackage("custom-default")
 @Namespace("/")
 @Action(value = "YuYuesHist", results = {
 //成功

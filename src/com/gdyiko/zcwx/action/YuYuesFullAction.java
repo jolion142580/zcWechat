@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springside.modules.web.struts2.Struts2Utils;
 
@@ -11,6 +12,7 @@ import com.gdyiko.zcwx.po.YuYuesFull;
 import com.gdyiko.zcwx.service.YuYuesFullService;
 import com.gdyiko.tool.action.BaseAction;
 
+@ParentPackage("custom-default")
 @Namespace("/")
 @Action(value = "yuYuesFull", results = {
 	//成功

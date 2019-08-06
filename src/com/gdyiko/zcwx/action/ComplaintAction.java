@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.gdyiko.zcwx.po.SsUserInfo;
 import com.gdyiko.zcwx.service.SsUserInfoService;
+import com.gdyiko.zcwx.weixinUtils.UserApi;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -30,6 +31,7 @@ import com.gdyiko.tool.service.GenericService;
 @Namespace("/")
 @Action(value = "complaint", results = {@Result(name = "success", location = "/"),
         @Result(name = "complaintpage", location = "/complaint.jsp"), // 获取投诉页面
+        @Result(name = "submit", location = "/submitcomplaint.jsp"), // 获取留言页面
         // 失败
         @Result(name = "fail", location = "/")})
 
@@ -38,6 +40,8 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
     ComplaintService complaintService;
     @Resource(name = "ssUserInfoService")
     SsUserInfoService ssUserInfoService;
+
+    private SsUserInfo ssUserInfo;
 
     //留言时间
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -58,13 +62,22 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
         super.setGenericService(genericService);
     }
 
-    /*
-     * public String getComplaintPage(){ return "complaintpage"; }
-     */
+
+    public String getComplaintPage(){
+        ssUserInfo = UserApi.getUserInfo();
+        return "complaintpage";
+    }
+
+    public String getsubmitPage(){
+        ssUserInfo = UserApi.getUserInfo();
+        return "submit";
+    }
+
     public String findLikeByEntitypy()
             throws IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         this.model.setComplaint_Show("是");
-        String openid = (String) this.session.getAttribute("openid");
+        ssUserInfo = UserApi.getUserInfo();
+        String openid =ssUserInfo.getId();
 //            openid取消使用查询全部留言
         try {
             List<Complaint> list = complaintService.findByConditionShow(openid, "是");
@@ -79,7 +92,8 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
     }
 
     public String save() {
-        String openid = (String) this.session.getAttribute("openid");
+        ssUserInfo = UserApi.getUserInfo();
+        String openid =ssUserInfo.getId();
         if (openid != null) {
             SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
             String phone = ssUserInfo.getPhone();
@@ -97,5 +111,11 @@ public class ComplaintAction extends BaseAction<Complaint, String> {
         return null;
     }
 
+    public SsUserInfo getSsUserInfo() {
+        return ssUserInfo;
+    }
 
+    public void setSsUserInfo(SsUserInfo ssUserInfo) {
+        this.ssUserInfo = ssUserInfo;
+    }
 }

@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gdyiko.zcwx.service.BlackWhiteListService;
+import com.gdyiko.zcwx.weixinUtils.UserApi;
 import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +36,7 @@ import com.gdyiko.tool.action.BaseAction;
 import com.gdyiko.tool.service.GenericService;
 import com.opensymphony.xwork2.ActionContext;
 
-//@ParentPackage("custom-default")
+@ParentPackage("custom-default")
 @Namespace("/")
 @Action(value = "YuYues", results = {
         //成功
@@ -44,7 +46,7 @@ import com.opensymphony.xwork2.ActionContext;
         //未绑定，不允许预约
         //@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx481172387f6fb7c5&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/ssUserInfo!userlist?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
 //	@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/relation.jsp?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
-        @Result(name = "notPermitted", type = "redirect", location = "/relation.jsp?type=yuyue"),
+    //    @Result(name = "notPermitted", type = "redirect", location = "/relation.jsp?type=yuyue"),
         //已绑定，允许预约
         @Result(name = "userYuYues", location = "/wdyy_2.jsp"),
         //已绑定，允许预约
@@ -178,19 +180,19 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 		return "permitted";*/
 
 
-        OAuth oauth = new OAuth();
+       /* OAuth oauth = new OAuth();
         openid = oauth.getOppenid(code);
-        this.model.setOpenid(openid);
+        this.model.setOpenid(openid);*/
         //todo openid 要换
 //        String openid = "2222";
         //System.out.println("---openid---"+openid);
         //bymao
-        SsUserInfo ssUserInfo = ssUserInfoService.findById(this.model.getOpenid());
+        SsUserInfo ssUserInfo = UserApi.getUserInfo();//ssUserInfoService.findById(this.model.getOpenid());
 //        SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
         //System.out.println("----ssUserInfo---"+ssUserInfo.getName());
-        if (ssUserInfo == null) {
+   /*     if (ssUserInfo == null) {
             return "notPermitted";
-        }
+        }*/
 
         this.model.setName(ssUserInfo.getName());
         this.model.setIdcard(ssUserInfo.getIdCard());
@@ -272,6 +274,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
 
         return null;

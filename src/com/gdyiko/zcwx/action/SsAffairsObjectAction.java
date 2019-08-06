@@ -15,6 +15,7 @@ import net.sf.json.JSONArray;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -38,7 +39,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.conversion.annotations.ConversionRule;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 
-//@ParentPackage("custom-default")
+@ParentPackage("custom-default")
 @Namespace("/")
 @Action(value = "ssAffairsObjectInfo", results = {
 //成功
