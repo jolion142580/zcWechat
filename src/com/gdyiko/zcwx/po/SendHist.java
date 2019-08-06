@@ -13,18 +13,8 @@ import com.gdyiko.tool.po.GenericPo;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true)
-@Table(name = "SendHist", schema = "dbo", catalog = "QUEUE")
+@Table(name = "SendHist")
 public class SendHist extends GenericPo implements java.io.Serializable{
-	/*number varchar(10),
-	idCardNum VARCHAR(18),
-	userName VARCHAR(20),
-	phone VARCHAR(50),
-	tItemId VARCHAR(10),
-	npId VARCHAR(50),
-	bookType VARCHAR(50),
-	remark VARCHAR(500),
-	currentTiime DATETIME*/
-	
 	/**
 	 * 
 	 */
