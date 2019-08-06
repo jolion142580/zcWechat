@@ -9,14 +9,13 @@ import com.gdyiko.zcwx.po.FileInfo;
 import com.gdyiko.zcwx.service.FileInfoService;
 import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import com.gdyiko.zcwx.weixinUtils.WxJSSignUtil;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
@@ -39,7 +38,10 @@ public class FileInfoServiceImpl extends
 
     //    @Override
 //    public void uploadByIdCardOrMaterials(String openId, String onlineApplyId, String mediaId, String remark, String materialId) {
-    public boolean uploadByIdCardOrMaterials(FileInfo fileInfo) {
+    public JSONObject uploadByIdCardOrMaterials(File file, FileInfo fileInfo) {
+
+        JSONObject reJson = new JSONObject();
+
         String uploadPath = propertieService.getPropertie("filePath") + fileInfo.getOpenid() + "/";
         //网上办事上传的路径
 
@@ -57,58 +59,51 @@ public class FileInfoServiceImpl extends
 
         String randomStr = System.currentTimeMillis() + WxJSSignUtil.getNonceStr();
         String fileName = randomStr + ".jpg";
-        byte[] data = new byte[1024];
-        int len = 0;
-        FileOutputStream fileOutputStream = null;
-        InputStream inputStream = getMedia(fileInfo.getMediaId());
+    /*    byte[] data = new byte[1024];
+        int len = 0;*/
+        //FileOutputStream fileOutputStream = null;
+     //new File(uploadPath+fileName);//getMedia(fileInfo.getMediaId());
+        String filepath = uploadPath+fileName;
+        FileUtil.copy(file,new File(filepath));
+        //InputStream inputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(uploadPath + fileName);
-            System.out.println();
-            while ((len = inputStream.read(data)) != -1) {
+            //inputStream = new FileInputStream(filepath);
+            //fileOutputStream = new FileOutputStream(uploadPath + fileName);
+            //System.out.println();
+          /*  while ((len = inputStream.read(data)) != -1) {
                 fileOutputStream.write(data, 0, len);
-            }
+            }*/
             //上传缩略图
             String reduceImgFileName = randomStr + "_reduce.jpg";
-            ReduceImg.reduceImg(uploadPath + fileName, uploadPath + reduceImgFileName, 0, 0, 0.7f);
-            fileOutputStream.close();
+            ReduceImg.reduceImg(filepath, uploadPath + reduceImgFileName, 0, 0, 0.7f);
+            //fileOutputStream.close();
 
             fileInfo.setId(PrimaryProduce.produce());
             fileInfo.setFilename(reduceImgFileName);
             fileInfo.setLocalpath(uploadPath + reduceImgFileName);
             fileInfo.setCreattime(DateUtil.getDateStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
             fileInfoDao.save(fileInfo);
+
+            reJson.put("filepath","WeChatUpload!IoReadImage?myid="+fileInfo.getId());
+            reJson.put("res",true);
+
         } catch (Exception e) {
             FileInfo delFileinfo = new FileInfo();
             delFileinfo.setMediaId(fileInfo.getMediaId());
             fileInfoDao.remove(delFileinfo);
             e.printStackTrace();
-            return false;
-        } finally {
-
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            reJson.put("res",false);
+          //  return reJson;
         }
 
-        return true;
+        return reJson;
     }
 
 
     /**
      * 获取临时素材
      */
-    private InputStream getMedia(String mediaId) {
+/*    private InputStream getMedia(String mediaId) {
         String url = "https://api.weixin.qq.com/cgi-bin/media/get";
         String access_token = TokenHepl.getaccessToken().getAccessToken();//TokenThread.accessToken.getAccessToken();
         String params = "access_token=" + access_token + "&media_id=" + mediaId;
@@ -131,7 +126,7 @@ public class FileInfoServiceImpl extends
             e.printStackTrace();
         }
         return is;
-    }
+    }*/
 
     /**
      * @param openid
