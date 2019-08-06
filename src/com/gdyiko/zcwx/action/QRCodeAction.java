@@ -8,12 +8,17 @@ import com.gdyiko.zcwx.po.SsUserInfo;
 import com.gdyiko.zcwx.po.resp.Token;
 import com.gdyiko.zcwx.service.SsAffairsObjectService;
 import com.gdyiko.zcwx.service.SsUserInfoService;
+import com.gdyiko.zcwx.session.FrontSessionContext;
+import com.gdyiko.zcwx.weixinUtils.CookieUtil;
 import com.gdyiko.zcwx.weixinUtils.TokenHepl;
+import com.gdyiko.zcwx.weixinUtils.UserApi;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,7 @@ import org.springside.modules.web.struts2.Struts2Utils;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.interceptor.ExcludeDefaultInterceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -77,6 +83,7 @@ public class QRCodeAction extends ActionSupport {
     @Autowired
     WeChatPropertieService weChatPropertieService;
 
+
     public void createUUID() {
         Token token = (Token) session.getAttribute("token");
         if (token != null) {
@@ -98,42 +105,37 @@ public class QRCodeAction extends ActionSupport {
 
     }
 
-
     public void createQRCode() throws JSONException, IOException {
 
-		/*
-        String uuid=UUID.randomUUID().toString();
-		System.out.println("---createQRCode----"+uuid);
-		session.removeAttribute("uuid");
-		session.setAttribute("uuid", uuid);*/
-        String uuid = (String) session.getAttribute("uuid");
-        //System.out.println("---createQRCode----"+uuid);
-//        System.out.println("---后台sesssion获取UUID----"+uuid);
 
-        String APPID = weChatPropertieService.getPropertie("APPID");
+        String uuid = (String) session.getAttribute("uuid");
+        String sessionStr = session.getId();
+
+        System.out.println("sessionID:"+sessionStr);
+        FrontSessionContext fsession = FrontSessionContext.getInstance();
+        HttpSession sess = fsession.getSession(sessionStr);
+        String uu =  (String) sess.getAttribute("uuid");
+        System.out.println("uu:"+uu);
+
         String weChatDNSURL = weChatPropertieService.getPropertie("WeChatDNSURL");
-        String content = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APPID + "&redirect_uri=" + weChatDNSURL + "scanConfirm.jsp?uuid=" + uuid + "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+        //使用含有权限限制的页面，当扫描时该手机没有登陆或不含有登陆的cookie则会自动跳转到登陆界面，登陆后方可跳转允许授权的操作
+        String content =  weChatDNSURL + "ssUserInfo!scanConfirm?uuid=" + uuid +"&sid="+sessionStr;
 
         response.reset();
         //设置页面不缓存
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
-        //String logo =basePath+"images/logo.png";
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
         BufferedImage qRCode = null;
         try {
-            //qRCode = QRCodeUtil.createImage("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/ssAffairsGuideInfo!findByAffairId?affairid="+affairid+"&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect", logo,true);
             qRCode = QRCodeUtil.createImage(content, "C:\\ewmLogo.jpg", true);
         } catch (Exception e) {
             e.printStackTrace();
         }
         // 输出图象到页面
         ImageIO.write(qRCode, "JPEG", response.getOutputStream());
-        //清除
-        /*out.clear();
-        out = pageContext.pushBody();*/
 
     }
 
@@ -166,17 +168,23 @@ public class QRCodeAction extends ActionSupport {
 		return "affairObject";
 	}*/
 
+	//手机端处理电脑端登陆，获取电脑端session，并将手机端的登陆成功的用户信息传递到电脑端
     public String allowScan() {
         HashMap<String, String> hp = new HashMap<String, String>();
         String uuid = request.getParameter("uuid");
-        String openid = request.getParameter("openid");
+        String sid = request.getParameter("sid");
 
-        SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
+        SsUserInfo ssUserInfo = UserApi.getUserInfo();
 
         if (ssUserInfo == null) {
             hp.put("state", "fail");
         } else {
-            ActionContext.getContext().getApplication().put(uuid, openid);
+            FrontSessionContext fsession = FrontSessionContext.getInstance();
+            HttpSession sess = fsession.getSession(sid);
+            sess.setAttribute("user",ssUserInfo);
+
+            ActionContext.getContext().getApplication().put(uuid, ssUserInfo.getId());
+
             hp.put("state", "success");
         }
 
@@ -193,6 +201,7 @@ public class QRCodeAction extends ActionSupport {
         this.ssAffairObjectList = ssAffairObjectList;
     }
 
+    //监听电脑端登陆时间是否超时
     public void listenUUID() {
         Boolean result = false;
         String uuid = (String) session.getAttribute("uuid");
@@ -202,7 +211,7 @@ public class QRCodeAction extends ActionSupport {
         if (openId != null && !openId.equals("")) {
             System.out.println("监听openId--:" + openId);
             result = true;
-            Token token = TokenHepl.getaccessToken();
+            Token token = new Token();//TokenHepl.getaccessToken();
             token.setBegin_time(System.currentTimeMillis());
             session.setAttribute("token", token);
             session.setAttribute("openid", openId);
