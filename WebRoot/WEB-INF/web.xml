@@ -89,8 +89,12 @@
   <listener>
     <listener-class>com.gdyiko.tool.onlineListener</listener-class>
   </listener>
-  
-  
+
+  <listener>
+    <listener-class>com.gdyiko.zcwx.session.listener.SessionListener</listener-class>
+  </listener>
+
+
   <servlet>
     <description></description>
     <display-name>WeixinServlet</display-name>
