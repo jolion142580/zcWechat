@@ -32,24 +32,24 @@
 %>--%>
 
 <%
-    String token = TokenHepl.getaccessToken().getAccessToken();
+  /*  String token = TokenHepl.getaccessToken().getAccessToken();
     String jsapi_ticket = TokenHepl.jsapi_ticket;
     String url = WxJSSignUtil.getUrl();
     System.out.println("==url==" + url);
     System.out.println("jsapi_ticket==" + jsapi_ticket);
-    Map map = WxJSSignUtil.sign(jsapi_ticket, url);
+    Map map = WxJSSignUtil.sign(jsapi_ticket, url);*/
 
-    String code = request.getParameter("code");
-    String type = request.getParameter("type");
+    //String code = request.getParameter("code");
+    //String type = request.getParameter("type");
 
-    System.out.println("code:::::" + code + "----type-----" + type);
-    String openid = (String) session.getAttribute("openid");
+    //System.out.println("code:::::" + code + "----type-----" + type);
+    //String openid = (String) session.getAttribute("openid");
 
-    if (code != null && openid == null) {
+    /*if (code != null && openid == null) {
         OAuth oauth = new OAuth();
         openid = oauth.getOppenid(code);
     }
-    System.out.println("----openid---" + openid);
+    System.out.println("----openid---" + openid);*/
 	/* String openid="1111";
 	String code="22222";
 	String type="33333";*/
@@ -92,6 +92,16 @@
         .weui-search-bar__form:after {
             border-radius: 0px;
         }
+        .weui-search-bar__box .weui-search-bar__input {
+            padding: 5px 0;
+            /* width: 100%; */
+            height: 3em;
+            border: 0;
+            font-size: 14px;
+            line-height: 3em;
+            box-sizing: content-box;
+            background: transparent;
+        }
     </style>
     <script type="text/javascript" src="js/config.js"></script>
 </head>
@@ -126,9 +136,9 @@
                             <div class="weui-search-bar2" id="searchBar">
                                 <form id="accountform" action="" method="POST" class="weui-search-bar__form"
                                       style="line-height:44px;">
-                                    <div class="weui-search-bar__box">
+                                    <div style="width: 100%" class="weui-search-bar__box">
                                         <i class="weui-icon-search"></i>
-                                        <input type="search" class="weui-search-bar__input" name="currCode"
+                                        <input type="search" style="width: 100%" class="weui-search-bar__input" name="currCode"
                                                id="currCode" placeholder="输入查询码" required="">
                                         <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
                                     </div>
@@ -140,13 +150,13 @@
                                     style="color:#FFF;width: 3rem;">查询
                             </button>
                         </div>
-                        <div class="weui-cell__ft" style="background-color:#61b3cb">
-                            <button onClick="wxcloseWindow();return false;" class="weui-vcode-btn"
-                                    style="font-size:0px;line-height:0px;width: 3rem;">
-                                <%--<img src="icon/icon%20(24).png" style="line-height:44px; width:1rem"/>--%>
-                                <img src="images/weixin/saoyisao.png" style="line-height:44px; width:1rem"/>
-                            </button>
-                        </div>
+                        <%--<div class="weui-cell__ft" style="background-color:#61b3cb">--%>
+                            <%--<button onClick="wxcloseWindow();return false;" class="weui-vcode-btn"--%>
+                                    <%--style="font-size:0px;line-height:0px;width: 3rem;">--%>
+                                <%--&lt;%&ndash;<img src="icon/icon%20(24).png" style="line-height:44px; width:1rem"/>&ndash;%&gt;--%>
+                                <%--<img src="images/weixin/saoyisao.png" style="line-height:44px; width:1rem"/>--%>
+                            <%--</button>--%>
+                        <%--</div>--%>
                     </div>
                 </div>
                 <div class="weui-cells__title">提示：请使用受理回执中的查询码进行查询，或点击查询按钮旁的扫码查询功能扫描受理回执中的二维码进行查询。</div>
@@ -187,15 +197,7 @@
     $(function () {
         $("#currCode").focus();
         findUserName();
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: weChat.APPID, // 必填，公众号的唯一标识
-            timestamp: '<%=map.get("timestamp") %>', // 必填，生成签名的时间戳
-            nonceStr: '<%=map.get("nonceStr") %>', // 必填，生成签名的随机串
-            signature: '<%=map.get("signature") %>',// 必填，签名，见附录1
-            jsApiList: ['scanQRCode']
-            // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });
+
     });
 
     function findUserName() {
