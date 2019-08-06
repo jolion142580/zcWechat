@@ -11,14 +11,12 @@ import com.gdyiko.base.service.WeChatPropertieService;
 import com.gdyiko.tool.StringUtils;
 import com.gdyiko.zcwx.po.SysUser;
 import com.gdyiko.zcwx.service.SysUserService;
-import com.gdyiko.zcwx.weixinUtils.CustomMessageAPI;
-import com.gdyiko.zcwx.weixinUtils.HttpClientUtil;
-import com.gdyiko.zcwx.weixinUtils.TemplateData;
-import com.gdyiko.zcwx.weixinUtils.WxTemplate;
+import com.gdyiko.zcwx.weixinUtils.*;
 import net.sf.json.JSONArray;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gdyiko.zcwx.dao.YuYuesDao;
@@ -37,6 +35,9 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
 
     @Resource(name = "weChatPropertieService")
     WeChatPropertieService weChatPropertieService;
+
+    @Autowired
+    SendMassageUtil sendMassageUtil;
 
     @Resource(name = "yuYuesDao")
     @Override
@@ -127,7 +128,6 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
             e.printStackTrace();
         }
         if (validate == "" || Integer.valueOf(validate) < 1) {
-//			return "该时段没有预约号";
             return "{\"msg\":\"该时段已经没有预约号了！\"}";
         }
         // 验证成功再预约
@@ -136,98 +136,27 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         String header = "";
         message = ifs.yuYues(street, serviceType, name, idCard, phone, date,
                 s_time, e_time, openid, null, 0);
-       /* message = "{\n" +
-                "  \"header\": {\n" +
-                "    \"handler_id\": 2001,\n" +
-                "    \"command_id\": 2001,\n" +
-                "    \"terminal\": 1001,\n" +
-                "    \"version\": 0,\n" +
-                "    \"reserved\": 0\n" +
-                "  },\n" +
-                "  \"data\": {\n" +
-                "    \"street\": \"3\",\n" +
-                "    \"id_card\": \"" + model.getIdcard() + "\"," +
-                "    \"booking_no\": \"10025043\",\n" +
-                "    \"phone\": \"" + model.getPhone() + "\"," +
-                "    \"name\": \"" + model.getName() + "\"," +
-                "    \"service_type\":\"" + model.getStype() + "\"," +
-                "    \"date\": \"" + model.getYdate() + "\"," +
-                "    \"s_time\": \"" + model.getYstime() + "\"," +
-                "    \"e_time\": \"" + model.getYetime() + "\"," +
-                "    \"count\": 2,\n" +
-                "    \"code\": 1,\n" +
-                "    \"openid\":\"" + model.getOpenid() + "\"," +
-                "    \"msg\": \"亲！系统已经记录你的预约信息啦！请保管好你的预约号码\",\n" +
-                "    \"source_type\": \"0\",\n" +
-                "    \"exstype\": \"GTQ012\"\n" +
-                "  }\n" +
-                "}";*/
+
 
         // 返回data的值
         result = getJsonData(message);
-        header = net.sf.json.JSONObject.fromObject(message).get("header").toString();
 
-        Map<String, TemplateData> m = new HashMap<String, TemplateData>();
-        TemplateData first = new TemplateData();
-        first.setColor("#000000");
-        first.setValue(model.getName());
-        m.put("first", first);
+    //使用短信通知预约
+    String bookNo = net.sf.json.JSONObject.fromObject(result).get("booking_no").toString();
+    String msg = "地点：张槎街道行政服务中心,预约号："+bookNo+",预约时间："+model.getYdate() + " " + model.getYstime() + "-" + model.getYetime()+","+
+            "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，\n" +
+            "凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。\n" +
+            "（若要取消预约请在预约记录中取消）。预约后不前来办事，累积达3次将会列入黑名单，当年不能再使用预约功能。";
 
-        TemplateData businessType = new TemplateData();
-        businessType.setColor("#000");
-        businessType.setValue("预约事项");
-        m.put("businessType", businessType);
-
-        TemplateData business = new TemplateData();
-        business.setColor("#328392");
-        business.setValue(model.getBusinessName());
-        m.put("business", business);
-
-        TemplateData order = new TemplateData();
-        order.setColor("#328392");
-        order.setValue(net.sf.json.JSONObject.fromObject(result).get("booking_no").toString());
-        m.put("order", order);
-
-        TemplateData time = new TemplateData();
-        time.setColor("#328392");
-        time.setValue(model.getYdate() + " " + model.getYstime() + "-" + model.getYetime());
-        m.put("time", time);
-
-        TemplateData address = new TemplateData();
-        address.setColor("#328392");
-        address.setValue("张槎街道行政服务中心");
-        m.put("address", address);
-
-
-        TemplateData remark = new TemplateData();
-        remark.setColor("#929232");
-        remark.setValue("您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，\n" +
-                "凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。\n" +
-                "（若要取消预约请在预约记录中取消）。预约后不前来办事，累积达3次将会列入黑名单，当年不能再使用预约功能。");
-        m.put("remark", remark);
-
-        WxTemplate template = new WxTemplate();
-        String APPID = weChatPropertieService.getPropertie("APPID");
-        String weChatDNSURL = weChatPropertieService.getPropertie("WeChatDNSURL");
-
-        template.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APPID + "&redirect_uri=" + weChatDNSURL + "newwdyy_2.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
-        template.setTouser(openid);
-        template.setTopcolor("#000000");
-//        template.setTemplate_id("N3nc9RvCoJX62DhnopplvfR06SgQm79xFDQTtHWR7VQ");//测试号模板
-        template.setTemplate_id("JN1xdc88MB-ebfha_03O1dcUPNpppENIofzUNVvlIk");//正式号模板
-        template.setData(m);
-
-        CustomMessageAPI api = new CustomMessageAPI();
-        String result2 = api.sendTemplateMessage(template);
-        net.sf.json.JSONObject jsonObject = net.sf.json.JSONObject.fromObject(result2);
-        if (jsonObject.getString("errmsg").equals("ok")) {
-            System.out.println("网上预约信息模板推送成功");
-        } else {
-            throw new RuntimeException("网上预约信息模板推送失败");
-        }
+       net.sf.json.JSONObject json = sendMassageUtil.sendSms(msg,phone);
+       if (json.getString("flag").equals("1")){
+           System.out.println("网上预约信息模板推送成功");
+       }else{
+           throw new RuntimeException("网上预约信息模板推送失败");
+       }
 
         model.setState("0");
-        model.setNo(net.sf.json.JSONObject.fromObject(result).get("booking_no").toString());
+        model.setNo(bookNo);
         model.setTerminal("1002"); //1002为手机智慧禅城APP终端
         yuYuesDao.save(model);
 
@@ -387,7 +316,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         // 传入booking_no和id_card
         message = ifs.cancelYuYues(booking_no, id_card);
         result = getJsonData(message);
-        ;
+
         try {
             JSONObject json = new JSONObject(result);
             String code = json.get("code").toString();
@@ -397,44 +326,15 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
                     yuYues.setState("2");
                     yuYuesDao.modify(yuYues);
                 }
-                Map<String, TemplateData> m = new HashMap<String, TemplateData>();
-                TemplateData first = new TemplateData();
-                first.setColor("#000000");
-                first.setValue("您的预约已成功取消！");
-                m.put("first", first);
 
-                TemplateData keyword1 = new TemplateData();
-                keyword1.setColor("#328392");
-                keyword1.setValue(yuYues.getNo());
-                m.put("keyword1", keyword1);
+                String msg = "地点：张槎街道行政服务中心,预约号："+yuYues.getNo()+",预约时间："+model.getYdate() + " " + model.getYstime() + "-" + model.getYetime()+","+
+                        "您的预约已成功取消！\n" +
+                        "感谢您的使用。";
 
-                TemplateData keyword2 = new TemplateData();
-                keyword2.setColor("#328392");
-                keyword2.setValue(yuYues.getYdate() + " " + yuYues.getYstime() + "-" + yuYues.getYetime());
-                m.put("keyword2", keyword2);
-
-                TemplateData remark = new TemplateData();
-                remark.setColor("#929232");
-                remark.setValue("感谢您的使用。");
-                m.put("remark", remark);
-
-                WxTemplate template = new WxTemplate();
-                String APPID = weChatPropertieService.getPropertie("APPID");
-                String weChatDNSURL = weChatPropertieService.getPropertie("WeChatDNSURL");
-
-                template.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APPID + "&redirect_uri=" + weChatDNSURL + "newwdyy_2.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
-                template.setTouser(yuYues.getOpenid());
-                template.setTopcolor("#000000");
-//                template.setTemplate_id("kbADVkF8cnfBwqM8sP9Mg5uA551k2UzVXTjNDmA-emk");//测试号模板
-                template.setTemplate_id("S1s3yWLheITrCCEDo5zbawtz-1YvToBkQH6P8aAWKLw");//正式号模板
-                template.setData(m);
-
-                CustomMessageAPI api = new CustomMessageAPI();
-                String result2 = api.sendTemplateMessage(template);
-                net.sf.json.JSONObject jsonObject = net.sf.json.JSONObject.fromObject(result2);
-                if (jsonObject.getString("errmsg").equals("ok")) {
+                net.sf.json.JSONObject json1 = sendMassageUtil.sendSms(msg,yuYues.getPhone());
+                if (json.getString("flag").equals("1")){
                     System.out.println("预约取消模板发送成功");
-                } else {
+                }else{
                     throw new RuntimeException("预约取消模板发送失败");
                 }
             }
