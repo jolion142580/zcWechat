@@ -29,7 +29,7 @@ import com.gdyiko.tool.po.GenericPo;
 import com.gdyiko.tool.service.GenericService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-@ParentPackage ("exception")
+/*@ParentPackage ("exception")*/
 public class BaseAction<T extends GenericPo, ID extends Serializable> extends
 		ActionSupport implements ModelDriven<T> {
 
