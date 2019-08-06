@@ -26,7 +26,7 @@ public class OnlineApplyDaoImpl extends GenericDaoImpl<OnlineApply, String> impl
 		return OnlineApply.class;
 	}
 
-	public List<Map<String, String>> listByOpenId(String openid) {
+	public List listByOpenId(String openid) {
 		StringBuffer sql =new StringBuffer();
 		sql.append("select a.id as id,a.state as state,a.approved_or_not as approvedOrNot,c.affairname as affairName,")
 				.append(" a.creattime as creattime from onlineApply as a ")
@@ -35,8 +35,11 @@ public class OnlineApplyDaoImpl extends GenericDaoImpl<OnlineApply, String> impl
 				.append(" ORDER BY a.creattime desc ");
 		System.out.println("pc查看个人办事记录sql----:"+sql.toString());
 
+		List list = this.getHibernateTemplate().getSessionFactory()
+				.getCurrentSession().createSQLQuery(sql.toString())
+				.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 
-		List<Map<String,String>> list = this.getHibernateTemplate().getSessionFactory()
+	/*	List<Map<String,String>> list = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createSQLQuery(sql.toString())
 				.addScalar("id", Hibernate.STRING)
 				.addScalar("state", Hibernate.STRING)
@@ -44,7 +47,7 @@ public class OnlineApplyDaoImpl extends GenericDaoImpl<OnlineApply, String> impl
 				.addScalar("approvedOrNot", Hibernate.STRING)
 //				.addScalar("creattime", Hibernate.DATE)
 				.addScalar("creattime", Hibernate.STRING)
-				.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+				.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();*/
 		return list;
 	}
 	/*

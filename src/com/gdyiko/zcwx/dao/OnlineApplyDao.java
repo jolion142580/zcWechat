@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface OnlineApplyDao extends GenericDao<OnlineApply, String> {
 
-    List<Map<String,String>> listByOpenId(String openid);
+    List listByOpenId(String openid);
 }
