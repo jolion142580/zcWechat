@@ -3,8 +3,6 @@
 <%
     String path = request.getContextPath();
    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
-    String openid =(String) session.getAttribute("openid");
-    System.out.println(openid);
 %>
 
 
@@ -252,7 +250,7 @@
                 success: function (data) {
                     alert("留言成功");
                     // location.reload();
-                    location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"complaint.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                    location.href="complaint!getComplaintPage";
                     return;
                 },
                 error: function () {
