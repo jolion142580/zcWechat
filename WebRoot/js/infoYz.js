@@ -348,7 +348,12 @@ function yz() {
             $("#address").focus();
             return false;
         }
-        if ($('.weui-uploader__file').length < maxCount) {
+
+        console.log();
+        var s = $("#imgArr").val();
+        var im =  s.split(",");
+        if (im.length < maxCount) {
+
             alert("请上传身份证正反面");
             return false;
         }
