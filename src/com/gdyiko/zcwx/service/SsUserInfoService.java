@@ -5,4 +5,5 @@ import com.gdyiko.tool.service.GenericService;
 
 public interface SsUserInfoService extends GenericService<SsUserInfo, String> {
 
+    SsUserInfo findByPhone(String phone);
 }
