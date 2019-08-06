@@ -7,26 +7,6 @@
    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
 %>
 
-<%
-    String token = TokenHepl.getaccessToken().getAccessToken();
-    String jsapi_ticket =TokenHepl.jsapi_ticket;
-    String url = WxJSSignUtil.getUrl();
-    System.out.println("==url=="+url);
-    System.out.println("jsapi_ticket=="+jsapi_ticket);
-    Map map = WxJSSignUtil.sign(jsapi_ticket, url);
-    String code = request.getParameter("code");
-    String type = "";
-    System.out.println("==code=="+code);
-    String openid=(String) session.getAttribute("openid");
-
-    if(code!=null && openid == null){
-          OAuth oauth = new OAuth();
-          openid=oauth.getOppenid(code);
-    }
-      System.out.println("----openid---"+openid);
-    /*session.setAttribute("openid", "123");
-    String openid = (String) session.getAttribute("openid");*/
-%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -129,31 +109,15 @@
     var kt = 1;
     var ys = 0;
     $(function () {
-        authen();
+      //  authen();
         gotofy(kt, ys);
         $("#yanz").click(function () {
-            // window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaec78dd064e22ada&redirect_uri=http://zhengqiao.ss.gov.cn/wxfb/WxServlet?tiaoznum=2&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-            $.post("${path}ssUserInfo!findById", function (data) {
-                if (!data.success) {
-                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"relation.jsp?type=tousu&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-                }
-                else{
-                    window.location.href = "submitcomplaint.jsp";
-                }
-            })
 
+            window.location.href = "complaint!getsubmitPage";
 
         });
     });
 
-    function authen() {
-        $.post("${path}ssUserInfo!findById", function (data) {
-            if (!data.success) {
-//                        window.location.href="relation.jsp";
-                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"relation.jsp?type=tousu&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-            }
-        })
-    }
 
     function gotoUp() {
         if (parseInt($("#kt").val()) == 1 || parseInt($("#kt").val()) == "") {
@@ -216,7 +180,7 @@
                     //alert(data);
                     //obj = JSON.parse(data);
 
-                    var loginOpenId = '<%=openid%>';
+                    var loginOpenId = '${ssUserInfo.id}';
                     var p = "";
                     var a = "<div align='center'><span onclick='gotoUp()'>上一页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                     console.log(data);
