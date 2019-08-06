@@ -73,13 +73,13 @@
 		      <s:if test ='(objname == "无分类" || objname=="无") && iswrite == "true"' >
 		      	<script>
 		      	//location.href='http://localhost:8083/zcWechat/onlineApply!isrelation?affairid=<s:property value="affairid"/>_onlineApply_'+<s:property value="objindex"/>;
-		      	location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="affairid"/>_onlineApply_<s:property value="objindex"/>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+		      	location.href='onlineApply!isrelation?affairid=<s:property value="affairid"/>_onlineApply_<s:property value="objindex"/>';
 		      	</script>
 		      </s:if>
 		      <s:if test ='(objname == "无分类" || objname=="无") && iswrite == null' >
 		      	<script>
 		      	//location.href='http://localhost:8083/zcWechat/onlineApply!isrelation?affairid=<s:property value="affairid"/>_affairMaterials_'+<s:property value="objindex"/>;
-		      	location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="affairid"/>_affairMaterials_<s:property value="objindex"/>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+		      	location.href='onlineApply!isrelation?affairid=<s:property value="affairid"/>_affairMaterials_<s:property value="objindex"/>';
 		      	</script>
 		      </s:if>
 		      
@@ -117,13 +117,15 @@ function commit(){
 		return;
 	}
 	if(iswrite=='true'){
+
 	    //<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />_onlineApply&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect" class="weui-tabbar__item">
 		//location.href='http://localhost:8083/zcWechat/onlineApply!isrelation?affairid='+affairid+'_onlineApply_'+objindex;
-		location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="affairid"/>_onlineApply_'+objindex+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+		location.href='onlineApply!isrelation?affairid=<s:property value="affairid"/>_onlineApply_'+objindex;
 	}else{
+
 	//<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />_affairMaterials&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect" class="weui-tabbar__item">
 		//location.href='http://localhost:8083/zcWechat/onlineApply!isrelation?affairid='+affairid+'_affairMaterials_'+objindex;
-		location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!isrelation?affairid=<s:property value="affairid"/>_affairMaterials_'+objindex+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+		location.href='onlineApply!isrelation?affairid=<s:property value="affairid"/>_affairMaterials_'+objindex;
 	}
 }
 
