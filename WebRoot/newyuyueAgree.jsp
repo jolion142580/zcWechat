@@ -120,7 +120,7 @@
 
 //		location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaec78dd064e22ada&redirect_uri=http://zhengqiao.ss.gov.cn/ssWechat/YuYues!yuYues&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
 // 		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"YuYues!yuYues&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"YuYues!yuYues?affairname=<%=affairname%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+		location.href="YuYues!yuYues?affairname=<%=affairname%>";
 	}
 </script>
 
