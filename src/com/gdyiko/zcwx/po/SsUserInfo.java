@@ -25,6 +25,7 @@ public class SsUserInfo extends GenericPo implements java.io.Serializable {
     private String creattime;
     private String sex;
     private String brithday;
+    private String imgfiles;
     // Constructors
 
     /**
@@ -126,6 +127,7 @@ public class SsUserInfo extends GenericPo implements java.io.Serializable {
 
     }
 
+    @Column
     public String getSex() {
         return sex;
     }
@@ -133,7 +135,7 @@ public class SsUserInfo extends GenericPo implements java.io.Serializable {
     public void setSex(String sex) {
         this.sex = sex;
     }
-
+    @Column
     public String getBrithday() {
         return brithday;
     }
@@ -141,4 +143,15 @@ public class SsUserInfo extends GenericPo implements java.io.Serializable {
     public void setBrithday(String brithday) {
         this.brithday = brithday;
     }
+
+    @Column
+    public String getImgfiles() {
+        return imgfiles;
+    }
+
+    public void setImgfiles(String imgfiles) {
+        this.imgfiles = imgfiles;
+    }
+
+
 }
