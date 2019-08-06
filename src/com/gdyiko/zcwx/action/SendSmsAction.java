@@ -7,8 +7,10 @@ import java.util.Map;
 
 import com.gdyiko.base.service.PropertieService;
 import com.gdyiko.zcwx.weixinUtils.HttpClientUtil;
+import com.gdyiko.zcwx.weixinUtils.SendMassageUtil;
 import net.sf.json.JSONObject;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,15 @@ import com.gdyiko.zcwx.weixinUtils.HttpContent;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 @Namespace("/")
 @Action(value = "sms", results = {})
 public class SendSmsAction extends ActionSupport {
     @Autowired
-    PropertieService propertieService;
+    SendMassageUtil sendMassageUtil;
 
     /**
      *
@@ -47,44 +52,26 @@ public class SendSmsAction extends ActionSupport {
     // 4.2.2.发送短信
     public String sendSmsmessage() {
         //
-        String smscode = (String) ActionContext.getContext().getSession().get("smscode");
+        //String smscode = (String) ActionContext.getContext().getSession().get("smscode");
 
         try {
-            if (("".equals(this.getTxt()) || this.getTxt() == null) && smscode != null) {
-                String str = "欢迎使用张槎街道行政服务中心微信平台!帐号认证验证码：" + smscode + ",10分钟内有效。";
+            if (("".equals(this.getTxt()) || this.getTxt() == null) ) {
 
+                int codeLength = 6;
+                String smscode = "";
+                for (int i = 0; i < codeLength; i++) {
+                    smscode += (int) (Math.random() * 9);
+                }
+                HttpServletRequest request=ServletActionContext.getRequest();
+                HttpSession session=request.getSession();
+                session.setMaxInactiveInterval(10*60);
+                session.removeAttribute("smscode");
+                session.setAttribute("smscode",smscode);
+                String str = "欢迎使用张槎街道行政服务中心微信平台!帐号认证验证码：" + smscode + ",10分钟内有效。";
                 this.setTxt(str);
             }
-
-/*			HttpContent httpContent = new HttpContent();
-//			String smsData=URLEncoder.encode(this.getTxt(),"gbk");
-//			txt=URLEncoder.encode(txt,"UTF-8");
-//			String sendurl = SEND.replace("phone", phone).replace("txt", txt).replace("vale", "ddd60800269641d7b036a789fa113a51");
-			String smsData=txt;
-			String AuthenticationUrl=Authentication.replace("data",URLEncoder.encode(smsData,"UTF-8")).replace("phone",phone);
-
-
-			
-			String content = httpContent.getHttpContent(AuthenticationUrl,smsData,"","post");*/
-            //bymao
-//            String url = "http://59.39.58.206/main?xwl=2439KD5MA3WZ";
-            String url = propertieService.getPropertie("onlineSuccessMsg");
-            Map map = new HashMap();
-            map.put("method", "sendSMS");
-            map.put("content", txt);
-            map.put("receiver", phone);
-            map.put("token", "0menshi789");
-            String content = HttpClientUtil.doPost(url, map);
-            JSONObject result = JSONObject.fromObject(content);
-            String r = result.getString("result");
-            if (r == "true") {
-//				System.out.println("发送短信"+phone+"返回的内容：：："+r);
-                Struts2Utils.renderText("{\"flag\":\"1\",\"Msg\":\"发送成功\"}");
-            } else {
-                Struts2Utils.renderText("{\"flag\":\"0\",\"Msg\":\"发送失败\"}");
-            }
-
-
+            JSONObject resjson =sendMassageUtil.sendSms(this.getTxt(),this.getPhone());
+            Struts2Utils.renderText(resjson.toString());
         } catch (Exception e) {
             e.printStackTrace();
             Struts2Utils.renderText("{\"flag\":\"0\",\"Msg\":\"发送失败\"}");

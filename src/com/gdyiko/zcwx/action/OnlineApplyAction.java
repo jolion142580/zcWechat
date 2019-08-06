@@ -10,12 +10,14 @@ import com.gdyiko.tool.service.GenericService;
 import com.gdyiko.zcwx.po.*;
 import com.gdyiko.zcwx.service.*;
 import com.gdyiko.zcwx.weixinUtils.*;
+import com.opensymphony.xwork2.ActionContext;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.web.struts2.Struts2Utils;
@@ -29,13 +31,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@ParentPackage("custom-default")
+@ParentPackage("custom-default")
 @Namespace("/")
 @Action(value = "onlineApply", results = {
 //成功
         @Result(name = "success", location = "/"),
         @Result(name = "permitted", location = "/onlineWrite.jsp"),
-        @Result(name = "notPermitted", type = "redirect", location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${WeChatDNSURL}relation.jsp?type=onlineApply&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
+        @Result(name = "notPermitted", type = "redirect",  location = "${openUrl}"),
         @Result(name = "afairMaterials", type = "redirect", location = "/affairMaterials.jsp"),
         @Result(name = "onlineHistory", location = "/onlineHistory.jsp"),
         @Result(name = "onlineDepart", location = "/onlineList.jsp"),
@@ -62,6 +64,10 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
 
     List<SsAffairs> ssAffairsList;
 
+    @Autowired
+    SendMassageUtil sendMassageUtil;
+
+    private String openUrl = "";
 
     public OnlineApplyAction() {
 
@@ -116,12 +122,9 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         session.setAttribute("affairid", affairid);
         session.setAttribute("objindex", objindex);
         //System.out.println("-----"+affairid);
-        String code = request.getParameter("code");
+/*        String code = request.getParameter("code");
 
         OAuth oauth = new OAuth();
-
-        //session.setAttribute("openid", "oEyt00yz55O7DYPXt6fVGQIjYZmo");//用于测试
-
         String openid = (String) session.getAttribute("openid");
 
         if (code != null && openid == null) {
@@ -129,16 +132,16 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
             System.out.println("【session中openid为空】" + openid);
 
         }
-        //System.out.println("====----"+openid);
-//        SsUserInfo ssUserInfo = new SsUserInfo();
-//        ssUserInfo.setId(openid);
-
-        SsUserInfo ssUserInfo1 = ssUserInfoService.findById(openid);
-
+        SsUserInfo ssUserInfo1 = ssUserInfoService.findById(openid);*/
+        SsUserInfo ssUserInfo1 = UserApi.getUserInfo();
+        //检查没有用户信息则跳转
         if (ssUserInfo1 == null) {
-            this.setAPPID(weChatPropertieService.getPropertie("APPID"));
-            this.setWeChatDNSURL(weChatPropertieService.getPropertie("WeChatDNSURL"));
-            return "notPermitted";
+            Map<String, Object> session = ActionContext.getContext().getSession();
+            String url = (String) session.get("JumpUrl");
+            if (StringUtils.isNotEmpty(url)) {
+                setOpenUrl(url);
+                return "notPermitted";
+            }
         }
         if (ssUserInfo1 != null && type.equals("onlineApply")) {
             System.out.println("【网上办事网上办事】");
@@ -151,7 +154,7 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
 //            this.model.setIscommit("true");
             this.model.setAffairid(affairid);
             this.model.setObjindex(objindex);
-            this.model.setOpenid(openid);
+            this.model.setOpenid(ssUserInfo1.getId());
             this.model.setCreattime(df.format(new java.util.Date()));
             onlineApplyService.save(this.model);
             //System.out.println("=-=保存后-=="+this.model.getId());
@@ -171,7 +174,7 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
             String onlineApplyId = affairidType[3];
             //判断是否同一个账号上传资料
             OnlineApply onlineApply = onlineApplyService.findById(onlineApplyId);
-            if (!openid.equals(onlineApply.getOpenid())) {
+            if (!ssUserInfo1.getId().equals(onlineApply.getOpenid())) {
                 return "permitted";
             }
             //判断该事项是否提交
@@ -299,71 +302,25 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
         this.model.setApprovedOrNot("");
         super.modify();
 
-        String openid = (String) session.getAttribute("openid");
-        SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
+        SsUserInfo ssUserInfo = UserApi.getUserInfo();
         OnlineApply onlineApply = onlineApplyService.findById(request.getParameter("myid"));
         SsAffairs ssAffairs = ssAffairsService.findById(onlineApply.getAffairid());
 
         System.out.println("==============================================" + onlineApply);
 
-        Map<String, TemplateData> m = new HashMap<String, TemplateData>();
+        String msg = "您好，" + ssUserInfo.getName() + "  您所申请的" + ssAffairs.getAffairname() + "事项已提交成功，工作人员将于一个工作日回复预审结果，敬请耐心等待，如有疑问可拨打82590191咨询，谢谢。【张槎街道行政服务中心】";
 
-        TemplateData first = new TemplateData();
-        first.setColor("#000000");
-        //bymao " + affairsDO.getAffairName() + "
-        first.setValue("您好，" + ssUserInfo.getName() + "  您所申请的" + ssAffairs.getAffairname() + "事项已提交成功，工作人员将于一个工作日回复预审结果，敬请耐心等待，如有疑问可拨打82590191咨询，谢谢。");
-
-        m.put("first", first);
-        TemplateData keyword1 = new TemplateData();
-        keyword1.setColor("#328392");
-        keyword1.setValue(ssUserInfo.getName());
-        m.put("keyword1", keyword1);
-
-        TemplateData keyword2 = new TemplateData();
-        keyword2.setColor("#328392");
-        keyword2.setValue(ssAffairs.getAffairname());
-        m.put("keyword2", keyword2);
-
-        TemplateData keyword3 = new TemplateData();
-        keyword3.setColor("#328392");
-        keyword3.setValue(onlineApply.getCreattime());
-        m.put("keyword3", keyword3);
-
-        TemplateData keyword4 = new TemplateData();
-        keyword4.setColor("#328392");
-        keyword4.setValue(this.model.getState());
-        m.put("keyword4", keyword4);
-
-
-        TemplateData remark = new TemplateData();
-        remark.setColor("#929232");
-        remark.setValue("请关注");
-        m.put("remark", remark);
-
-        WxTemplate template = new WxTemplate();
-        String APPID = weChatPropertieService.getPropertie("APPID");
-        String weChatDNSURL = weChatPropertieService.getPropertie("WeChatDNSURL");
-
-        template.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APPID + "&redirect_uri=" + weChatDNSURL + "onlineApply!onlineApplyHistory&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
-        template.setTouser(openid);
-        template.setTopcolor("#000000");
-        template.setTemplate_id("WLkSsDqQtqCeJyy33EbwFyC_CrOHi_FjS1WfaTtYhdM");
-        template.setData(m);
-
-        CustomMessageAPI api = new CustomMessageAPI();
-        String result = api.sendTemplateMessage(template);
-        JSONObject jsonObject = JSONObject.fromObject(result);
-        if (jsonObject.getString("errmsg").equals("ok")) {
+        net.sf.json.JSONObject json = sendMassageUtil.sendSms(msg,ssUserInfo.getPhone());
+        if (json.getString("flag").equals("1")){
             System.out.println("发送成功");
             session.removeAttribute("onlineApplyId");
 
         } else {
             throw new RuntimeException("申请网上办事失败");
         }
-        //申请在线填单事项后  再申请其他事项需要清空onlineApplyId
-
         //网上办事成功后通知部门人员
         String txt = String.format("张槎街道行政服务中心收到新的待办事项，事项名为：%s,请相关人员注意查收", ssAffairs.getAffairname());
+        System.out.println(txt);
         sendSuccessMessage(txt);
         return null;
     }
@@ -459,5 +416,13 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
 
     public void setWeChatDNSURL(String weChatDNSURL) {
         this.weChatDNSURL = weChatDNSURL;
+    }
+
+    public String getOpenUrl() {
+        return openUrl;
+    }
+
+    public void setOpenUrl(String openUrl) {
+        this.openUrl = openUrl;
     }
 }
