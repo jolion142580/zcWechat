@@ -10,7 +10,9 @@ import com.gdyiko.zcwx.weixinUtils.TokenHepl;
 import com.gdyiko.zcwx.weixinUtils.TokenThread;
 import com.handau.util.StringUtil;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -82,39 +84,47 @@ public class WeChatUploadAction extends BaseAction<FileInfo, String> {
 
     public void delFile() {
 
-        List<FileInfo> fileInfoList = fileInfoService.findEqualByEntity(this.model, BeanUtilEx.getNotNullEscapePropertyNames(this.model));
-        super.setMyid(fileInfoList.get(0).getId());
-        super.remove();
+        try {
+            FileInfo fileInfo = fileInfoService.findById(this.myid);
+            fileInfoService.remove(fileInfo);
 
-
-        FileInfo fileInfo = new FileInfo();
-        fileInfo.setOpenid(fileInfoList.get(0).getOpenid());
-        fileInfo.setRemark(fileInfoList.get(0).getRemark());
-        fileInfo.setOnlineApplyId(fileInfoList.get(0).getOnlineApplyId());
-        List<FileInfo> fileList = fileInfoService.findEqualByEntity(fileInfo, BeanUtilEx.getNotNullEscapePropertyNames(fileInfo));
-        System.out.println("==========================================================size" + fileList.size());
-        if (fileList.size() < 3) {
-            for (int i = 0; i < fileList.size(); i++) {
-                if (fileList.get(i).getFilename().endsWith(".pdf")) {
-                    System.out.println("==================================================================" + fileList.get(i).getFilename());
-                    super.setMyid(fileList.get(i).getId());
-                    super.remove();
+            //删除相关
+            FileInfo fileInfo2 = new FileInfo();
+            fileInfo2.setOpenid(fileInfo.getOpenid());
+            fileInfo2.setRemark(fileInfo.getRemark());
+            fileInfo2.setOnlineApplyId(fileInfo.getOnlineApplyId());
+            List<FileInfo> fileList = fileInfoService.findEqualByEntity(fileInfo2, BeanUtilEx.getNotNullEscapePropertyNames(fileInfo2));
+            System.out.println("==================1========================================size" + fileList.size());
+            if (fileList.size() < 3) {
+                for (int i = 0; i < fileList.size(); i++) {
+                    if (fileList.get(i).getFilename().endsWith(".pdf")) {
+                        System.out.println("===================2===============================================" + fileList.get(i).getFilename());
+                        //super.setMyid(fileList.get(i).getId());
+                        //super.remove();
+                        fileInfoService.remove(fileList.get(i));
+                    }
                 }
             }
+            Struts2Utils.renderText("{\"res\":\"true\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Struts2Utils.renderText("{\"res\":\"false\"}");
         }
     }
 
-    public void savePicture() throws JSONException {
 
+    public void savePicture()  {
 
-        if (fileInfoService.uploadByIdCardOrMaterials(this.model)) {
+        JSONObject rsjson =fileInfoService.uploadByIdCardOrMaterials(file,this.model);
+        Struts2Utils.renderText(rsjson.toString());
+        /*if (fileInfoService.uploadByIdCardOrMaterials(file,this.model)) {
             Struts2Utils.renderText("{\"res\":\"true\"}");
             return;
 
         } else {
             Struts2Utils.renderText("{\"res\":\"false\"}");
             return;
-        }
+        }*/
     }
 
     public void savePictureToWeb() {
@@ -278,33 +288,35 @@ public class WeChatUploadAction extends BaseAction<FileInfo, String> {
 
     public String IoReadImage() throws IOException {
         HttpServletRequest request = ServletActionContext.getRequest();
-        String mediaId = request.getParameter("mediaId");
+        //String mediaId = request.getParameter("mediaId");
         HttpServletResponse response = ServletActionContext.getResponse();
         ServletOutputStream out = null;
         FileInputStream ips = null;
         try {
-            FileInfo fileInfo = new FileInfo();
-            fileInfo.setMediaId(mediaId);
+          /*  FileInfo fileInfo = new FileInfo();
+            fileInfo.setMediaId(mediaId);*/
+            FileInfo fileInfo = fileInfoService.findById(this.myid);
+            //List<FileInfo> fileInfoList = fileInfoService.findEqualByEntity(fileInfo, BeanUtilEx.getNotNullEscapePropertyNames(fileInfo));
+            if (fileInfo!=null) {
 
-            List<FileInfo> fileInfoList = fileInfoService.findEqualByEntity(fileInfo, BeanUtilEx.getNotNullEscapePropertyNames(fileInfo));
-            if (CollectionUtils.isNotEmpty(fileInfoList)) {
-
-
-                System.out.println("-=-读取图片=-=-=" + fileInfoList.get(0).getLocalpath());
-                File file = new File(fileInfoList.get(0).getLocalpath());
+                System.out.println("-=-读取图片=-=-=" + fileInfo.getLocalpath());
+                File file = new File(fileInfo.getLocalpath());
                 if (file.exists()) {
                     //获取图片存放路径
-                    String imgPath = fileInfoList.get(0).getLocalpath();
+                    String imgPath = fileInfo.getLocalpath();
                     ips = new FileInputStream(new File(imgPath));
-                    response.setContentType("multipart/form-data");
+                    //response.setContentType("multipart/form-data");
                     out = response.getOutputStream();
+                    //out = response.getOutputStream();
                     //读取文件流
-                    int len = 0;
+                 /*   int len = 0;
                     byte[] buffer = new byte[1024 * 10];
                     while ((len = ips.read(buffer)) != -1) {
                         out.write(buffer, 0, len);
                     }
-                    out.flush();
+                    out.flush();*/
+
+                    IOUtils.copy(ips, out);
                 }
             }
         } catch (Exception e) {
