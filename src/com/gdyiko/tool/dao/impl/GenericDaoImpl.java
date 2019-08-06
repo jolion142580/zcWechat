@@ -28,6 +28,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.engine.LoadQueryInfluencers;
 import org.hibernate.engine.QueryParameters;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.engine.SessionImplementor;
@@ -74,8 +75,7 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 	 * <p>
 	 * 必须提供的构造方法,以便创建实例的时候就知道具体实体的类型
 	 * <p>
-	 * 
-	 * @param type
+	 *
 	 *            : 实体类型
 	 */
 	public GenericDaoImpl() {
@@ -92,8 +92,6 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 	 * <p>
 	 * 因为这个类没有继承HibernateDaoSupport,所以现在由Spring注入HibernateTemplate
 	 * </p>
-	 * 
-	 * @param hibernateTemplate
 	 *            : Spring提供的Hibernate工具类
 	 */
 	public abstract Class<T> getEntityClass();
@@ -914,7 +912,7 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 		CriteriaJoinWalker walker = new CriteriaJoinWalker(
 				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
 				translator, factory, criteriaImpl, criteriaImpl
-						.getEntityOrClassName(), session.getEnabledFilters());
+						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());
 		QueryParameters queryParameters = translator.getQueryParameters();
 		String sql = walker.getSQLString();
 		System.out
@@ -1018,7 +1016,7 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 		CriteriaJoinWalker walker = new CriteriaJoinWalker(
 				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
 				translator, factory, criteriaImpl, criteriaImpl
-						.getEntityOrClassName(), session.getEnabledFilters());
+						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());
 		QueryParameters queryParameters = translator.getQueryParameters();
 		String sql = walker.getSQLString();
 		System.out
@@ -1066,7 +1064,7 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 		CriteriaJoinWalker walker = new CriteriaJoinWalker(
 				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
 				translator, factory, criteriaImpl, criteriaImpl
-						.getEntityOrClassName(), session.getEnabledFilters());
+						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());
 		QueryParameters queryParameters = translator.getQueryParameters();
 		String sql = walker.getSQLString();
 		List list = findBySqlID(sql,
