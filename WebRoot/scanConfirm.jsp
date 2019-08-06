@@ -9,31 +9,6 @@
    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path +"/";
 %>
 
-<%
-
-
-	String code = request.getParameter("code");
-	String uuid=request.getParameter("uuid");
-	
-	System.out.println("code:::::" + code );
-	String openid=(String)session.getAttribute("openid");
-	
-	if(code!=null && openid == null){
-		OAuth oauth = new OAuth();
-		openid=oauth.getOppenid(code);	
-	} 
-	//String openid="111";
-	//String uuid="2222";
-	 System.out.println("----网页扫一扫获取openid---"+openid);
-	System.out.println("--=-=-网页uuid===="+uuid);
-
-	//todo  增加了	application.setAttribute(uuid, openid);
-    //    application.setAttribute(uuid, openid);
-
-	
-
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +51,7 @@ $.modal({
 	  buttons: [
 	    { text: "允许", onClick: function(){ 
 	    	
-	    	$.post('QRCode!allowScan', { uuid:'<%=uuid%>',openid:'<%=openid%>'}, function(data) {
+	    	$.post('QRCode!allowScan', { uuid:'${uuid}',sid:'${sid}'}, function(data) {
 	    		var data1 = eval("(" + data + ")");
 	    		if(data1.state=="success"){
 	    			$.toast("操作成功", function() {
@@ -84,7 +59,8 @@ $.modal({
 		    		});	
 	    		}
 	    		if(data1.state=="fail"){
-	    		    location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"relation.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+	    		   // alert(1);
+	    		 //   location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"relation.jsp&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
 	    			/*$.alert("请关注\"张槎街道行政服务中心\"微信公众号并进行认证绑定！", function() {
 
 	    				wx.closeWindow();
