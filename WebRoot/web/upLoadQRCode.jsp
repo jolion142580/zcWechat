@@ -38,14 +38,12 @@
         $(function () {
             var ewmData;
             if (content == "1") {
-                ewmData = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + weChat.APPID
-                    + "&redirect_uri=" + weChat.weChatDNSURL
-                    + "onlineApply!isrelation?affairid=<%=affairid%>_affairMaterials_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                ewmData =  weChat.WeChatDNSURL
+                    + "onlineApply!isrelation?affairid=<%=affairid%>_affairMaterials_<%=objindex%>";
             } else if (content == "2") {
-                ewmData = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + weChat.APPID
-                    + "&redirect_uri=" + weChat.weChatDNSURL
+                ewmData = weChat.WeChatDNSURL
                     + "onlineApply!isrelation?affairid=<%=affairid%>_affairMaterialsByPC2Wechart_<%=objindex%>_"
-                    + onlineApplyId + "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                    + onlineApplyId;
             }
             loadEWM(ewmData);
         })
