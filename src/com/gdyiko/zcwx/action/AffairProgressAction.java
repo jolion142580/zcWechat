@@ -4,6 +4,7 @@ import com.gdyiko.base.service.PropertieService;
 import com.gdyiko.zcwx.po.SsUserInfo;
 import com.gdyiko.zcwx.service.SsUserInfoService;
 import com.gdyiko.zcwx.weixinUtils.HttpContent;
+import com.gdyiko.zcwx.weixinUtils.UserApi;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
@@ -76,8 +77,8 @@ public class AffairProgressAction extends ActionSupport {
 	}*/
 
     public String findUserName() {
-        String openid = (String) session.getAttribute("openid");
-        SsUserInfo ssUserInfo = ssUserInfoService.findById(openid);
+
+        SsUserInfo ssUserInfo = UserApi.getUserInfo();
         HashMap<String, String> userInfo = new HashMap<String, String>();
         userInfo.put("userName", ssUserInfo.getName());
         String result = JSONObject.fromObject(userInfo).toString();
