@@ -360,8 +360,15 @@
         }
         var check = yz();
         if (check == true) {
+            var id = $('#id').val();
+            var url = "";
+            if (id==""){
+                url = "ssUserInfoNoLogin!save";
+            }else {
+                url = "ssUserInfo!save";
+            }
 
-            $.post('ssUserInfoNoLogin!save', {
+            $.post(url, {
                 "random_num": $("#random_num").val(),
                 "random_sms": $("#random_sms").val(),
                 "id":$("#id").val(),
