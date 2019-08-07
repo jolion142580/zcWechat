@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
+import org.springside.modules.web.struts2.Struts2Utils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -72,15 +73,11 @@ public class WxLoginAction extends ActionSupport {
       }
     }
 
-
-/*    if (isInvalid(phone)) return INPUT;
-
-    if (isInvalid(SmsCode)) return INPUT;*/
     // 从库中查找是否存在该数据
     user = ssUserInfoService.findByPhone(getPhone());
     String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
-
-    if (user != null && !user.getName().equals("") &&SmsCode==smscode) {
+    System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
+    if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
       ActionContext.getContext().getSession().put("user", user);
       CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
       if (StringUtils.isNotEmpty(url)) {
@@ -89,9 +86,60 @@ public class WxLoginAction extends ActionSupport {
       }
       return "success";
     }
+  //  Struts2Utils.renderText("登陆失败");
     return "input";
   }
 
+public String login(){
+  // 若session已经包含登陆信息则直接放行
+  Map<String, Object> session =ActionContext.getContext().getSession();
+  SsUserInfo user = (SsUserInfo) session.get("user");
+
+  System.out.println("若session已经包含登陆信息则直接放行---------------->" + user);
+  if (user != null) {
+
+    return "/index.jsp";
+  }
+
+  String url = (String) session.get("JumpUrl");
+
+  // 从cookies中获取用户信息，并自动登陆
+  String userjson = CookieUtil.getCookie("user");
+  //判断获取的值是否为空
+  if (userjson!=null&&!userjson.equals("")){
+    JSONObject j = JSONObject.fromObject(userjson);
+    user = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
+    //验证对象是否一致
+    if (user != null && !user.getName().equals("")) {
+      SsUserInfo ckuser = ssUserInfoService.findById(user.getId());
+      if (user.equals(ckuser)){
+        ActionContext.getContext().getSession().put("user", user);
+        CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
+        if (StringUtils.isNotEmpty(url)) {
+          setOpenUrl(url);
+          return openUrl;
+        }
+        return "/index.jsp";
+      }
+    }
+  }
+
+  // 从库中查找是否存在该数据
+  user = ssUserInfoService.findByPhone(getPhone());
+  String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
+  System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
+  if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
+    ActionContext.getContext().getSession().put("user", user);
+    CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
+    if (StringUtils.isNotEmpty(url)) {
+      setOpenUrl(url);
+      return openUrl;
+    }
+    return "/index.jsp";
+  }
+    Struts2Utils.renderText("登陆失败");
+    return null;
+}
 
   public String logout(){
 
