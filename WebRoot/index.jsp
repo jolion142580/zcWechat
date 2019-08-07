@@ -6,8 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-">
 
 <link rel="stylesheet" href="lib/weui.min.css" type="text/css"></link>
 <link rel="stylesheet" href="css/jquery-weui.min.css" type="text/css"></link>
@@ -45,6 +43,19 @@
 
 <script type="text/javascript">
 
+    $(function () {
+
+        $.post("ssUserInfoNoLogin!getUser",function (data) {
+
+            if (data==null){
+                $("#log").css("display","block");
+            } else {
+                $("#log").css("display","none");
+            }
+            console.log(data);
+        });
+    });
+
 </script>
 
 
@@ -58,7 +69,7 @@
             </ul>
         </div>
     </div>
-
+<%--
     <div id="nav">
         <ul id="indicator">
             <li class="active" ></li>
@@ -66,17 +77,21 @@
             <li></li>
             <li></li>
         </ul>
-    </div>
+    </div>--%>
 
 </div>
 
+<div id="log" style="background-color: #eee;display: block">
+    <a style="margin-left: 1em">切换用户</a>
+</div>
+
 <ul class="mainmenu">
-    <li><a href="ssUserInfo" ><b><img src="images\weixin\grxx.png" /></b><span>个人信息</span></a></li>
+    <li><a href="ssBaseDicInfo!findAllByBaseDicType" ><b><img src="images\weixin\zhinan.png" /></b><span>办事点我</span></a></li>
     <li><a href="YuYues!yuYues" ><b><img src="images\weixin\newyuyue1.png" /></b><span>排队预约</span></a></li>
-    <li><a href="ssBaseDicInfo!findAllByBaseDicType" ><b><img src="images\weixin\zhinan.png" /></b><span>办事指南</span></a></li>
     <li><a href="zcQueueInfo.jsp" ><b><img src="images\weixin\queue.png" /></b><span>排队信息</span></a></li>
     <li><a href="affairProgress.jsp" ><b><img src="images\weixin\genzong.png" /></b><span>办件跟踪</span></a></li>
     <li><a href="complaint!getComplaintPage" ><b><img src="images\weixin\fg.png" /></b><span>市民留言</span></a></li>
+    <li><a href="ssUserInfo" ><b><img src="images\weixin\grxx.png" /></b><span>个人信息</span></a></li>
 </ul>
 
 
