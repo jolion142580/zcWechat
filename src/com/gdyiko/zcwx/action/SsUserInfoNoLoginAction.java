@@ -1,6 +1,7 @@
 package com.gdyiko.zcwx.action;
 
 import com.gdyiko.tool.AesEncryptUtils;
+import com.gdyiko.tool.BeanUtilEx;
 import com.gdyiko.tool.PrimaryProduce;
 import com.gdyiko.tool.action.BaseAction;
 import com.gdyiko.tool.service.GenericService;
@@ -11,6 +12,7 @@ import com.gdyiko.zcwx.service.SsUserInfoService;
 import com.gdyiko.zcwx.weixinUtils.CookieUtil;
 import com.gdyiko.zcwx.weixinUtils.UserApi;
 import com.opensymphony.xwork2.ActionContext;
+import net.sf.json.JSON;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -78,6 +80,12 @@ public class SsUserInfoNoLoginAction extends BaseAction<SsUserInfo, String> {
         super.setGenericService(genericService);
     }
 
+    //查询用户
+    public void getUser(){
+        net.sf.json.JSONObject jsonObject = net.sf.json.JSONObject.fromObject(userInfo);
+        Struts2Utils.renderText(jsonObject.toString());
+    }
+
     public String save() {
 
         try {
@@ -102,7 +110,32 @@ public class SsUserInfoNoLoginAction extends BaseAction<SsUserInfo, String> {
             this.model.setIdCard(AesEncryptUtils.decrypt(this.model.getIdCard(), AesEncryptUtils.KEY));
             System.out.println("===============idCard===============" + this.model.getIdCard());
             this.model.setPhone(AesEncryptUtils.decrypt(this.model.getPhone(), AesEncryptUtils.KEY));
+            List<SsUserInfo> list = null;
+            SsUserInfo checkuser = new SsUserInfo();
+            checkuser.setName(this.model.getName());
+            checkuser.setIdCard(this.model.getIdCard());
+
+            list = ssUserInfoService.findLikeByEntity(checkuser, BeanUtilEx.getNotNullPropertyNames(checkuser));
+            net.sf.json.JSONObject jsonObject = new net.sf.json.JSONObject();
+
+            if (list!=null&&list.size()>0){
+                jsonObject.put("flag",FLAG_FAIL);
+                jsonObject.put("message","用户已存在！");
+                Struts2Utils.renderText(jsonObject.toString());
+                return null;
+            }
+            checkuser.setPhone(this.model.getPhone());
+            list = ssUserInfoService.findLikeByEntity(checkuser, BeanUtilEx.getNotNullPropertyNames(checkuser));
+            if (list!=null&&list.size()>0){
+                jsonObject.put("flag",FLAG_FAIL);
+                jsonObject.put("message","用户已存在！");
+                Struts2Utils.renderText(jsonObject.toString());
+                return null;
+            }
+
+
             this.model.setCreattime(df.format(new java.util.Date()));
+
             if (this.model.getId() == null || "".equals(this.model.getId())) {
                 this.model.setId(PrimaryProduce.produce());
             }
