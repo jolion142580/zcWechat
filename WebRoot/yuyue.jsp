@@ -11,58 +11,7 @@
 			+ path + "/";
 %>
 
-<%!String convert(int val) {
-		String retStr = "";
-		switch (val) {
-			case 0 :
-				return "星期日";
-			case 1 :
-				return "星期一";
-			case 2 :
-				return "星期二";
-			case 3 :
-				return "星期三";
-			case 4 :
-				return "星期四";
-			case 5 :
-				return "星期五";
-			case 6 :
-				return "星期六";
-			default :
-				break;
-		}
-		return retStr;
-	}%>
-<%
-	//String join_id = request.getParameter("join_id");
-	//System.out.println("------join_id-------"+join_id);
 
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-	Holiday holiday = new Holiday();
-
-	Date addDate = holiday.getIncomeDate(new Date(),true);
-	String date = format.format(addDate);
-	String weekDay = convert(addDate.getDay());
-	//System.out.println(":::::::::::::"+addDate);
-
-	Date addDate2 = holiday.getIncomeDate(addDate,true);
-	String date2 = format.format(addDate2);
-	String weekDay2 = convert(addDate2.getDay());
-	//System.out.println(":::::::::::::"+addDate2);
-
-	Date addDate3 = holiday.getIncomeDate(addDate2,true);
-	String date3 = format.format(addDate3);
-	String weekDay3 = convert(addDate3.getDay());
-
-	Date addDate4 = holiday.getIncomeDate(addDate3,true);
-	String date4 = format.format(addDate4);
-	String weekDay4 = convert(addDate4.getDay());
-
-	Date addDate5 = holiday.getIncomeDate(addDate4,true);
-	String date5 = format.format(addDate5);
-	String weekDay5 = convert(addDate5.getDay());
-%>
 
 <%
 //String street = request.getParameter("street");
@@ -94,10 +43,6 @@ String twoLevelAffairId = params[2];
 <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="yms/window/weiXinAppointment/js/common.js"></script>
 <script type="text/javascript" src="yms/window/onlineAppointment/js/id-num-validator.js"></script>
-
-
-
-
 
 
 </head>
@@ -487,11 +432,7 @@ function getCount(ydate){
          		<div class="txt right">
          			<select class="input-select" name="ydate" onchange="getCount(this.value);" id="ydate">
          				  <option value="" selected="selected">--请选择预约时间--</option>
-						  <option value="<%=date %>"><%=date %> (<%=weekDay %>)</option>
-						  <option value="<%=date2 %>"><%=date2 %> (<%=weekDay2 %>)</option>
-						  <option value="<%=date3 %>"><%=date3 %> (<%=weekDay3 %>)</option>
-						  <option value="<%=date4 %>"><%=date4 %> (<%=weekDay4 %>)</option>
-						  <option value="<%=date5 %>"><%=date5 %> (<%=weekDay5 %>)</option>
+
                     </select>
          			<!-- <a href="list-2.html">请选择预约日期</a> -->
          		</div>
@@ -617,6 +558,25 @@ function retualServerValue(){
 	}catch(e) {
       
 	}
+}
+
+
+function getdate(){
+    var json = ${dayJson};
+    //	alert();
+    var serverTypeNo = '<%=serverTypeNo%>';
+
+    for(var key in json){
+
+        //　alert(key+':'+json[key]);
+        if(json[key].indexOf("六")!=-1){
+            $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
+        }
+        if(serverTypeNo.indexOf('ZL')==-1&&serverTypeNo.indexOf('GL')==-1){
+            $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
+        }
+
+    }
 }
 </script>
 </html>

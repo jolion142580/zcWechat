@@ -26,10 +26,7 @@
         openid = oauth.getOppenid(code);
     }
     System.out.println("----openid---" + openid);
-	/* String openid="1111";
-	String code="22222";
-	String type="33333";*/
-    //System.out.println("----openid---"+openid);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -267,7 +264,6 @@
         }
         var check = yz();
         if (check == true) {
-//            alert($("form").serialize());
             $.post('ssUserInfo!save', {
                 "random_num": $("#random_num").val(),
                 "random_sms": $("#random_sms").val(),

@@ -1,5 +1,6 @@
+<%@ page import="com.gdyiko.zcwx.po.SsUserInfo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,8 @@
 <%
 
 String affairid=(String)session.getAttribute("affairid");
-String openid=(String)session.getAttribute("openid");
+	SsUserInfo user = (SsUserInfo) session.getAttribute("user");
+	String openid = user.getId();
 String objindex=(String)session.getAttribute("objindex");
 //System.out.println("--11111---"+affairid+"-=-=-="+openid);
  %>
@@ -50,7 +52,8 @@ String objindex=(String)session.getAttribute("objindex");
 
 					} },
 				{ text: "上传表格", onClick: function(){
-						location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"onlineApply!isrelation?affairid=<%=affairid%>_affairMaterials_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+						<%--location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"onlineApply!isrelation?affairid=<%=affairid%>_affairMaterials_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";--%>
+                        location.href="onlineApply!isrelation?affairid=<%=affairid%>_affairMaterials_<%=objindex%>";
 					} },
 
 			]
@@ -62,7 +65,8 @@ function onlineDataFun(inputData){
 	$.post("onlineApply!onlineApplySave",{affairid:<%=affairid%>,objindex:<%=objindex%>,openid:'<%=openid%>',onlineData:inputData,iscommit:'true'},function(res){
       	
       	alert("提交成功");
-      	location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"onlineApply!isrelation?affairid=<%=affairid%>_affairMaterialsByWrite_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+      	<%--location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+weChat.APPID+"&redirect_uri="+weChat.WeChatDNSURL+"onlineApply!isrelation?affairid=<%=affairid%>_affairMaterialsByWrite_<%=objindex%>&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";--%>
+        location.href="onlineApply!isrelation?affairid=<%=affairid%>_affairMaterialsByWrite_<%=objindex%>";
          
      })
 

@@ -53,7 +53,7 @@
                         <input id="btnSendCode1"  type="button" class="btn btn-default" value="获取验证码" onClick="sendMessage1()" />
                     </div>
                 </div>
-                <input type="submit" class="aui-sign-login"  value="立即登录" />
+                <input type="button" id="submit" class="aui-sign-login"  value="立即登录" />
 
                 <div class="aui-flex aui-flex-clear">
                     <div class="aui-flex-box">
@@ -86,6 +86,14 @@
         var ja = JSON.parse(s);
         alert(ja.phone);
         console.log(ja.phone);*/
+        $("#submit").bind("click",function(){
+            $.post("wxlogin!login",$('form').serialize(),function (data) {
+                console.log(data);
+                if (data!=null){
+                    alert(data);
+                }
+            });
+        });
     });
 
     function sendMessage1() {

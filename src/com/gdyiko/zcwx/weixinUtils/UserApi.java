@@ -25,11 +25,15 @@ public class UserApi {
         /*由于session断开导致用户不能持久化，因此通过拦截器获取cookie信息，
          *并且保持session状态，由于拦截器属于后置，
          * 因此先通过cookie获取用户信息，再通过拦截器保持session*/
-        String userjson = CookieUtil.getCookie("user");
-        if (userjson!=null&&!userjson.equals("")){
-            JSONObject j = JSONObject.fromObject(userjson);
-        System.out.println("--j-"+j.toString());
-            userInfo = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
+        try {
+            String userjson = CookieUtil.getCookie("user");
+            if (userjson!=null&&!userjson.equals("")){
+                JSONObject j = JSONObject.fromObject(userjson);
+            System.out.println("--j-"+j.toString());
+                userInfo = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     System.out.println("----uu----"+JSONObject.fromObject(userInfo).toString());

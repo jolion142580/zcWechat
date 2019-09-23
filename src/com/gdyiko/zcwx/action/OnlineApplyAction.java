@@ -263,18 +263,19 @@ public class OnlineApplyAction extends BaseAction<OnlineApply, String> {
     }
 
     public String onlineApplyHistory() {
-        String code = request.getParameter("code");
+       /* String code = request.getParameter("code");
 
         OAuth oauth = new OAuth();
         String openid = (String) session.getAttribute("openid");
 
         if (code != null && openid == null) {
             openid = oauth.getOppenid(code);
-        }
+        }*/
+        SsUserInfo ssUserInfo1 = UserApi.getUserInfo();
         //if(openid==null) openid="openid";
         onlineApplyList = new ArrayList<OnlineApply>();
 
-        this.model.setOpenid(openid);
+        this.model.setOpenid(ssUserInfo1.getId());
         this.model.setIscommit("true");
         this.model.setCreattime("orderby_desc_");
         this.model.setState("");

@@ -42,61 +42,7 @@
         }
     </style>
 </head>
-<%!
-    String convert(int val) {
-        String retStr = "";
-        switch (val) {
-            case 0:
-                return "星期日";
-            case 1:
-                return "星期一";
-            case 2:
-                return "星期二";
-            case 3:
-                return "星期三";
-            case 4:
-                return "星期四";
-            case 5:
-                return "星期五";
-            case 6:
-                return "星期六";
-            default:
-                break;
-        }
-        return retStr;
-    }
-%>
-<%
-    //String join_id = request.getParameter("join_id");
-//System.out.println("------join_id-------"+join_id);
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-    Holiday holiday = new Holiday();
-
-    Date addDate = holiday.getIncomeDate(new Date());
-    String date = format.format(addDate);
-    String weekDay = convert(addDate.getDay());
-//System.out.println(":::::::::::::"+addDate);
-
-    Date addDate2 = holiday.getIncomeDate(addDate);
-    String date2 = format.format(addDate2);
-    String weekDay2 = convert(addDate2.getDay());
-//System.out.println(":::::::::::::"+addDate2);
-
-    Date addDate3 = holiday.getIncomeDate(addDate2);
-    String date3 = format.format(addDate3);
-    String weekDay3 = convert(addDate3.getDay());
-
-    Date addDate4 = holiday.getIncomeDate(addDate3);
-    String date4 = format.format(addDate4);
-    String weekDay4 = convert(addDate4.getDay());
-
-    Date addDate5 = holiday.getIncomeDate(addDate4);
-    String date5 = format.format(addDate5);
-    String weekDay5 = convert(addDate5.getDay());
-
-%>
 <body>
 <div class="page-group">
     <div class="page page-current">
@@ -193,11 +139,7 @@
                         <div class="weui-cell__bd">
                             <select name="ydate" onchange="getCount(this.value);" id="ydate" class="weui-select">
                                 <option value="" selected="selected">--请选择预约时间--</option>
-                                <option value="<%=date %>"><%=date %>   (<%=weekDay %>)</option>
-                                <option value="<%=date2 %>"><%=date2 %> (<%=weekDay2 %>)</option>
-                                <option value="<%=date3 %>"><%=date3 %> (<%=weekDay3 %>)</option>
-                                <option value="<%=date4 %>"><%=date4 %> (<%=weekDay4 %>)</option>
-                                <option value="<%=date5 %>"><%=date5 %> (<%=weekDay5 %>)</option>
+
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -666,6 +608,20 @@
                 document.getElementById("codeResult").value = response;
             }
         } catch (e) {
+
+        }
+    }
+
+    function getdate(){
+        var json = ${dayJson};
+
+        for(var key in json){
+
+            //　alert(key+':'+json[key]);
+            if(json[key].indexOf("六")!=-1){
+                $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
+            }
+
 
         }
     }

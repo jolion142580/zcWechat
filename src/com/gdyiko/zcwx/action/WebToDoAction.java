@@ -126,7 +126,11 @@ public class WebToDoAction extends BaseAction<SsUserInfo, String> {
     public String logout() {
         String result = vail();
         clearSession();
-        CookieUtil.removeCookie("user");
+        try {
+            CookieUtil.removeCookie("user");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 

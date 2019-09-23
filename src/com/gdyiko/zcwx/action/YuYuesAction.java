@@ -1,5 +1,6 @@
 package com.gdyiko.zcwx.action;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gdyiko.zcwx.service.BlackWhiteListService;
+import com.gdyiko.zcwx.weixinUtils.Holiday;
 import com.gdyiko.zcwx.weixinUtils.UserApi;
 import net.sf.json.JSONArray;
 
@@ -22,6 +24,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springside.modules.web.struts2.Struts2Utils;
 
 import com.gdyiko.zcwx.po.SsUserInfo;
@@ -79,6 +82,9 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
     private String appointMsg;
 
+    private net.sf.json.JSONObject dayJson;
+
+
     //private String paramVal;
 
     private List<YuYues> yuYuesList;
@@ -100,6 +106,10 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 
     @Resource(name = "blackWhiteListService")
     BlackWhiteListService blackWhiteListService;
+
+    @Autowired
+    Holiday holiday;
+
 
     @Resource(name = "yuYuesService")
     @Override
@@ -193,6 +203,54 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
    /*     if (ssUserInfo == null) {
             return "notPermitted";
         }*/
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date addDate = holiday.getIncomeDate(new Date());
+            String date = format.format(addDate);
+            String weekDay = holiday.convert(addDate.getDay());
+            //System.out.println(":::::::::::::"+addDate);
+
+            Date addDate2 = holiday.getIncomeDate(addDate);
+            String date2 = format.format(addDate2);
+            String weekDay2 = holiday.convert(addDate2.getDay());
+            //System.out.println(":::::::::::::"+addDate2);
+
+            Date addDate3 = holiday.getIncomeDate(addDate2);
+            String date3 = format.format(addDate3);
+            String weekDay3 = holiday.convert(addDate3.getDay());
+
+            Date addDate4 = holiday.getIncomeDate(addDate3);
+            String date4 = format.format(addDate4);
+            String weekDay4 = holiday.convert(addDate4.getDay());
+
+            Date addDate5 = holiday.getIncomeDate(addDate4);
+            String date5 = format.format(addDate5);
+            String weekDay5 = holiday.convert(addDate5.getDay());
+            dayJson = new net.sf.json.JSONObject();
+            dayJson.put(date, weekDay);
+            dayJson.put(date2, weekDay2);
+            dayJson.put(date3, weekDay3);
+            dayJson.put(date4, weekDay4);
+            dayJson.put(date5, weekDay5);
+
+
+
+        } catch (NullPointerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
 
         this.model.setName(ssUserInfo.getName());
         this.model.setIdcard(ssUserInfo.getIdCard());
@@ -511,5 +569,11 @@ public String getParamVal() {
 	}
 */
 
+    public net.sf.json.JSONObject getDayJson() {
+        return dayJson;
+    }
 
+    public void setDayJson(net.sf.json.JSONObject dayJson) {
+        this.dayJson = dayJson;
+    }
 }

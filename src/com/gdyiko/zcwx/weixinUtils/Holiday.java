@@ -1,7 +1,11 @@
 package com.gdyiko.zcwx.weixinUtils;
 
+import com.gdyiko.zcwx.service.DaysService;
 import org.json.JSONException;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -11,7 +15,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
+@Service
 public class Holiday {
+
+
+	@Resource(name="daysService")
+	DaysService daysService;
 
 	public Date addWorkDay(Date date, int num) {
 		//2015年法定节假日
@@ -59,16 +68,16 @@ public class Holiday {
 	    in.close();
 	    
 	    //String isHoliday =props.getProperty("isHoliday");
-	    HttpContent httpContent = new HttpContent();
-		String isHoliday = httpContent.getHttpContent("http://zhengqiao.ss.gov.cn/sspjxt/days!tll.action?namelr=isHoliday", "", "", "POST");
+	    //HttpContent httpContent = new HttpContent();
+		//String isHoliday = httpContent.getHttpContent("http://zhengqiao.ss.gov.cn/sspjxt/days!tll.action?namelr=isHoliday", "", "", "POST");
 		//System.out.println("isHoliday:::"+isHoliday);
-		
+		String isHoliday = daysService.showdays("isHoliday");
 		//2015节假前后加班日
 		//String overDay="1-4,2-15,5-4,10-10,10-11";
 		//String overDay =props.getProperty("overDay");
-		String overDay = httpContent.getHttpContent("http://zhengqiao.ss.gov.cn/sspjxt/days!tll.action?namelr=overDay", "", "", "POST");
+		//String overDay = httpContent.getHttpContent("http://zhengqiao.ss.gov.cn/sspjxt/days!tll.action?namelr=overDay", "", "", "POST");
 		//System.out.println("overDay:::"+overDay);
-	 
+		String overDay = daysService.showdays("overDay");
 	    //对日期的操作,我们需要使用 Calendar 对象
 	    Calendar calendar = new GregorianCalendar();
 	    calendar.setTime(date);
@@ -148,6 +157,29 @@ public class Holiday {
 	    
 	    return false;
 	}
-	 
+
+
+	public	String convert(int val) {
+		String retStr = "";
+		switch (val) {
+			case 0 :
+				return "星期日";
+			case 1 :
+				return "星期一";
+			case 2 :
+				return "星期二";
+			case 3 :
+				return "星期三";
+			case 4 :
+				return "星期四";
+			case 5 :
+				return "星期五";
+			case 6 :
+				return "星期六";
+			default :
+				break;
+		}
+		return retStr;
+	}
 	
 }

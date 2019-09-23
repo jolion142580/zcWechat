@@ -71,7 +71,7 @@
                 <s:if test="%{onlineData == null and (approvedOrNot==0 || state=='待资料上传')}">
                     <%--<s:if test="%{onlineData == null and (state=='预审不通过' || state=='待资料上传')}">--%>
 
-                <a id="a_href_SET">
+                <a id="a_href_SET" href="onlineApply!modifyAffairMaterials?id=<s:property value="id"/>">
                     </s:if>
                     </s:else>
                     <div class="weui-form-preview">
@@ -120,8 +120,8 @@
 <script type="text/javascript" src="lib/fastclick.js"></script>
 <script>
     $(function () {
-        var HREF ='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!modifyAffairMaterials?id=<s:property value="id"/>&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect';
-        $("#a_href_SET").attr("href",HREF);
+      /*  var HREF =weChat.WeChatDNSURL+'onlineApply!modifyAffairMaterials?id=<s:property value="id"/>';
+        $("#a_href_SET").attr("href",HREF);*/
         FastClick.attach(document.body);
     });
 </script>

@@ -53,40 +53,51 @@ public class WxLoginAction extends ActionSupport {
     String url = (String) session.get("JumpUrl");
 
     // 从cookies中获取用户信息，并自动登陆
-    String userjson = CookieUtil.getCookie("user");
-    //判断获取的值是否为空
-    if (userjson!=null&&!userjson.equals("")){
-      JSONObject j = JSONObject.fromObject(userjson);
-      user = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
-      //验证对象是否一致
-      if (user != null && !user.getName().equals("")) {
-        SsUserInfo ckuser = ssUserInfoService.findById(user.getId());
-        if (user.equals(ckuser)){
-          ActionContext.getContext().getSession().put("user", user);
-          CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
-          if (StringUtils.isNotEmpty(url)) {
-            setOpenUrl(url);
-            return "jump";
+    try {
+      String userjson = CookieUtil.getCookie("user");
+      //判断获取的值是否为空
+      if (userjson!=null&&!userjson.equals("")){
+        JSONObject j = JSONObject.fromObject(userjson);
+        user = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
+        //验证对象是否一致
+        if (user != null && !user.getName().equals("")) {
+          SsUserInfo ckuser = ssUserInfoService.findById(user.getId());
+          if (user.equals(ckuser)){
+            ActionContext.getContext().getSession().put("user", user);
+            CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
+            System.out.println("url---"+url);
+            url = url.replaceAll("zcWechat/","");
+            System.out.println("url---"+url);
+            if (StringUtils.isNotEmpty(url)) {
+              setOpenUrl(url);
+              return "jump";
+            }
+            return "success";
           }
-          return "success";
         }
       }
-    }
 
-    // 从库中查找是否存在该数据
-    user = ssUserInfoService.findByPhone(getPhone());
-    String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
-    System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
-    if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
-      ActionContext.getContext().getSession().put("user", user);
-      CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
-      if (StringUtils.isNotEmpty(url)) {
-        setOpenUrl(url);
-        return "jump";
+      // 从库中查找是否存在该数据
+      user = ssUserInfoService.findByPhone(getPhone());
+      String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
+      System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
+      if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
+        ActionContext.getContext().getSession().put("user", user);
+        CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
+        System.out.println("url---"+url);
+        url = url.replaceAll("zcWechat/","");
+        System.out.println("url---"+url);
+        if (StringUtils.isNotEmpty(url)) {
+          setOpenUrl(url);
+          return "jump";
+        }
+        return "success";
       }
-      return "success";
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "input";
     }
-  //  Struts2Utils.renderText("登陆失败");
+    //  Struts2Utils.renderText("登陆失败");
     return "input";
   }
 
@@ -103,41 +114,45 @@ public String login(){
 
   String url = (String) session.get("JumpUrl");
 
-  // 从cookies中获取用户信息，并自动登陆
-  String userjson = CookieUtil.getCookie("user");
-  //判断获取的值是否为空
-  if (userjson!=null&&!userjson.equals("")){
-    JSONObject j = JSONObject.fromObject(userjson);
-    user = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
-    //验证对象是否一致
-    if (user != null && !user.getName().equals("")) {
-      SsUserInfo ckuser = ssUserInfoService.findById(user.getId());
-      if (user.equals(ckuser)){
-        ActionContext.getContext().getSession().put("user", user);
-        CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
-        if (StringUtils.isNotEmpty(url)) {
-          setOpenUrl(url);
-          return openUrl;
+  try {
+    // 从cookies中获取用户信息，并自动登陆
+    String userjson = CookieUtil.getCookie("user");
+    //判断获取的值是否为空
+    if (userjson!=null&&!userjson.equals("")){
+      JSONObject j = JSONObject.fromObject(userjson);
+      user = (SsUserInfo) JSONObject.toBean(j, SsUserInfo.class);
+      //验证对象是否一致
+      if (user != null && !user.getName().equals("")) {
+        SsUserInfo ckuser = ssUserInfoService.findById(user.getId());
+        if (user.equals(ckuser)){
+          ActionContext.getContext().getSession().put("user", user);
+          CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
+          if (StringUtils.isNotEmpty(url)) {
+            setOpenUrl(url);
+            return openUrl;
+          }
+          return "/index.jsp";
         }
-        return "/index.jsp";
       }
     }
-  }
 
-  // 从库中查找是否存在该数据
-  user = ssUserInfoService.findByPhone(getPhone());
-  String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
-  System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
-  if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
-    ActionContext.getContext().getSession().put("user", user);
-    CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
-    if (StringUtils.isNotEmpty(url)) {
-      setOpenUrl(url);
-      return openUrl;
+    // 从库中查找是否存在该数据
+    user = ssUserInfoService.findByPhone(getPhone());
+    String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
+    System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
+    if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
+      ActionContext.getContext().getSession().put("user", user);
+      CookieUtil.addCookie("user", JSONObject.fromObject(user).toString());
+      if (StringUtils.isNotEmpty(url)) {
+        setOpenUrl(url);
+        return openUrl;
+      }
+      return "/index.jsp";
     }
-    return "/index.jsp";
+  } catch (Exception e) {
+    e.printStackTrace();
   }
-    Struts2Utils.renderText("登陆失败");
+  Struts2Utils.renderText("登陆失败");
     return null;
 }
 
@@ -145,7 +160,11 @@ public String login(){
 
     HttpSession session = ServletActionContext.getRequest().getSession();
     session.removeAttribute("user");
-    CookieUtil.removeCookie("user");
+    try {
+      CookieUtil.removeCookie("user");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return "logout";
   }
 
