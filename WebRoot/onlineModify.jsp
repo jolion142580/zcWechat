@@ -112,15 +112,16 @@ String objindex = onlineApply.getObjindex();
 
 <script>
 	$(function () {
-		var HREF = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+weChat.APPID+'&redirect_uri='+weChat.WeChatDNSURL+'onlineApply!modifyAffairMaterials?id=<%=onlineApplyId %>&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect" class="weui-tabbar__item';
+		var HREF = 'onlineApply!modifyAffairMaterials?id=<%=onlineApplyId %>';
 		$("#a_href_SET").attr("href",HREF);
+        $("#a_href_SET").attr("class","weui-tabbar__item");
 	})
 function onlineDataFun(inputData){
 //alert(inputData);
 	$.post("onlineApply!onlineApplyDataModify",{myid:'<%=onlineApplyId%>',onlineData:inputData},function(res){
       	
       	alert("提交成功");
-  
+        window.location.href="onlineApply!onlineApplyHistory";
      })
 
 }
