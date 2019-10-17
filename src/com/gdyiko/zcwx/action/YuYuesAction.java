@@ -283,6 +283,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
 //        String result = yuYuesService.getCount(this.model.getStreet(), this.model.getYdate(), businessType, this.model.getWeight());
         String result = yuYuesService.getCount(this.model.getStreet(), this.model.getYdate());
 //		System.out.println("result---->"+result);
+        System.out.println("com.gdyiko.zcwx.action.YuYuesAction line[286] output: -=>" +result);
         Struts2Utils.renderText(result);
         return null;
 
