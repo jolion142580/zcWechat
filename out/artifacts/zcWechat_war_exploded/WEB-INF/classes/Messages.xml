@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Messages>
+	<Article>
+		<Title>便民服务</Title>
+		<Description></Description>
+		<PicUrl>images/bianminfuwu.jpg</PicUrl>
+		<Url></Url>
+	</Article>
+	<Article>
+		<Title>实时公交查询</Title>
+		<Description></Description>
+		<PicUrl>images/gongjiao.jpg</PicUrl>
+		<Url></Url>
+	</Article>
+	<!--<Article>
+		<Title>社保助手</Title>
+		<Description></Description>
+		<PicUrl>images/shibao.jpg</PicUrl>
+		<Url></Url>
+	</Article>-->
+	<Article>
+		<Title>港澳通行证续签需知</Title>
+		<Description></Description>
+		<PicUrl>images/gangao.jpg</PicUrl>
+		<Url></Url>
+	</Article>
+	<Article>
+		<Title>违章查询</Title>
+		<Description></Description>
+		<PicUrl>"images/weizhang.jpg"</PicUrl>
+		<Url></Url>
+	</Article>
+</Messages>

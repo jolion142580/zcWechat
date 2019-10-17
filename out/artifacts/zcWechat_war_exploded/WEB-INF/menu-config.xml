@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<MenuConfig>
+
+  <Menus>
+    <Menu  name="LoginedMenu"  title="Examples">
+	<!-- page attribute indicating a context relative resource.
+	     The context path will be prepended to the value. -->
+      <Item  name="menuItem1"  title="portal.menu.home"
+	       toolTip="portal.menu.home"
+	       page="/index.do" show="true"
+	       image="/skins/default/image/aepp/maintab/home.gif" />
+
+	<Item  name="menuItem2"  title="portal.menu.process"
+	       toolTip="portal.menu.process"
+	       image="/skins/default/image/aepp/maintab/process.gif"
+	       page="/MyTask.do" show="true"
+	       />
+
+	<Item  name="menuItem3"  title="portal.menu.employee"
+	       toolTip="portal.menu.employee"
+	       image="/skins/default/image/aepp/maintab/employee.gif"
+	       page="/Employee.do" show="true"
+	       />
+
+	<Item  name="menuItem5"  title="portal.menu.schedule"
+	       toolTip="portal.menu.schedule"
+	       image="/skins/default/image/aepp/maintab/scheduler.gif"
+	       page="/WeekSchedule.do" show="true"
+	       />
+
+	<Item  name="menuItem9"  title="portal.menu.forum"
+	       toolTip="portal.menu.forum"
+	       image="/skins/default/image/aepp/maintab/forum.gif"
+	       page="/GetBBSBoard.do" show="true"
+	       />
+
+	<Item  name="menuItem11"  title="portal.menu.bulletin"
+	       toolTip="portal.menu.bulletin"
+	       image="/skins/default/image/aepp/maintab/board.gif"
+	       page="/GetMainBoard.do" show="true"
+	       />
+
+	<Item  name="menuItem7"  title="portal.menu.download"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/aepp/maintab/document.gif"
+		   page="/download.do" show="true"
+	       />
+
+    <!-- for Flow.Doc Tab,use docman gif just for keep session timeout both webagenda and docman-->
+<!--      <Item  name="menuItem8"  title="portal.menu.download"
+	       toolTip="portal.menu.download"
+	       image="/image/docman/tab_icon.gif"
+	       page="/FlowDoc.do" show="true"
+	       />
+-->
+	<!--
+	<Item  name="google"  title="google"
+	       toolTip="google"
+	       image="/skins/default/image/aepp/maintab/document.gif"
+	       href ="http://www.google.com.tw" show="true"
+	       />
+
+	<Item  name="yahoo"  title="yahoo"
+	       toolTip="google"
+	       image="/skins/default/image/aepp/maintab/document.gif"
+	       href ="http://www.yahoo.com.tw" show="true"
+	       />
+
+	<Item  name="ibm"  title="ibm"
+	       toolTip="ibm"
+	       image="/skins/default/image/aepp/maintab/document.gif"
+	       href ="http://www.ibm.com.tw" show="true"
+	       />
+	-->
+    </Menu>
+
+    <Menu name="NotLoginMenu" title="Project Menu">
+	<Item  name="menuItem4"  title="\u95DC\u65BC\u83EF\u82D3"
+	       toolTip="portal.menu.forum"
+	       image="/skins/default/image/aepp/login/about.gif"
+	       page="" show="true"
+	       />
+
+	<Item  name="menuItem8"  title="portal.menu.system"
+	       toolTip="portal.menu.bulletin"
+	       image="/skins/default/image/config.gif"
+	       page="/config.do" show="false"
+	       />
+
+    </Menu>
+
+
+
+
+
+    <Menu name="ConfigMenu" title="Web Config Menu">
+	<Item  name="menuItem8"  title="adm.general"
+	       toolTip="portal.menu.forum"
+	       image="/skins/default/image/setupnormal_24.gif"
+	       page="/config.do" show="true"
+	       />
+
+	<Item  name="menuItem2"  title="adm.group"
+	       toolTip="portal.menu.bulletin"
+	       image="/skins/default/image/setupgroup_24.gif"
+	       page="/groupconfig.do" show="true"
+	       />
+
+	<Item  name="menuItem12"  title="adm.system"
+	       toolTip="portal.menu.bulletin"
+	       image="/skins/default/image/setupsystem_24.gif"
+	       page="/aeppconfig.do" show="true"
+	       />
+
+    </Menu>
+
+
+
+    <Menu name="AgendaMenu" title="Agenda Menu">
+	<Item  name="menuItem1"  title="agenda.menu.task"
+	       toolTip="portal.menu.forum"
+	       image="/skins/default/image/myTask.gif"
+	       page="/MyTask.do" show="true"
+	       />
+
+	<Item  name="menuItem14"  title="label.groupsign"
+	       toolTip="portal.menu.bulletin"
+	       image="/skins/default/image/groupSign.gif"
+	       page="/GroupSign.do" show="true"
+	       />
+
+	<Item  name="menuItem3"  title="agenda.menu.monitor"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/taskMonitor.gif"
+	       page="/TaskMonitor.do" show="true"
+	       />
+
+	<Item  name="menuItem2"  title="agenda.menu.process"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/initProcess.gif"
+	       page="/initProcess.do" show="true"
+	       />
+	<Item  name="menuItem7"  title="agenda.menu.application"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/apList.gif"
+	       page="/APList.do" show="true"
+	       />
+	<Item  name="menuItem4"  title="agenda.menu.history"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/historyTasks.gif"
+	       page="/HistoryTasks.do" show="true"
+	       />
+	<Item  name="menuItem5"  title="agenda.menu.form.search"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/artifactSearch.gif"
+	       page="/artifactSearch.do" show="true"
+	       />
+	<Item  name="menuItem6"  title="agenda.menu.task.search"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/admTaskSearch.gif"
+	       page="/AdmTaskSearch.do" show="true"
+	       />
+	<Item  name="menuItem8"  title="agenda.menu.message"
+	       toolTip="portal.menu.download"
+	       image="/skins/default/image/message.gif"
+	       page="/Message.do" show="true"
+	       />
+
+    </Menu>
+
+
+  </Menus>
+
+</MenuConfig>
