@@ -1,0 +1,206 @@
+@charset "utf-8";
+/*---------------------------------
+Site:江门市邑门式网上预约
+Description:单独样式
+Company:同望
+Author:chenz
+Created:2016.07.24
+Updated:2016.12.14
+Updated by:chenz
+---------------------------------*/
+
+/* init */
+html,body,dl,dt,dd,ul,li,h3,h4,pre,input,p,blockquote,th,td,form,iframe,ol {margin:0;padding:0;}
+html {width:100%;height:100%;}
+body {}
+ul {list-style:none;}
+img {border:0;}
+q:before,q:after {content:'';}
+iframe {filter:chroma(color=#ffffff);}
+table {border-collapse:collapse;border-spacing:0;width:100%;}
+.clear {zoom:1;}
+.clear:after {clear:both;content:"";display:block}
+button,input[type="button"],input[type="reset"],input[type="submit"] {cursor:pointer;-webkit-appearance:button;*overflow:visible;}
+input {outline:none;}
+input,code {font-family:"Microsoft YaHei", "宋体", Arial, Helvetica, sans-serif;}
+ul, dl, dl dt, dl dd, form {padding:0;margin:0;list-style:none;}
+h1, h2, h3, h4, h5 {padding:0;margin:0;}
+input,textarea {margin:0;font-family:"Microsoft YaHei", "宋体", Arial, Helvetica, sans-serif;font-size:12px;}
+a {color:#333;text-decoration:none;border:none;outline:none;}
+a:hover {color:#F80;text-decoration:none;}
+a:focus {outline:none;}
+
+.hide{display:none;}
+
+/* Base */
+html {}
+body {height:100%;background:#FFF;color:#333;font-size:12px;font-family:"微软雅黑","宋体", Arial, Helvetica, sans-serif;position:relative;}
+.transition {transition:all .3s ease;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-o-transition:all .3s ease;}
+.main {width:680px;margin:0 auto;}
+.left {float:left;}
+.right {float:right;}
+.overflow {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* Layout */
+.header {color:#FFF;}
+.header .top-bar {background:#FF7F00;height:30px;line-height:30px;}
+.header .top-bar .back-link {background:url(../images/ico-back-link.png) no-repeat left center;color:#FFF;padding-left:20px;}
+.header .top-bar a:hover {color:#FFD9B3;}
+.header .header-banner {background:#FFF7E2 url(../images/header-banner-bg.jpg) no-repeat center bottom;border-bottom:#FFDA93 solid 1px;height:110px;padding-top:30px;}
+
+.content {}
+.content .title-h1 {background:#E2F4F8;border-bottom:#A5CEEE solid 1px;height:50px;line-height:50px;text-align:center;color:#E46926;font-weight:normal;margin-top:20px;}
+.content .title-h2 {font-weight:normal;font-size:24px;margin-bottom:30px;}
+.content .title-h2 .back-btn {background:#E6E6E6;color:#333;width:80px;height:32px;line-height:32px;font-size:14px;text-align:center;display:block;}
+.content .title-h2 .back-btn:hover {background:#EBEBEB;}
+.content .title-h2 .back-btn:active {background:#CFCFCF;}
+.content .txt {margin-top:20px;}
+.content .txt h3 {font-size:14px;font-weight:normal;margin-bottom:12px;}
+.content .txt p {font-size:12px;line-height:150%;text-indent:2em;}
+.content .appointment-btn {width:766px;margin:0 auto;}
+.content .appointment-btn a {width:333px;height:137px;display:block;margin:12px 25px 40px 25px;}
+.content .appointment-btn-1 {background:url(../images/appointment-big-btn.jpg) no-repeat;}
+.content .appointment-btn-2 {background:url(../images/appointment-big-btn.jpg) no-repeat right top;}
+.content .appointment-btn-1:hover {background-position:left -137px;}
+.content .appointment-btn-1:active {background-position:left -274px;}
+.content .appointment-btn-2:hover {background-position:right -137px;}
+.content .appointment-btn-2:active {background-position:right -274px;}
+
+.footer {text-align:center;height:50px;line-height:50px;color:#999;}
+.footer .main {border-top:#D6D6D6 solid 1px;}
+
+.flow-step {border-bottom:#E6E6E6 solid 1px;padding:30px 0;margin-bottom:30px;}
+.flow-step .flow-step-bg {background:url(../images/flow-step-bg.png) no-repeat;width:821px;height:40px;margin:0 auto;}
+.flow-step .flow-step-1 {background-position:0 0;}
+.flow-step .flow-step-2 {background-position:0 -40px;}
+.flow-step .flow-step-3 {background-position:0 -80px;}
+.flow-step .flow-step-4 {background-position:0 -120px;}
+
+.appointment-tabs {background:#EBEBEB;border-top:#E76203 solid 4px;height:50px;line-height:50px;padding-left:30px;margin-bottom:30px;}
+.appointment-tabs li {}
+.appointment-tabs a {width:150px;display:block;font-size:14px;text-align:center;color:#142A5C;}
+.appointment-tabs .cur a {background:#FFF;}
+
+.area-list {}
+.area-list h3 {color:#F80;margin-bottom:20px;font-size:22px;}
+.area-list h3 em {color:#0A93F1;font-style:normal;}
+.area-list h3 span {color:#999;cursor:default;}
+.area-list .area-main {background:#FFF;border:#CCC solid 1px;padding:20px;margin-bottom:20px;}
+.area-main h4 {margin-bottom:10px;font-size:14px;}
+.area-main h4 em {color:#0A93F1;font-style:normal;}
+.area-list h4 span {color:#999;cursor:default;}
+.area-main table {}
+.area-main table td {width:16.6%;padding:2px 0;}
+.area-main table td a {font-size:14px;color:#0A93F1;}
+.area-main table td a:hover {color:#F80;}
+.business-main table td {width:25%;}
+.area-main ul {}
+.area-main li {width:16.6%;padding:2px 0;margin-bottom:18px;}
+.area-main li a {font-size:14px;color:#0A93F1;}
+.area-main li a:hover {color:#F80;}
+.area-main li span {font-size:14px;color:#999;cursor:default;}
+.business-main li {width:25%;}
+
+.appointment-date {margin-bottom:40px;}
+.appointment-date table {}
+.appointment-date td {background:#FFF;border:#E6E6E6 solid 1px;text-align:center;font-size:14px;vertical-align:middle;width:16.6%;height:60px;}
+.appointment-date td a {color:#F80;}
+.appointment-date td a:hover {color:#0A93F1;}
+.appointment-date td span {color:#999;}
+.appointment-date td.td-hover {background:#FFF3E5;}
+
+.fill-form {width:680px;margin:0 auto;}
+.fill-form h3 {font-weight:normal;font-size:24px;margin-bottom:30px;text-align:center;}
+.fill-form .fill-form-main {background:#FFF;border:#E6E6E6 solid 1px;width:678px;padding:60px 0;}
+.fill-form-main .form-main {margin:12px 0;}
+.fill-form-main label {width:210px;height:40px;line-height:40px;text-align:right;font-size:14px;padding-right:6px;}
+.fill-form-main .input-txt {border:#DDD solid 1px;width:300px;height:38px;line-height:38px;padding:0 4px;vertical-align:middle;font-size:14px;}
+.fill-form-main .star {color:#C00;font-style:normal;font-size:14px;font-weight:bold;}
+.fill-form-main .input-select {border:#DDD solid 1px;width:200px;height:38px;line-height:38px;vertical-align:middle;font-size:14px;}
+.fill-form-btn {margin:40px auto;width:260px;}
+.fill-form-btn a {width:120px;height:40px;line-height:40px;font-size:16px;text-align:center;display:block;margin:0 5px;}
+.fill-form-btn .submit-btn {background:#FF7F00;color:#FFF;}
+.fill-form-btn .submit-btn:hover {background:#F93;}
+.fill-form-btn .submit-btn:active {background:#E57200;}
+.fill-form-btn .cancel-btn {background:#E6E6E6;color:#333;}
+.fill-form-btn .cancel-btn:hover {background:#EBEBEB;}
+.fill-form-btn .cancel-btn:active {background:#CFCFCF;}
+
+/* popdialog */
+.popwin {width:100%;height:100%;position:fixed;right:0;top:0;z-index:10;}
+.popbg {width:100%;height:100%;position:fixed;background:rgba(0, 0, 0, 0.5) none repeat scroll 0 0 !important;filter:Alpha(opacity=50);background:#000;}
+.popsubmit {background:#FFF url(../images/popsubmit-bg.png) no-repeat left bottom;width:600px;height:400px;margin:-230px 0 0 -300px;position:absolute;z-index:2;left:50%;top:50%;box-shadow:#666 0 0 10px;padding-top:60px;}
+.popfailed {}
+.popsubmit h3 {background:url(../images/ico-succeed.png) no-repeat center top;text-align:center;font-size:22px;padding-top:100px;margin-bottom:40px;}
+.popfailed h3 {background:url(../images/ico-failed.png) no-repeat center top;}
+.popsubmit p {font-size:14px;text-align:center;margin-bottom:12px;}
+.popsubmit p strong {color:#F80;}
+.popsubmit .back-btn {background:url(../images/ico-back.png) no-repeat 16px center;border:#999 solid 1px;width:144px;height:36px;line-height:36px;display:block;margin:30px auto 0 auto;font-size:16px;text-align:center;padding-left:16px;}
+.popcancel {background:#FFF;width:400px;height:200px;margin:-100px 0 0 -200px;position:absolute;z-index:2;left:50%;top:50%;box-shadow:#666 0 0 10px;}
+.popcancel h3 {text-align:center;font-size:22px;padding-top:50px;margin-bottom:20px;color:#999;}
+.popcancel-btn {margin:40px auto;width:252px;}
+.popcancel-btn a {width:116px;height:38px;line-height:38px;font-size:14px;text-align:center;display:block;margin:0 5px;}
+.popcancel-btn .submit-btn {background:#FF7F00;color:#FFF;}
+.popcancel-btn .submit-btn:hover {background:#F93;}
+.popcancel-btn .submit-btn:active {background:#E57200;}
+.popcancel-btn .cancel-btn {background:#E6E6E6;color:#333;}
+.popcancel-btn .cancel-btn:hover {background:#EBEBEB;}
+.popcancel-btn .cancel-btn:active {background:#CFCFCF;}
+.popcancel .ico-close {background:url(../images/ico-close.png) no-repeat;width:26px;height:26px;display:block;position:absolute;top:0;right:0;}
+.popcancel .ico-close:hover {background-color:#FFF3E5;}
+.popcancel .ico-close:active {background-color:#FFDBB2;}
+.popitem {background:#FFF;width:750px;height:200px;margin:-150px 0 0 -375px;position:absolute;z-index:2;left:50%;top:50%;box-shadow:#666 0 0 10px;padding-top:30px;}
+.popitem .item-box {background:#FFF;padding:0 20px;height:214px;margin:0 auto;overflow-y:auto;}
+.popitem .item-box h4 {margin-bottom:10px;font-size:14px;}
+.popitem ul {}
+.popitem li {width:46%;padding:2px 20px 2px 0;margin-bottom:6px;}
+.popitem li a {font-size:14px;color:#0A93F1;display:block;}
+.popitem li a:hover {color:#F80;}
+.popitem .ico-close {background:url(../images/ico-close.png) no-repeat;width:26px;height:26px;display:block;position:absolute;top:0;right:0;}
+.popitem .ico-close:hover {background-color:#FFF3E5;}
+.popitem .ico-close:active {background-color:#FFDBB2;}
+
+.search-form {margin-top:30px;}
+.search-result {width:600px;margin:30px auto 0 auto;}
+.search-result h3 {margin-bottom:12px;}
+.search-result table {}
+.search-result table td {background:#FFF;border:#E6E6E6 solid 1px;padding:12px;font-size:14px;}
+.search-result table td.col-1 {width:25%;text-align:center;color:#999;}
+.search-result table td.col-2 {width:75%;}
+.result-btn {margin:40px auto;width:260px;}
+.result-btn a {width:120px;height:40px;line-height:40px;font-size:16px;text-align:center;display:block;margin:0 5px;}
+.result-btn .submit-btn {background:#FF7F00;color:#FFF;}
+.result-btn .submit-btn:hover {background:#F93;}
+.result-btn .submit-btn:active {background:#E57200;}
+.result-btn .cancel-btn {background:#E6E6E6;color:#333;}
+.result-btn .cancel-btn:hover {background:#EBEBEB;}
+.result-btn .cancel-btn:active {background:#CFCFCF;}
+
+.index-box {padding:30px 0 140px 0;}
+.index-box .search-btn {background:#45C77D url(../images/ico-search.png) no-repeat 20px center;width:78px;height:34px;line-height:34px;padding-left:52px;display:block;color:#FFF;font-size:14px;}
+.index-box .search-btn:hover {background-color:#6AD396;}
+.index-box .search-btn:active {background-color:#3EB46F;}
+.index-box .index-btn {width:840px;margin:30px auto 0 auto;}
+.index-btn li {margin:0 40px 40px 40px;}
+.index-btn li a {width:340px;height:114px;line-height:114px;padding-top:188px;display:block;text-align:center;font-size:25px;}
+.index-btn li .index-btn-1 {border-radius: 5px;background:#EDFBC0 url(../images/wsbs.png) no-repeat;}
+.index-btn li .index-btn-2 {border-radius: 5px;background:#FFF4CC url(../images/gdcx.png) no-repeat;}
+.index-btn li .index-btn-1:hover {background-color:#F1FCCD;color:#59B200;}
+.index-btn li .index-btn-2:hover {background-color:#FFF6D6;}
+.index-btn li .index-btn-1:active {background-color:#E1EEB6;}
+.index-btn li .index-btn-2:active {background-color:#F2E8C2;}
+
+.rules {text-align:center;font-size:16px;}
+.rules .input-checkbox,
+.rules span {vertical-align:middle;}
+.rules .input-checkbox {margin-right:6px;}
+.rules span a {color:#F80;}
+.rules span a:hover {color:#333;}
+
+.popwin-rules .popitem {background:#FFFAE6;height:400px;margin:-200px 0 0 -375px;}
+.rules-main {}
+.rules-main h3 {font-size:16px;margin-bottom:20px;padding:0 20px;}
+.rules-main .rules-content {background:#FFF;height:318px;padding:20px;overflow:auto;}
+.rules-main .rules-txt {margin-bottom:12px;}
+.rules-main h4 {color:#F80;line-height:150%;margin-bottom:8px;}
+.rules-main p {text-indent:2em;line-height:150%;margin-bottom:4px;}

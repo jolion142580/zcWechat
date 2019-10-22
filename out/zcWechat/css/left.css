@@ -1,0 +1,21 @@
+#left { height:100%;}
+	#tips { float:left; width:33px; height:100%; background:url(../images/tip_bg.jpg) repeat-y; border-top:1px #acc4d6 solid; border-bottom:1px #acc4d6 solid; border-left:1px #acc4d6 solid;}
+		#top_icon { }
+		#one1,#one2,#one3,#one4 { width:33px; height:150px; background:url(../images/tip.jpg) no-repeat; cursor:pointer; color:#285884; font-size:14px; font-weight:bold; padding:0 11px 0 0; text-align:center;writing-mode:tb-rl;}
+		#one1.hover,#one2.hover,#one3.hover,#one4.hover { width:33px; height:150px; background:url(../images/tip_hover.jpg) no-repeat; font-size:14px; font-weight:bold; padding:0 11px 0 0; text-align:center;writing-mode:tb-rl;}
+	
+	#leftmenu { float:left; width:100%px; height:100%; background:#edf7ff; border-top:1px #acc4d6 solid; border-right:1px #acc4d6 solid; border-bottom:1px #acc4d6 solid;}
+		#con_one_1,#con_one_2,#con_one_3,#con_one_4 { padding:3px; height:100%;}
+	
+		.navigation { height:18px; background:url(../images/nav_02.gif); cursor:pointer; color:#285884; font-size:12px; font-weight:bold; line-height:18px; padding:4px 0 0 0; text-align:center;}
+		.navigation_hover { height:18px; background:url(../images/nav_02_hover.gif); cursor:pointer; color:#285884; font-size:12px; font-weight:bold; line-height:18px; padding:4px 0 0 0; text-align:center;}
+		
+		.subnav { width:100%; height:100%; font-size:12px ;margin: 0; padding:3px 0 0 7px;}
+		.subnav li { list-style: none; margin: 0;padding: 0; text-align: left; text-indent:1.0em; background:url(../images/listico.gif) no-repeat left 5px;}
+		.subnav li a { height:20px; display:block;color:#285884; font-size:12px; line-height:20px; text-decoration:none;}
+		.subnav li a:hover { color:#d85c19;}
+		
+		.subnav_scroll { width:100%; height:100%; font-size:12px ;margin: 0; overflow-y:scroll; padding:3px 0 0 7px;scrollbar-3dlight-color: #abc3d5;scrollbar-arrow-color: black;scrollbar-darkshadow-color: white;scrollbar-face-color: #d4ecfc;scrollbar-highlight-color: #ecf8ff;scrollbar-shadow-color: #abc3d5;}
+		.subnav_scroll li { list-style: none; margin: 0;padding: 0; text-align: left; text-indent:1.0em; background:url(../images/listico.gif) no-repeat left 5px;}
+		.subnav_scroll li a { height:20px; display:block;color:#285884; font-size:12px; line-height:20px; text-decoration:none;}
+		.subnav_scroll li a:hover { color:#d85c19;}

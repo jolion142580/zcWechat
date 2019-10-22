@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+    <package name="custom-default" extends="struts-default">
+        <!-- 定义一个拦截器 -->
+        <interceptors>
+            <interceptor name="logincheck"
+                         class="com.gdyiko.base.interceptor.LoginInterceptor"/>
+
+            <interceptor name="jumpBefore"
+                         class="com.gdyiko.base.interceptor.JumpBeforeInterceptor"/>
+
+          <!--  <interceptor name="opResult" class="util.web.OpResultInterceptor"></interceptor>-->
+            <!-- 拦截器栈 -->
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="jumpBefore"></interceptor-ref>
+                <interceptor-ref name="logincheck" />
+               <!-- <interceptor-ref name="opResult" />-->
+                <interceptor-ref name="defaultStack" />
+
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="mydefault" />
+        <global-results>
+            <result name="login" type="dispatcher">
+                /login.jsp
+            </result>
+        </global-results>
+    </package>
+
+
+
+
+    <!-- 开启使用开发模式，详细错误提示 -->
+    <constant name="struts.devMode" value="false" />
+    <!-- 将对象交给spring管理 -->
+    <constant name="struts.objectFactory" value="spring" />
+    <!-- 指定资源编码类型 -->
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <!-- 指定每次请求到达，重新加载资源文件 -->
+    <constant name="struts.i18n.reload" value="false" />
+    <!--该属性指定Struts2文件上传中整个请求内容允许的最大字节数 -->
+    <constant name="struts.multipart.maxSize" value="1000000000000"/>
+    <!-- 指定每次配置文件更改后，自动重新加载 -->
+    <constant name="struts.configuration.xml.reload" value="false" />
+    <constant name="struts.url.includeParams" value="all" />
+    <!-- 默认后缀名 -->
+    <!-- <constant name="struts.action.extension" value="do,action,jhtml,,"
+        /> -->
+    <!-- Struts Annotation -->
+    <!-- <constant name="actionPackages" value="com.test1"/> -->
+
+    <!-- <constant name="struts.action.excludePattern" value="/oa/.*"/> -->
+    <constant name="struts.action.excludePattern" value="QRCode!createQRCode,QRCode!createUUID,/ueditor1_4_3_1-utf8-jsp/.*"/>
+</struts>    

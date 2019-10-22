@@ -34,14 +34,16 @@ public class BlackWhiteListServiceImpl extends GenericServiceImpl<BlackWhiteList
     }
 
     public JSONObject check(YuYues yuYues) {
+//        System.out.println("com.gdyiko.zcwx.service.impl.BlackWhiteListServiceImpl line[37] output: -=>111" );
         JSONObject result = new JSONObject();
         try {
-
+//            System.out.println("com.gdyiko.zcwx.service.impl.BlackWhiteListServiceImpl line[37] output: -=>111.1" );
             BlackWhiteList blackWhiteList;
             Calendar cal = Calendar.getInstance();
             String year = String.valueOf(cal.get(Calendar.YEAR));
             String idCard = yuYues.getIdcard();
             blackWhiteList = getForever(idCard);
+//            System.out.println("com.gdyiko.zcwx.service.impl.BlackWhiteListServiceImpl line[46] output: -=>111.2" );
             if (blackWhiteList != null) { //永久黑白名单
                 result.put("flag", blackWhiteList.getFlag());
 //                result.put("forever", "".equals(blackWhiteList.getForever()) ? "0" : blackWhiteList.getForever());
@@ -49,6 +51,7 @@ public class BlackWhiteListServiceImpl extends GenericServiceImpl<BlackWhiteList
                 return result;
             }
             blackWhiteList = getByYear(idCard, year);
+//            System.out.println("com.gdyiko.zcwx.service.impl.BlackWhiteListServiceImpl line[54] output: -=>111.3" );
             if (blackWhiteList != null) { // 今年进入黑白名单
                 result.put("flag", blackWhiteList.getFlag());
                 result.put("forever", null == blackWhiteList.getForever() ? "0" : blackWhiteList.getForever());
@@ -58,6 +61,7 @@ public class BlackWhiteListServiceImpl extends GenericServiceImpl<BlackWhiteList
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String date = format.format(System.currentTimeMillis() - (1000 * 60 * 60 * 24));
             List<YuYues> yuYuesList = yuYuesService.signNot(idCard, date, year);
+//            System.out.println("com.gdyiko.zcwx.service.impl.BlackWhiteListServiceImpl line[64] output: -=>111.4" );
             /* 今年失约超过3次*/
             if (yuYuesList.size() >= 3) {
                 System.out.println(yuYues.getName() + " 今年失约-->" + yuYuesList.size());
@@ -82,7 +86,7 @@ public class BlackWhiteListServiceImpl extends GenericServiceImpl<BlackWhiteList
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+//        System.out.println("com.gdyiko.zcwx.service.impl.BlackWhiteListServiceImpl line[89] output: -=>222" );
         return result;
     }
 

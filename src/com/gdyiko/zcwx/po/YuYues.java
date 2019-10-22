@@ -328,4 +328,39 @@ public class YuYues extends GenericPo implements java.io.Serializable {
         OtherAdvice = otherAdvice;
     }
 
+
+    @Override
+    public String toString() {
+        return "YuYues{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", idcard='" + idcard + '\'' +
+                ", phone='" + phone + '\'' +
+                ", no='" + no + '\'' +
+                ", street='" + street + '\'' +
+                ", state='" + state + '\'' +
+                ", stype='" + stype + '\'' +
+                ", terminal='" + terminal + '\'' +
+                ", ystime='" + ystime + '\'' +
+                ", yetime='" + yetime + '\'' +
+                ", ydate='" + ydate + '\'' +
+                ", cdate='" + cdate + '\'' +
+                ", qdate='" + qdate + '\'' +
+                ", timecode='" + timecode + '\'' +
+                ", openid='" + openid + '\'' +
+                ", weight=" + weight +
+                ", businessName='" + businessName + '\'' +
+                ", appraiseResult='" + appraiseResult + '\'' +
+                ", appraiseAdvice='" + appraiseAdvice + '\'' +
+                ", queueNum='" + queueNum + '\'' +
+                ", USING='" + USING + '\'' +
+                ", allstart='" + allstart + '\'' +
+                ", glstart='" + glstart + '\'' +
+                ", fwstart='" + fwstart + '\'' +
+                ", tdstart='" + tdstart + '\'' +
+                ", UseAdvice='" + UseAdvice + '\'' +
+                ", OtherAdvice='" + OtherAdvice + '\'' +
+                ", operator='" + operator + '\'' +
+                '}';
+    }
 }

@@ -21,6 +21,7 @@ public class YuYuesDaoImpl extends GenericDaoImpl<YuYues, String> implements YuY
     }
 
     public List<YuYues> signNot(String idCard, String date, String year) {
+        System.out.printf("com.gdyiko.zcwx.dao.impl.YuYuesDaoImpl line[24] output: -=> idCard=%s, date=%s, year=%s\n", idCard, date, year);
         List<YuYues> list = null;
         year += "-01-01";
         try {

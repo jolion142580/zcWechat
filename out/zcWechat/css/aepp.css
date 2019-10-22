@@ -1,0 +1,425 @@
+.border_1 {  background-color: #333333}
+.border_1_shadow {  background-color: #ffffff}
+.border_right {  background-color: #666666}
+
+.oasis_tab_title{
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #ffffff;
+			text-decoration: none;
+			font-weight: bold;
+			height:26px}
+
+.oasis_tab_title_hover{
+			background-image: url(../image/aepp/process_1/field_title_hover_bg.gif); background-repeat:repeat-x;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #000000;
+			text-decoration: none;
+			font-weight: bold;
+			Cursor:hand;}
+.oasis_tab_title:hover{
+			background-image: url(../image/aepp/process_1/field_title_hover_bg.gif); background-repeat:repeat-x;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #444444;
+			text-decoration: none;
+			font-weight: bold;
+
+			Cursor:hand;}
+.oasis_tab_title_normal{
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #ffffff;
+			text-decoration: none;
+			font-weight: bold;
+			height:30px}
+
+
+.oasis_workzone_bg {	background-image: url(../image/aepp/process_1/workzone_bg.jpg); background-repeat:repeat-x}
+
+
+.oasis_list_title_html{ font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #333333;
+			text-decoration: none;
+			text-align: center;
+			font-weight: bold;
+			height:23px}
+
+.oasis_list_title{ font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #333333;
+			text-decoration: none;
+			text-align: center;
+			font-weight: bold;}
+
+.oasis_list {		background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			height:22px}
+
+
+.oasis_list_separate {background-color: #e7e3de ; height:1px}
+
+.oasis_list2 {		background-color: #efefef;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			height:22px }
+.oasis_list_link {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			}
+.oasis_list_link:hover {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			font-weight: bold; }
+.oasis_functionmenu {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			}
+.oasis_list_hover {	background-color: #def3ff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			height:22px;
+			Cursor:hand   }
+.oasis_list_hover_2 {	background-color: #245883;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #ffffff;
+			text-decoration: none;
+			height:22px;
+			Cursor:hand   }
+
+.oasis_setting_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #333333;
+			text-decoration: none;  }
+.oasis_setting_text_2 {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #406277;
+			text-decoration: none;  }
+.oasis_setting_title {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 13px;
+			color: #000000;
+			font-weight: bold;
+			text-decoration: none;  }
+.oasis_setting_textfield_1 {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 13px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_info_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_copyright_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #555555;
+			text-decoration: none;  }
+
+.oasis_button_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+
+.oasis_calendar_title {
+			background-color: #537f9e;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 14px;
+			color: #ffffff;
+			text-decoration: none;
+			text-align: center; vertical-align: middle;
+			height:25;}
+
+.oasis_calendar_title_time {
+			background-color: #71add8;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 13px;
+			color: #ffffff;
+			text-decoration: underline;
+			width:70;
+			text-align: center; vertical-align: middle;}
+
+.oasis_calendar_title_time:hover {
+			background-color: #71add8;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 13px;
+			color: #000000;
+			text-decoration: underline;
+			width:70;
+			text-align: center; vertical-align: middle;}
+
+.oasis_calendar_topic {
+			background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #000000;
+			text-decoration: underline;  }
+
+.oasis_calendar_topic:hover {
+			background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #000000;
+			text-decoration: underline;  }
+
+.oasis_calendar_timerange {
+			background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #ff0000;
+			text-decoration: none;  }
+
+.oasis_calendar_people {
+			background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_calendar_column_1 {
+			background-color: #ffffff;
+			height:50;
+			vertical-align: top;
+			 }
+
+.oasis_calendar_column_2 {
+			background-color: #d7ecff;
+			height:50;
+			vertical-align: top;
+			 }
+
+.oasis_calendar_border {
+			background-color: #000000;
+			  }
+
+.oasis_calendar_today {
+			background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 45px;
+			color: #71add8;
+			text-decoration: none;  }
+
+.oasis_calendar_today_list {
+			background-color: #ffffff;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 30px;
+			color: #71add8;
+			text-decoration: none;
+			height:20pt;  }
+
+
+.oasis_calendar_today_list:hover {
+
+			text-decoration: underline;color: #537f9e;   }
+
+
+.oasis_calendar_today:hover {
+
+			text-decoration: underline;color: #537f9e;   }
+
+.oasis_calendar_today_info_1 {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_calendar_today_info_list {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_calendar_today_info_2 {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 14px;
+			color: #000000;
+			text-decoration: none;  }
+
+
+.oasis_calendar_today_info_list_2 {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_calendar_today_info_china {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 12px;
+			color: #999999;
+			text-decoration: none;  }
+
+.oasis_calendar_today_info_china_list {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #999999;
+			text-decoration: none;  }
+
+.oasis_worktab_bg {
+			background-color: #55ff00;  }
+
+
+
+
+.oasis_maintab_border {
+			background-color: #6787a6  }
+
+.oasis_subtab_border {
+			background-color: #799fc3  }
+
+.oasis_maintab_separate {
+			background-color: #e8e8e8;width:4pt
+			}
+
+.oasis_maintab_bg {
+			background-color: #e8e8e8;  }
+
+
+
+
+.oasis_maintab_selected {
+			border: #6787a6;
+			background-color: #e8e8e8;
+			border-style: solid;
+			border-top-width: 3px;
+			border-right-width: 3px;
+			border-bottom-width: 0px;
+			border-left-width: 3px;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			color:#000000;
+			font-size:8pt;
+			width:75pt;
+			height:25; }
+
+.oasis_maintab_normal {
+			border: #6787a6;
+			background-color: #799fc3;
+			border-style: solid;
+			border-top-width: 3px;
+			border-right-width: 3px;
+			border-bottom-width: 3px;
+			border-left-width: 3px;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			color:#ffffff;
+			font-size:8pt;
+			width:75pt;
+			height:25; }
+
+.oasis_subtab_selected {
+			border: #799fc3;
+			background-color: #ffffff;
+			border-style: solid;
+			border-top-width: 3px;
+			border-right-width: 3px;
+			border-bottom-width: 0px;
+			border-left-width: 3px;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			color:#000000;
+			font-size:8pt;
+			width:75pt;
+			height:25;  }
+
+.oasis_subtab_normal {
+			border: #799fc3;
+			background-color: #94c7e7;
+			border-style: solid;
+			border-top-width: 3px;
+			border-right-width: 3px;
+			border-bottom-width: 3px;
+			border-left-width: 3px;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			color:#ffffff;
+			font-size:8pt;
+			width:75pt;
+			height:25; }
+
+
+.oasis_eform_bt {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.oasis_eform_bt:hover {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #ff0000;
+			text-decoration: none;  }
+
+
+
+
+//---------------------------------------------------------------
+
+
+.plastics_list_field_text_mouseover {
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #FFFFFF;
+			text-decoration: none;
+			background-color: #8caec3;
+			height: 23px;
+			font-weight: bold}
+
+
+.plastics_list_title{ font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 10px;
+			color: #333333;
+			text-decoration: none;
+			text-align: center;
+			font-weight: bold;
+			height:27px}
+
+.plastics_tab_title {height:40px}
+
+.plastics_list {		background-color: #cecece;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			height:22px}
+
+.plastics_list_separate {background-color: #dddddd ; height:1px}
+
+.plastics_list2 {		background-color: #cecece;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;
+			height:22px }
+
+.plastics_list_hover {	background-color: #8caec3;
+			font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #ffffff;  font-weight: bold;
+			text-decoration: none;
+			height:22px;
+			Cursor:hand   }
+
+.plastics_setting_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.plastics_info_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+
+.plastics_button_text {	font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+			font-size: 11px;
+			color: #000000;
+			text-decoration: none;  }
+.oasis_setup_status { font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; font-size: 14px; color: #000000; text-decoration: none }
+.oasis_setup_topic { height: 20px ; font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; font-size: 12px; font-weight: bold; color: #000000; text-decoration: none }
+.oasis_setup_text_bold { height: 20px ; font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; font-size: 12px; font-weight: bold; color: #000000; text-decoration: none }
