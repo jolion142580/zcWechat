@@ -51,7 +51,7 @@ import com.opensymphony.xwork2.ActionContext;
 //	@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/relation.jsp?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
     //    @Result(name = "notPermitted", type = "redirect", location = "/relation.jsp?type=yuyue"),
         //已绑定，允许预约
-        @Result(name = "userYuYues", location = "/wdyy_2.jsp"),
+        @Result(name = "userYuYues", location = "/newwdyy_2.jsp"),
         //已绑定，允许预约
         @Result(name = "singleYuYue", location = "/wdyy_1.jsp"),
         // 失败
@@ -263,6 +263,11 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
     //返回用户预约列表页面
     public String userYuYues() {
 
+        SsUserInfo ssUserInfo = UserApi.getUserInfo();
+        //openid=ssUserInfo.getId();
+
+        this.model.setOpenid(ssUserInfo.getId());
+
         return "userYuYues";
     }
 
@@ -399,9 +404,9 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
     public String userYuYuesJson() {
         //System.out.println("---yuyueListOpenid---"+this.model.getOpenid());
         //this.model.setOpenid("ovh5dxGh-9EXBe-fFYD5IU1fSW4k");
-        if (this.model.getOpenid().equals("")) {
-            this.model.setOpenid("oxFMm1hm4FmIDGvwIeRJk7iA-D3A");
-        }
+  /*      if (this.model.getOpenid().equals("")) {
+            //this.model.setOpenid("oxFMm1hm4FmIDGvwIeRJk7iA-D3A");
+        }*/
         String result = yuYuesService.yuYueList(this.model.getOpenid());
         System.out.println("result---->" + result);
         Struts2Utils.renderText(result);

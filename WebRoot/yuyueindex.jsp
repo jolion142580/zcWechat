@@ -13,6 +13,29 @@
     <link href="css/newIndex.css" rel="stylesheet" type="text/css" />
     <style>
         .banner img {width: 100%;}
+
+        body .mainmenu li {
+            float: left;
+            margin-left: 7%;
+            margin-top: 10%;
+            width: 85%;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        body .mainmenu li a b {
+            display: block;
+            height: 80px;
+            color: #FFF;
+            text-align: center;
+            font-size: 35px;
+            margin-top:20px;
+            margin-bottom:auto;
+        }
+        body .mainmenu li a img {
+            margin: 0px auto 10px;
+            width: 50px;
+            height: 50px;
+        }
     </style>
     <script type="text/javascript" src="js/newiscroll.js"></script>
     <script type="text/javascript">
@@ -65,7 +88,6 @@
         <div id="scroller">
             <ul id="thelist">
                 <li><a href="javascript:void(0)"><img src="images\weixin\wangshangyuyue.gif" /></a></li>
-
             </ul>
         </div>
     </div>
@@ -86,12 +108,9 @@
 </div>
 
 <ul class="mainmenu">
-    <li><a href="ssBaseDicInfo!findAllByBaseDicType" ><b><img src="images\weixin\zhinan.png" /></b><span>办事点我</span></a></li>
-    <li><a href="yuyueindex.jsp" ><b><img src="images\weixin\newyuyue1.png" /></b><span>在线预约</span></a></li>
-    <li><a href="zcQueueInfo.jsp" ><b><img src="images\weixin\queue.png" /></b><span>排队信息</span></a></li>
-    <li><a href="affairProgress.jsp" ><b><img src="images\weixin\genzong.png" /></b><span>办件跟踪</span></a></li>
-    <li><a href="complaint!getComplaintPage" ><b><img src="images\weixin\fg.png" /></b><span>市民留言</span></a></li>
-    <li><a href="ssUserInfo" ><b><img src="images\weixin\grxx.png" /></b><span>个人信息</span></a></li>
+    <li><a href="YuYues!yuYues" ><b>我要预约</b></a></li>
+    <li><a href="YuYues!userYuYues" ><b>预约记录</b></a></li>
+
 </ul>
 
 

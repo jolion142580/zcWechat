@@ -1,0 +1,642 @@
+body,html {
+	height:100%;
+	-webkit-tap-highlight-color:transparent
+}
+body {
+	font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif
+}
+ul {
+	list-style:none
+}
+.page,body {
+	background-color:#fff;
+}
+.link {
+	color:#1aad19
+}
+.container {
+	overflow:hidden
+}
+.container,.page {
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0
+}
+.page {
+	overflow-y:auto;
+	-webkit-overflow-scrolling:touch;
+	opacity:0;
+	z-index:1;
+    max-width: 640px;
+    margin: 0 auto;
+}
+.view {
+    background: #5d0290;
+}
+.page.js_show {
+	opacity:1;
+    background-color:#fff;
+}
+.page__hd img{
+	width: 100%;
+	display: block;
+}
+.weui-tab__con {
+    padding-top: 50px; 
+}
+.weui-works{
+	margin-right: auto;
+    margin-left: auto;
+    padding: 6px;
+}
+.weui-works:after {
+    content:"."; display:block; height:0; visibility:hidden; clear:both;
+}
+.bihua{text-align: center;color: #fff;}
+.weui-works li{
+    float: left;
+    vertical-align: top;
+    padding: 15px 10px;
+    width: 50%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    min-height: 192px;
+}
+.vote_item {
+    position: relative;
+    border: 2px #ba2bff solid;
+    background: #fff;
+    border-radius: 6px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.vote_item p{
+    text-align: center;
+}
+.works-logo img{
+	width: 100%;
+    display: block;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.works-name{
+    font-size: 16px;
+	line-height: 20px;
+    padding: 0 5px;
+    margin-top: 10px;
+    display: block;
+    color: #5d0290;
+    height: 20px;
+    font-weight: bold;
+    overflow: hidden;
+}
+.ticket {
+    font-size: 12px;
+    padding-left: 5px;
+    color: #9f9f9f;
+}
+.works-btn{
+    margin-top: 10px;
+}
+
+.weui-work{
+	margin-right: auto;
+    margin-left: auto;
+    padding: 15px;
+    text-align: center;
+}
+.weui-work .btn {
+	width: 30%;
+}
+.work-logo img {
+    width: 29%;
+    border-radius: 50%;
+    height: auto;
+    margin: 0px auto;
+}
+
+.btn.btn_view img{
+    width: 11px;
+}
+.zy_timeline {
+    margin-left: 12px;
+}
+.btn_div{
+    text-align: center;
+    padding: 20px 0 50px;
+}
+.btn_div .btn{
+    display: inline-block;
+    width: 40%;
+    margin: 0 2%;
+    padding: 6px 0 10px;
+    font-size: 16px;
+}
+.ranking {
+    padding: 20px 5%;
+}
+.right-table {
+    width: 100%;
+    border: 2px #ba2bff solid;
+    background: #fff;
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    border-spacing: 0px;
+}
+.right-table th {
+    font-size: 16px;
+    color: #666;
+    line-height: 40px;
+}
+.right-table tr td {
+    color: #999;
+    line-height: 70px;
+    border-bottom: 1px #aba7a7 solid;
+}
+.rank_img{width: 50px;height: 50px;border-radius: 50%;vertical-align: middle;}
+.weui-blue{
+    background: #004592;
+}
+.weui-navbar+.weui-tab__panel {
+    padding-top: 50px;
+    padding-bottom: 45px;
+}
+.weui-foot{}
+.weui-foot img{width: 100%;display: block;}
+.weui-tabbar a{display: block;color: #fff;line-height: 45px;text-align: center;width: 100%;}
+.weui-tab__panel_no{
+    /*padding-top: 10px;*/
+    background: url(../images/bg.png);
+    background-size: 100% auto;
+}
+.weui-article{
+    color: #4c3333;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    background: #fff;
+}
+.weui-article h2{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.weui-article audio{
+    width: 100%;
+}
+.weui-article section {
+    margin-bottom: 0;
+}
+.weui-article section img{
+    display: block;
+}
+.weui-navbar{color: #000;font-size: 22px;height: 50px;line-height: 50px;text-align: center;width: 100%;display: block;}
+.weui-rule img{display: block;width: 100%;}
+.weui-navbar:after{
+    border-bottom: 3px solid #0bc8ee;
+}
+.weui-navbar__item:after {border: none;}
+
+.weui-navbar__item:first-child{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.weui-navbar__item:last-child{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.weui-tab__panel {
+    padding-bottom: 0px;
+}
+.kuang__bd{position: relative;}
+.kuang{
+    position: relative;
+    top: -20px;
+    width: 88%;
+    left: 6%;
+    background: #fff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, .3);
+    margin-bottom: -3px;
+}
+.kuang_t{
+    text-align: center;
+}
+.kuang_t img{width: 30%;}
+.kuang_con{padding: 10px;}
+.kuang_con a{
+    display: block;
+    float: left;
+    width: 46%;
+    margin: 0px 2% 10px;
+}
+.kuang_con a img{width: 100%;display: block;}
+.kuang_con:after {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.index_con{padding: 10px;}
+.index_con a{
+	display:block;
+    font-size: 14px;
+    opacity: 0.8;
+    border:0px solid #fff;
+    border-radius: 6px;
+}
+.index_con a i.fa{
+	font-size:40px;
+	width:40%;
+	padding:20px 30% 0px 30%;
+}
+
+.index_con .weui-flex__item{
+	padding:5px;
+}
+
+
+.top_btn{text-align: center;padding-bottom: 30px; margin: 0 2%;}
+.top_btn .btn{
+    display: inline-block;
+    width: 40%;
+    margin: 0 2%;
+    padding: 6px 0 10px;
+    font-size: 16px;
+}
+.top_btn .btn_share{
+    display: inline-block;
+    width: 34%;
+    color: #fff;
+    text-align: right;
+}
+.weui-mask {
+    background: rgba(0,0,0,.8);
+}
+.weui_share {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+    text-align: right;
+}
+.weui_share img {
+    width: 50%;
+}
+.ewm{
+    padding-top: 30%;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+.ewm img{
+    display: block;
+    margin: 0 auto 10px;
+}
+.dialog-vi img{
+    width: 100%;
+}
+.dialog-vi:first-child{
+    max-height: 90%;
+    overflow-y: auto;
+    padding: 20px 30px;
+}
+.dialog__close{position: absolute;left: 50%;bottom: -80px;width: 60px;margin-left: -30px;}
+.dialog__close img{width: 100%;}
+.weui-dialog__kuang{
+    width: 90%;
+    max-width: 90%;
+    border: 3px #2e85eb solid;
+    border-radius: 10px;
+    background: #ffffff;
+    overflow: inherit;
+}
+.dialog_t{
+    color: #000;
+    font-size: 20px;
+    line-height: 60px;
+}
+.dialog_con a{
+    padding: 10px 0 10px 20px;
+    color: #000;
+    border-top: 1px #c7c7c7 solid;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    text-align: left;
+}
+.dialog_con .dialog_pic{
+    margin: 0 .5em;
+    width: 50px;
+    height: 50px;
+    line-height: 60px;
+    text-align: center;
+}
+.dialog_pic img{width: 100%;}
+
+.weui-dialog__kuang .dialog_btn{width: 20%;}
+.dialog__success img{width: 100%;}
+.sheng_vote{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 35%;
+}
+.sheng_vote span{color: #f00;}
+#share{z-index: 9999;position: absolute; left: 0; top: 0; width: 100%; height: 100%;}
+.popup_share_text{position: absolute;z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;text-align: right;}
+.popup_share_text img{margin-top: 15px;margin-right: 25px;width: 40%;}
+
+@-webkit-keyframes scale3d{
+    to{-webkit-transform:scale3d(1, 1, 1);}
+}
+
+.weui-dialog__form{
+    width: 70%;
+    padding: 0px 0 70px;
+    overflow: inherit;
+}
+.weui-dialog__form_title{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.weui-dialog__form_title img{
+    width: 100%;
+}
+.dialog_close{
+    position: absolute;
+    top: -20px;
+    right: -20px;
+}
+.dialog_close img{
+    width: 80%;
+}
+.weui-cell_form{
+    background: #fff;
+    border-radius: 20px;
+    padding: 90px 20px 20px;
+}
+.weui-cell__input{
+    border: 1px #bdbdbd solid;
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+}
+.weui-cell__textarea{
+    border: 1px #bdbdbd solid;
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+.weui-dialog__form_close{
+    padding: 0;
+}
+.weui-dialog__form_close .dialog_btn{width: 42%;}
+
+.msg{
+    background: url(../images/bg.jpg) no-repeat;
+    background-size: 100% 100%;
+}
+.msg_title{
+    padding: 65px 40px 0px;
+}
+.msg_title img{display: block;}
+.msg_div{
+    padding: 40px;
+}
+.msg_btn{
+    padding-top: 30px;
+    text-align: center;
+}
+.msg_btn img{
+    width: 50%;
+}
+.msg_textarea{
+    position: relative;
+    padding: 10px;
+    font-size: 16px;
+    background: #fff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, .3);
+}
+.weui-textarea-counter {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: #999;
+    font-size: 14px;
+}
+.weui-cells__title {
+    padding-left: 0;
+    color: #fff;
+    font-size: 16px;
+}
+.weui-cell {
+    padding: 10px 0;
+}
+.weui-label {
+    color: #fff;
+    width: 55px;
+}
+.weui-cell:before {
+    border-top: none;
+}
+.weui-input{
+    padding: 5px 3%;
+    width: 94%;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, .3);
+    background: #fff;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+.weui-footer__text {
+    padding: 0 .34em;
+    font-size: 12px
+}
+
+.weui-flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex
+}
+
+.weui-flex__item {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1
+}
+
+.weui-dialog {
+    position: fixed;
+    z-index: 5000;
+    width: 80%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    overflow: hidden
+}
+
+.weui-dialog__hd {
+    padding: 1.3em 1.6em .5em
+}
+
+.weui-dialog__title {
+    font-weight: 400;
+    font-size: 18px
+}
+
+.weui-dialog__bd {
+    padding: 0 1.6em .8em;
+    min-height: 40px;
+    font-size: 15px;
+    line-height: 1.3;
+    word-wrap: break-word;
+    word-break: break-all;
+    color: #999
+}
+
+.weui-dialog__bd:first-child {
+    padding: 2.7em 20px 1.7em;
+    color: #353535
+}
+
+.weui-dialog__ft {
+    position: relative;
+    line-height: 48px;
+    font-size: 18px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex
+}
+
+.weui-dialog__ft:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #d5d5d6;
+    color: #d5d5d6;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5)
+}
+
+.weui-dialog__btn {
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    color: #3cc51f;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: relative
+}
+
+.weui-dialog__btn:active {
+    background-color: #eee
+}
+
+.weui-dialog__btn:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    bottom: 0;
+    border-left: 1px solid #d5d5d6;
+    color: #d5d5d6;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleX(.5);
+    transform: scaleX(.5)
+}
+
+.weui-dialog__btn:first-child:after {
+    display: none
+}
+
+.weui-dialog__btn_default {
+    color: #353535
+}
+
+.weui-dialog__btn_primary {
+    color: #0bb20c
+}
+
+.weui-skin_android .weui-dialog {
+    text-align: left;
+    box-shadow: 0 6px 30px 0 rgba(0, 0, 0, .1)
+}
+
+.weui-skin_android .weui-dialog__title {
+    font-size: 21px
+}
+
+.weui-skin_android .weui-dialog__hd {
+    text-align: left
+}
+
+.weui-skin_android .weui-dialog__bd {
+    color: #999;
+    padding: .25em 1.6em 2em;
+    font-size: 17px;
+    text-align: left
+}
+
+.weui-skin_android .weui-dialog__bd:first-child {
+    padding: 1.6em 1.6em 2em;
+    color: #353535
+}
+
+.weui-skin_android .weui-dialog__ft {
+    display: block;
+    text-align: right;
+    line-height: 42px;
+    font-size: 16px;
+    padding: 0 1.6em .7em
+}
+
+.weui-skin_android .weui-dialog__ft:after {
+    display: none
+}
+
+.weui-skin_android .weui-dialog__btn {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 .8em
+}
+
+.weui-skin_android .weui-dialog__btn:after {
+    display: none
+}
+
+.weui-skin_android .weui-dialog__btn:active,.weui-skin_android .weui-dialog__btn:visited
+{
+    background-color: rgba(0, 0, 0, .06)
+}
+
+.weui-skin_android .weui-dialog__btn:last-child {
+    margin-right: -.8em
+}
+
+.weui-skin_android .weui-dialog__btn_default {
+    color: gray
+}

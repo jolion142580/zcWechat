@@ -1,18 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<%@page import="java.util.*" %>
-<%@page import="com.gdyiko.zcwx.weixinUtils.OAuth" %>
 
-
-<%
-    String code = request.getParameter("code");
-    OAuth oauth = new OAuth();
-    String openid = oauth.getOppenid(code);
-    //String openid="ovh5dxGh-9EXBe-fFYD5IU1fSW4k";
-    //System.out.println("2222---"+openid);
-
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,6 +57,7 @@
                onclick="javascript:WeixinJSBridge.call('closeWindow');">
                 <span class="icon icon-left main_color2"></span></a>
             <h1 class="title main_color2">我的预约记录</h1>
+
         </header>
         <div class="content" style="height: 100%;width: 100%">
             <div class="weui-tab">
@@ -135,7 +125,7 @@
             dataType: "JSON",
             data: {
                 //code:code
-                openid: '<%=openid%>'
+                openid: '${openid}'
             },
             success: function (r) {
                 // console.log(r.old);

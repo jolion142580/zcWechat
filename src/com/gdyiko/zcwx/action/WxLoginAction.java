@@ -38,6 +38,7 @@ public class WxLoginAction extends ActionSupport {
   @Resource(name = "ssUserInfoService")
   SsUserInfoService ssUserInfoService;
 
+  @Override
   public String execute() {
 
     // 若session已经包含登陆信息则直接放行
@@ -80,6 +81,8 @@ public class WxLoginAction extends ActionSupport {
       // 从库中查找是否存在该数据
       user = ssUserInfoService.findByPhone(getPhone());
       String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
+      SmsCode="null";
+      smscode="null";
       System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
       if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
         ActionContext.getContext().getSession().put("user", user);
@@ -139,6 +142,8 @@ public String login(){
     // 从库中查找是否存在该数据
     user = ssUserInfoService.findByPhone(getPhone());
     String smscode = (String) ActionContext.getContext().getSession().get("smscode"); // 对照验证码
+    SmsCode="null";
+    smscode="null";
     System.out.println("smscode:"+smscode+" SmsCode ："+SmsCode);
     if (user != null && !user.getName().equals("") &&SmsCode.equals(smscode)) {
       ActionContext.getContext().getSession().put("user", user);
