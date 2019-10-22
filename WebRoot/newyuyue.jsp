@@ -1,9 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="java.util.*" %>
-<%@page import="com.gdyiko.zcwx.weixinUtils.Holiday" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -255,7 +252,7 @@
 
     $(function () {
         reloadCode();
-
+        getdate();
         <%--$.post("<%=basePath%>Street!findAll" ,function(result) {
                   //alert(result);
                 result.sort(sortBy('id', false, parseInt));
@@ -305,7 +302,7 @@
               alert("请选择预约地点！");
               return;
           }*/
-        //alert(ydate);
+        // alert(ydate);
         if (ydate == "") {
             $('#time0').html(0);
             $('#time1').html(0);
@@ -315,25 +312,28 @@
             $('#time5').html(0);
             return;
         }
+        var data =  {
+            ydate: ydate,
+            street: street
+        };
+
         $.ajax({
             url: 'YuYues!getCount',
-            data: {
-                ydate: ydate,
-                street: street
-            },
-            type: 'POST',
+            data: data,
+            type: 'post',
+
             success: function (r) {
                 //alert(r);
                 var obj = JSON.parse(r);
-                $('#time0').html(obj.time0 == "" ? 1 : obj.time0);
-                $('#time1').html(obj.time1 == "" ? 1 : obj.time1);
-                $('#time2').html(obj.time2 == "" ? 1 : obj.time2);
-                $('#time3').html(obj.time3 == "" ? 1 : obj.time3);
-                $('#time4').html(obj.time4 == "" ? 1 : obj.time4);
-                $('#time5').html(obj.time5 == "" ? 1 : obj.time5);
+                $('#time0').html(obj.time0 == "" ? "0" : obj.time0);
+                $('#time1').html(obj.time1 == "" ? "0" : obj.time1);
+                $('#time2').html(obj.time2 == "" ? "0" : obj.time2);
+                $('#time3').html(obj.time3 == "" ? "0" : obj.time3);
+                $('#time4').html(obj.time4 == "" ? "0" : obj.time4);
+                $('#time5').html(obj.time5 == "" ? "0" : obj.time5);
             },
             error: function (e) {
-
+                alert('请求失败')
             }
         });
         //地址
@@ -617,8 +617,8 @@
 
         for(var key in json){
 
-            //　alert(key+':'+json[key]);
-            if(json[key].indexOf("六")!=-1){
+            // alert(key+':'+json[key]);
+            if(json[key].indexOf("六") == -1){
                 $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
             }
 

@@ -59,7 +59,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
              * (JSONObject) jsonObject.get("data");
              * System.out.println(jo.get("count"));
              */
-            data.put("time0", handleJson(street, ydate, "08:30", "09:30"));
+//            data.put("time0", handleJson(street, ydate, "08:30", "09:30"));
             data.put("time0", handleJson(street, ydate, "08:30", "09:30"));
             data.put("time1", handleJson(street, ydate, "09:30", "10:30"));
             data.put("time2", handleJson(street, ydate, "10:30", "11:30"));
@@ -108,6 +108,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
 
     // 保存预约(需要做校验)
     public String saveYuYues(YuYues model) {
+//        System.out.println("com.gdyiko.zcwx.service.impl.YuYuesServiceImpl line[111] output: -=>" +model);
         String street = model.getStreet();
         String serviceType = model.getStype();
         String name = model.getName();
@@ -127,7 +128,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if (validate == "" || Integer.valueOf(validate) < 1) {
+        if (validate.equals("") || Integer.valueOf(validate) < 1) {
             return "{\"msg\":\"该时段已经没有预约号了！\"}";
         }
         // 验证成功再预约
@@ -136,24 +137,29 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         String header = "";
         message = ifs.yuYues(street, serviceType, name, idCard, phone, date,
                 s_time, e_time, openid, null, 0);
-
+        System.out.println("com.gdyiko.zcwx.service.impl.YuYuesServiceImpl line[143] output: -=>" + message);
 
         // 返回data的值
         result = getJsonData(message);
+        // 预约失败 （当天已预约 | 预约时段没有名额 ）
 
-    //使用短信通知预约
-    String bookNo = net.sf.json.JSONObject.fromObject(result).get("booking_no").toString();
-    String msg = "地点：张槎街道行政服务中心,预约号："+bookNo+",预约时间："+model.getYdate() + " " + model.getYstime() + "-" + model.getYetime()+","+
-            "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，\n" +
-            "凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。\n" +
-            "（若要取消预约请在预约记录中取消）。预约后不前来办事，累积达3次将会列入黑名单，当年不能再使用预约功能。";
+        if (0 == net.sf.json.JSONObject.fromObject(result).getInt("code") ) {
+            return result;
+        }
 
-       net.sf.json.JSONObject json = sendMassageUtil.sendSms(msg,phone);
-       if (json.getString("flag").equals("1")){
-           System.out.println("网上预约信息模板推送成功");
-       }else{
-           throw new RuntimeException("网上预约信息模板推送失败");
-       }
+        //使用短信通知预约
+        String bookNo = net.sf.json.JSONObject.fromObject(result).get("booking_no").toString();
+        String msg = "地点：张槎街道行政服务中心,预约号：" + bookNo + ",预约时间：" + model.getYdate() + " " + model.getYstime() + "-" + model.getYetime() + "," +
+                "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，\n" +
+                "凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。\n" +
+                "（若要取消预约请在预约记录中取消）。预约后不前来办事，累积达3次将会列入黑名单，当年不能再使用预约功能。";
+
+        net.sf.json.JSONObject json = sendMassageUtil.sendSms(msg, phone);
+        if (json.getString("flag").equals("1")) {
+            System.out.println("网上预约信息模板推送成功");
+        } else {
+            throw new RuntimeException("网上预约信息模板推送失败");
+        }
 
         model.setState("0");
         model.setNo(bookNo);
@@ -327,14 +333,14 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
                     yuYuesDao.modify(yuYues);
                 }
 
-                String msg = "地点：张槎街道行政服务中心,预约号："+yuYues.getNo()+",预约时间："+model.getYdate() + " " + model.getYstime() + "-" + model.getYetime()+","+
+                String msg = "地点：张槎街道行政服务中心,预约号：" + yuYues.getNo() + ",预约时间：" + model.getYdate() + " " + model.getYstime() + "-" + model.getYetime() + "," +
                         "您的预约已成功取消！\n" +
                         "感谢您的使用。";
 
-                net.sf.json.JSONObject json1 = sendMassageUtil.sendSms(msg,yuYues.getPhone());
-                if (json.getString("flag").equals("1")){
+                net.sf.json.JSONObject json1 = sendMassageUtil.sendSms(msg, yuYues.getPhone());
+                if (json.getString("flag").equals("1")) {
                     System.out.println("预约取消模板发送成功");
-                }else{
+                } else {
                     throw new RuntimeException("预约取消模板发送失败");
                 }
             }

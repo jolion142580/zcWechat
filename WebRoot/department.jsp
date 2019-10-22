@@ -109,6 +109,8 @@
                             onclick="controlPage('legalPerson_list_div',1,1,1);resetList()">人生事项</a></li>
                     <li class="left li_page_tab" style='width:25%' id="onlineApplyHistory"><a href="onlineApply!onlineApplyHistory"
                            >办事记录</a></li>
+                    <li class="left li_page_tab" style='width:25%' id="onlineApplyYuYues"><a href="YuYues!onlineApplyYuYues"
+                    >预约记录</a></li>
                     <!-- <li class="left li_page_tab" style='width:25%' id="common_list_div_li"><a onclick="controlPage('common_list_div','',0,1);commonEvent()">常用事项</a></li>
                     <li class="left li_page_tab" style='width:25%' id="his_list_div_li"><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/affairhis!findbyopenid&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect">历史查询</a></li> -->
                 </ul>

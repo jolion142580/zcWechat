@@ -46,10 +46,12 @@ import com.opensymphony.xwork2.ActionContext;
         @Result(name = "success", location = "/"),
         //已绑定，允许预约
         @Result(name = "permitted", location = "/newyuyue.jsp"),
+        // 预约记录
+        @Result(name = "onlineApplyYuYues", location = "/newwdyy_2.jsp"),
         //未绑定，不允许预约
         //@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx481172387f6fb7c5&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/ssUserInfo!userlist?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
 //	@Result(name = "notPermitted", type="redirect",location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxeae24884fc77e6ff&redirect_uri=http://ymswx.pjq.gov.cn/pjWechat/relation.jsp?type=yuyue&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"),
-    //    @Result(name = "notPermitted", type = "redirect", location = "/relation.jsp?type=yuyue"),
+        //    @Result(name = "notPermitted", type = "redirect", location = "/relation.jsp?type=yuyue"),
         //已绑定，允许预约
         @Result(name = "userYuYues", location = "/wdyy_2.jsp"),
         //已绑定，允许预约
@@ -236,7 +238,6 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
             dayJson.put(date5, weekDay5);
 
 
-
         } catch (NullPointerException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -282,6 +283,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
             String result = "";
             //查看黑白名单
             JSONObject json = blackWhiteListService.check(model);
+            System.out.println("com.gdyiko.zcwx.action.YuYuesAction line[285] output: -=>" + json);
             String flag = json.get("flag").toString();
 //            String forever = json.getString("forever");
             String forever = json.get("forever").toString();
@@ -485,6 +487,10 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String onlineApplyYuYues() {
+        return "onlineApplyYuYues";
     }
 
     public String getAppointMsg() {

@@ -52,8 +52,8 @@
     <div class="page page-current">
         <header class="bar bar-nav"
                 style="background-size: contain;background-repeat: repeat-x;background-color:#0490E4">
-            <a class="button button-link button-nav pull-left" href="javascript:;"
-               onclick="javascript:WeixinJSBridge.call('closeWindow');"><span class="icon icon-left main_color"></span></a>
+            <a class="button button-link button-nav pull-left" href="ssBaseDicInfo!findAllByBaseDicType">
+                <span class="icon icon-left main_color"></span></a>
             <h1 class="title main_color">办事记录</h1>
         </header>
 
@@ -81,7 +81,7 @@
                         <div class="weui-form-preview__bd" style="text-align:left">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">办件状态</label>
-                                <%--<span class="weui-form-preview__value"><s:property value="state"/></span>--%>
+                                    <%--<span class="weui-form-preview__value"><s:property value="state"/></span>--%>
                                 <s:if test="%{(state=='已审核' and  approvedOrNot ==0)}">
                                     <span class="weui-form-preview__value">预审不通过</span>
                                 </s:if>
@@ -93,15 +93,15 @@
                                 <label class="weui-form-preview__label">申请时间</label>
                                 <span class="weui-form-preview__value"><s:property value="creattime"/></span>
                             </div>
-                            <%--<div class="weui-form-preview__item">--%>
+                                <%--<div class="weui-form-preview__item">--%>
                                 <%--<label class="weui-form-preview__label">test6</label>--%>
                                 <%--<s:if test="%{(state=='已审核' and  approvedOrNot ==0)}">--%>
-                                    <%--<span class="weui-form-preview__value">预审不通过</span>--%>
+                                <%--<span class="weui-form-preview__value">预审不通过</span>--%>
                                 <%--</s:if>--%>
                                 <%--<s:if test="%{(state=='已审核' and  approvedOrNot ==1)}">--%>
-                                    <%--<span class="weui-form-preview__value">预审通过</span>--%>
+                                <%--<span class="weui-form-preview__value">预审通过</span>--%>
                                 <%--</s:if>--%>
-                            <%--</div>--%>
+                                <%--</div>--%>
                         </div>
                     </div>
                 </a>
@@ -120,7 +120,13 @@
 <script type="text/javascript" src="lib/fastclick.js"></script>
 <script>
     $(function () {
-      /*  var HREF =weChat.WeChatDNSURL+'onlineApply!modifyAffairMaterials?id=<s:property value="id"/>';
+        /*  var HREF =weChat.WeChatDNSURL+'onlineApply!modifyAffairMaterials?id=
+
+
+
+
+
+        <s:property value="id"/>';
         $("#a_href_SET").attr("href",HREF);*/
         FastClick.attach(document.body);
     });

@@ -77,7 +77,7 @@
 	    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 	</aop:config>
 
-	<!--<bean id="YuyueTimedTask" class="com.gdyiko.zcwx.timer.YuyueTimedTask" scope="singleton"  init-method="showTimer"></bean>-->
+	<bean id="YuyueTimedTask" class="com.gdyiko.zcwx.timer.YuyueTimedTask" scope="singleton"  init-method="showTimer"></bean>
 	<!--<bean id="YuyueTimedTask" class="com.gdyiko.zcwx.timer.YuyueTimedTask" scope="singleton" ></bean>-->
 
 	</beans>

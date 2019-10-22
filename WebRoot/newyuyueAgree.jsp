@@ -57,8 +57,7 @@
 			</div>--%>
 				<header class="bar bar-nav"
 						style="background-size: contain;background-repeat: repeat-x;background-color:#0490E4">
-					<a class="button button-link button-nav pull-left" href="javascript:;"
-					   onclick="javascript:WeixinJSBridge.call('closeWindow');">
+					<a class="button button-link button-nav pull-left" href="index.jsp" >
 						<span class="icon icon-left main_color" style="margin-top: 11px;"></span></a>
 					<h1 class="title main_color">预约须知</h1>
 				</header>
