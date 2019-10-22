@@ -149,7 +149,7 @@
 </html>
 <script>
     $(function () {
-        var HREF = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + weChat.APPID + '&redirect_uri=' + weChat.WeChatDNSURL + 'ssAffairsObjectInfo!findByAffairId?affairid=<s:property value="ssAffairGuide.affairid" escape="false" />&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+        var HREF = 'ssAffairsObjectInfo!findByAffairId?affairid=${ssAffairGuide.affairid}';
         $("#a_href_SET").attr("href", HREF);
         var affairname = "<s:property value="ssAffairGuide.affairname" escape="false" />";
         var href = weChat.WeChatDNSURL + "newyuyueAgree.jsp?affairname=" + affairname;

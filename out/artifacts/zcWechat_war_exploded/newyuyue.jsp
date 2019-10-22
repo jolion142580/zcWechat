@@ -1,9 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<%@page import="java.text.SimpleDateFormat" %>
-<%@page import="java.util.*" %>
-<%@page import="com.gdyiko.zcwx.weixinUtils.Holiday" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -42,61 +39,7 @@
         }
     </style>
 </head>
-<%!
-    String convert(int val) {
-        String retStr = "";
-        switch (val) {
-            case 0:
-                return "星期日";
-            case 1:
-                return "星期一";
-            case 2:
-                return "星期二";
-            case 3:
-                return "星期三";
-            case 4:
-                return "星期四";
-            case 5:
-                return "星期五";
-            case 6:
-                return "星期六";
-            default:
-                break;
-        }
-        return retStr;
-    }
-%>
-<%
-    //String join_id = request.getParameter("join_id");
-//System.out.println("------join_id-------"+join_id);
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-    Holiday holiday = new Holiday();
-
-    Date addDate = holiday.getIncomeDate(new Date());
-    String date = format.format(addDate);
-    String weekDay = convert(addDate.getDay());
-//System.out.println(":::::::::::::"+addDate);
-
-    Date addDate2 = holiday.getIncomeDate(addDate);
-    String date2 = format.format(addDate2);
-    String weekDay2 = convert(addDate2.getDay());
-//System.out.println(":::::::::::::"+addDate2);
-
-    Date addDate3 = holiday.getIncomeDate(addDate2);
-    String date3 = format.format(addDate3);
-    String weekDay3 = convert(addDate3.getDay());
-
-    Date addDate4 = holiday.getIncomeDate(addDate3);
-    String date4 = format.format(addDate4);
-    String weekDay4 = convert(addDate4.getDay());
-
-    Date addDate5 = holiday.getIncomeDate(addDate4);
-    String date5 = format.format(addDate5);
-    String weekDay5 = convert(addDate5.getDay());
-
-%>
 <body>
 <div class="page-group">
     <div class="page page-current">
@@ -193,11 +136,7 @@
                         <div class="weui-cell__bd">
                             <select name="ydate" onchange="getCount(this.value);" id="ydate" class="weui-select">
                                 <option value="" selected="selected">--请选择预约时间--</option>
-                                <option value="<%=date %>"><%=date %>   (<%=weekDay %>)</option>
-                                <option value="<%=date2 %>"><%=date2 %> (<%=weekDay2 %>)</option>
-                                <option value="<%=date3 %>"><%=date3 %> (<%=weekDay3 %>)</option>
-                                <option value="<%=date4 %>"><%=date4 %> (<%=weekDay4 %>)</option>
-                                <option value="<%=date5 %>"><%=date5 %> (<%=weekDay5 %>)</option>
+
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -313,7 +252,7 @@
 
     $(function () {
         reloadCode();
-
+        getdate();
         <%--$.post("<%=basePath%>Street!findAll" ,function(result) {
                   //alert(result);
                 result.sort(sortBy('id', false, parseInt));
@@ -363,7 +302,7 @@
               alert("请选择预约地点！");
               return;
           }*/
-        //alert(ydate);
+        // alert(ydate);
         if (ydate == "") {
             $('#time0').html(0);
             $('#time1').html(0);
@@ -373,25 +312,28 @@
             $('#time5').html(0);
             return;
         }
+        var data =  {
+            ydate: ydate,
+            street: street
+        };
+
         $.ajax({
             url: 'YuYues!getCount',
-            data: {
-                ydate: ydate,
-                street: street
-            },
-            type: 'POST',
+            data: data,
+            type: 'post',
+
             success: function (r) {
                 //alert(r);
                 var obj = JSON.parse(r);
-                $('#time0').html(obj.time0 == "" ? 1 : obj.time0);
-                $('#time1').html(obj.time1 == "" ? 1 : obj.time1);
-                $('#time2').html(obj.time2 == "" ? 1 : obj.time2);
-                $('#time3').html(obj.time3 == "" ? 1 : obj.time3);
-                $('#time4').html(obj.time4 == "" ? 1 : obj.time4);
-                $('#time5').html(obj.time5 == "" ? 1 : obj.time5);
+                $('#time0').html(obj.time0 == "" ? "0" : obj.time0);
+                $('#time1').html(obj.time1 == "" ? "0" : obj.time1);
+                $('#time2').html(obj.time2 == "" ? "0" : obj.time2);
+                $('#time3').html(obj.time3 == "" ? "0" : obj.time3);
+                $('#time4').html(obj.time4 == "" ? "0" : obj.time4);
+                $('#time5').html(obj.time5 == "" ? "0" : obj.time5);
             },
             error: function (e) {
-
+                alert('请求失败')
             }
         });
         //地址
@@ -666,6 +608,20 @@
                 document.getElementById("codeResult").value = response;
             }
         } catch (e) {
+
+        }
+    }
+
+    function getdate(){
+        var json = ${dayJson};
+
+        for(var key in json){
+
+            // alert(key+':'+json[key]);
+            if(json[key].indexOf("六") == -1){
+                $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
+            }
+
 
         }
     }

@@ -64,8 +64,7 @@
     <div class="page page-current">
         <header class="bar bar-nav"
                 style="background-size: contain;background-repeat: repeat-x;background-color:#0490E4">
-            <a class="button button-link button-nav pull-left" href="#"
-               onclick="javascript:WeixinJSBridge.call('closeWindow');">
+            <a class="button button-link button-nav pull-left" href="ssBaseDicInfo!findAllByBaseDicType" >
                 <span class="icon icon-left main_color2"></span></a>
             <h1 class="title main_color2">我的预约记录</h1>
         </header>
