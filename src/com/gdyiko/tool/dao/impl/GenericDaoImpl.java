@@ -912,7 +912,7 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 		CriteriaJoinWalker walker = new CriteriaJoinWalker(
 				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
 				translator, factory, criteriaImpl, criteriaImpl
-						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());
+				.getEntityOrClassName(), session.getEnabledFilters());
 		QueryParameters queryParameters = translator.getQueryParameters();
 		String sql = walker.getSQLString();
 		System.out
@@ -1013,10 +1013,14 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 				CriteriaQueryTranslator.ROOT_SQL_ALIAS);
 		String[] implementors = factory.getImplementors(criteriaImpl
 				.getEntityOrClassName());
+		/*		CriteriaJoinWalker walker = new CriteriaJoinWalker(
+				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
+				translator, factory, criteriaImpl, criteriaImpl
+						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());*/
 		CriteriaJoinWalker walker = new CriteriaJoinWalker(
 				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
 				translator, factory, criteriaImpl, criteriaImpl
-						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());
+				.getEntityOrClassName(), session.getEnabledFilters());
 		QueryParameters queryParameters = translator.getQueryParameters();
 		String sql = walker.getSQLString();
 		System.out
@@ -1061,10 +1065,14 @@ public abstract class GenericDaoImpl<T extends GenericPo, ID extends Serializabl
 				CriteriaQueryTranslator.ROOT_SQL_ALIAS);
 		String[] implementors = factory.getImplementors(criteriaImpl
 				.getEntityOrClassName());
+/*		CriteriaJoinWalker walker = new CriteriaJoinWalker(
+				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
+				translator, factory, criteriaImpl, criteriaImpl
+						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());*/
 		CriteriaJoinWalker walker = new CriteriaJoinWalker(
 				(OuterJoinLoadable) factory.getEntityPersister(implementors[0]),
 				translator, factory, criteriaImpl, criteriaImpl
-						.getEntityOrClassName(), (LoadQueryInfluencers) session.getEnabledFilters());
+				.getEntityOrClassName(), session.getEnabledFilters());
 		QueryParameters queryParameters = translator.getQueryParameters();
 		String sql = walker.getSQLString();
 		List list = findBySqlID(sql,

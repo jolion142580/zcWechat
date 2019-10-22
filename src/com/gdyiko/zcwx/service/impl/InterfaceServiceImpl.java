@@ -233,6 +233,8 @@ public class InterfaceServiceImpl implements InterfaceService {
 			HttpContent httpContent = new HttpContent();
 			//String content = httpContent.getHttpContent("http://192.168.1.8:8383", jsonData, "", "POST");
 			sp=propertieService.getPropertie("servicePath");
+			System.out.println("com.gdyiko.zcwx.service.impl.InterfaceServiceImpl line[236] output: -=>" +sp);
+			System.out.println("com.gdyiko.zcwx.service.impl.InterfaceServiceImpl line[237] output: -=>" +jsonData);
 			String content = httpContent.getHttpContent(sp, jsonData, "", "POST");
 //			System.out.println(content);
 			return content;
