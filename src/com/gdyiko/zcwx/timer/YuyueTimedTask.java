@@ -126,7 +126,7 @@ public class YuyueTimedTask {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         long oneDay = 24 * 60 * 60 * 1000;
         long initDelay = getTimeMillis("08:00:00") - System.currentTimeMillis();
-//        long initDelay = getTimeMillis("14:11:00") - System.currentTimeMillis(); //demo 就近时间
+//        long initDelay = getTimeMillis("14:00:00") - System.currentTimeMillis(); //demo 就近时间
         initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;
         executor.scheduleAtFixedRate(runable, initDelay, oneDay, TimeUnit.MILLISECONDS); //每天8:00发送
 //        executor.scheduleAtFixedRate(runable,initDelay,1000,TimeUnit.MILLISECONDS); //demo
