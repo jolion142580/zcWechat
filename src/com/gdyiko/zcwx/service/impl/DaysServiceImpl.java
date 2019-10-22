@@ -126,9 +126,14 @@ public class DaysServiceImpl extends GenericServiceImpl<Days, String> implements
 		return null;
 	}*/
 
+	@Override
 	public String showdays(String name) {
 		Days days = daysDao.findPkey(name);
-		String daysarray[] = days.getDays().split(",");
+		String daysStr = days.getDays();
+		if (daysStr==null){
+			return "";
+		}
+		String daysarray[] = daysStr.split(",");
 		String daysstr = "";
 		for(int i=0;i<daysarray.length;i++){
 			String str = daysarray[i];

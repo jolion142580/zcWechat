@@ -255,7 +255,7 @@
 
     $(function () {
         reloadCode();
-
+        getdate();
         <%--$.post("<%=basePath%>Street!findAll" ,function(result) {
                   //alert(result);
                 result.sort(sortBy('id', false, parseInt));
@@ -616,11 +616,11 @@
         var json = ${dayJson};
 
         for(var key in json){
-
+            $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
             //　alert(key+':'+json[key]);
-            if(json[key].indexOf("六")!=-1){
+           /* if(json[key].indexOf("六")!=-1){
                 $('#ydate').append("<option value=\""+key+"\" >"+key+" "+json[key]+"</option>");
-            }
+            }*/
 
 
         }
