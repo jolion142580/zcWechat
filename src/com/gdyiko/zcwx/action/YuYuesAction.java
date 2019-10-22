@@ -256,6 +256,7 @@ public class YuYuesAction extends BaseAction<YuYues, String> {
         this.model.setIdcard(ssUserInfo.getIdCard());
         this.model.setPhone(ssUserInfo.getPhone());
         this.model.setBusinessName("null".equals(affairname) ? "" : affairname);
+        this.model.setOpenid(ssUserInfo.getId());
 
         return "permitted";
     }
