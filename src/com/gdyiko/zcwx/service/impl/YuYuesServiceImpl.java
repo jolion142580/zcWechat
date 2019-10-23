@@ -341,7 +341,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
                         "感谢您的使用。";
 
                 net.sf.json.JSONObject json1 = sendMassageUtil.sendSms(msg, yuYues.getPhone());
-                if (json.getString("flag").equals("1")) {
+                if (json1.getString("flag").equals("1")) {
                     System.out.println("预约取消模板发送成功");
                 } else {
                     throw new RuntimeException("预约取消模板发送失败");
@@ -442,6 +442,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         return result;
     }
 
+    @Override
     public List<YuYues> getYuyuesBytime(Long currtime) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date d = new Date(System.currentTimeMillis() - currtime);
@@ -452,6 +453,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         return list;
     }
 
+    @Override
     public List<YuYues> signNot(String idCard, String date, String year) {
         List<YuYues> list = yuYuesDao.signNot(idCard, date, year);
         return list == null ? new ArrayList<YuYues>() : list;
