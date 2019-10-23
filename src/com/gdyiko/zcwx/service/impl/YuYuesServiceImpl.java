@@ -140,20 +140,25 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
 
         // 返回data的值
         result = getJsonData(message);
+        // 当天该用户已有预约 | 预约时段没号
+        if (0 == net.sf.json.JSONObject.fromObject(result).getInt("code")) {
 
-    //使用短信通知预约
-    String bookNo = net.sf.json.JSONObject.fromObject(result).get("booking_no").toString();
-    String msg = "地点：张槎街道行政服务中心,预约号："+bookNo+",预约时间："+model.getYdate() + " " + model.getYstime() + "-" + model.getYetime()+","+
-            "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，\n" +
-            "凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。\n" +
-            "（若要取消预约请在预约记录中取消）。预约后不前来办事，累积达3次将会列入黑名单，当年不能再使用预约功能。";
+            return result;
+        }
 
-       net.sf.json.JSONObject json = sendMassageUtil.sendSms(msg,phone);
-       if (json.getString("flag").equals("1")){
-           System.out.println("网上预约信息模板推送成功");
-       }else{
-           throw new RuntimeException("网上预约信息模板推送失败");
-       }
+        //使用短信通知预约
+        String bookNo = net.sf.json.JSONObject.fromObject(result).get("booking_no").toString();
+        String msg = "地点：张槎街道行政服务中心,预约号：" + bookNo + ",预约时间：" + model.getYdate() + " " + model.getYstime() + "-" + model.getYetime() + "," +
+                "您的预约已成功办理，请在预约时间内携带相关证件到现场取号处，\n" +
+                "凭身份证或订单号（预约号）取号。如有问题可以咨询现场工作人员。\n" +
+                "（若要取消预约请在预约记录中取消）。预约后不前来办事，累积达3次将会列入黑名单，当年不能再使用预约功能。";
+
+        net.sf.json.JSONObject json = sendMassageUtil.sendSms(msg, phone);
+        if (json.getString("flag").equals("1")) {
+            System.out.println("网上预约信息模板推送成功");
+        } else {
+            throw new RuntimeException("网上预约信息模板推送失败");
+        }
 
         model.setState("0");
         model.setNo(bookNo);
@@ -320,21 +325,22 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         try {
             JSONObject json = new JSONObject(result);
             String code = json.get("code").toString();
+            YuYues yuYues = null;
             if ("1".equals(code)) {
-                YuYues yuYues = yuYuesDao.selectByNoAndIdCard(booking_no, id_card);
+                yuYues = yuYuesDao.selectByNoAndIdCard(booking_no, id_card);
                 if (yuYues != null) {
                     yuYues.setState("2");
                     yuYuesDao.modify(yuYues);
                 }
 
-                String msg = "地点：张槎街道行政服务中心,预约号："+yuYues.getNo()+",预约时间："+model.getYdate() + " " + model.getYstime() + "-" + model.getYetime()+","+
+                String msg = "地点：张槎街道行政服务中心,预约号：" + yuYues.getNo() + ",预约时间：" + yuYues.getYdate() + " " + yuYues.getYstime() + "-" + yuYues.getYetime() + "," +
                         "您的预约已成功取消！\n" +
                         "感谢您的使用。";
 
-                net.sf.json.JSONObject json1 = sendMassageUtil.sendSms(msg,yuYues.getPhone());
-                if (json.getString("flag").equals("1")){
+                net.sf.json.JSONObject json1 = sendMassageUtil.sendSms(msg, yuYues.getPhone());
+                if (json.getString("flag").equals("1")) {
                     System.out.println("预约取消模板发送成功");
-                }else{
+                } else {
                     throw new RuntimeException("预约取消模板发送失败");
                 }
             }
