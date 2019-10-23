@@ -59,7 +59,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
              * (JSONObject) jsonObject.get("data");
              * System.out.println(jo.get("count"));
              */
-            data.put("time0", handleJson(street, ydate, "08:30", "09:30"));
+//            data.put("time0", handleJson(street, ydate, "08:30", "09:30"));
             data.put("time0", handleJson(street, ydate, "08:30", "09:30"));
             data.put("time1", handleJson(street, ydate, "09:30", "10:30"));
             data.put("time2", handleJson(street, ydate, "10:30", "11:30"));
@@ -142,7 +142,9 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         result = getJsonData(message);
         // 当天该用户已有预约 | 预约时段没号
         if (0 == net.sf.json.JSONObject.fromObject(result).getInt("code")) {
-
+            System.out.println("time[" + new SimpleDateFormat("MM-dd HH:mm:ss").format(new Date()) + "] " +
+                    "com.gdyiko.zcwx.service.impl.YuYuesServiceImpl " +
+                    "line[147] output: -=> 【" + name + "】 当天已有预约！");
             return result;
         }
 
@@ -169,6 +171,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
     }
 
     // 获得根据预约号和证件号获得单个预约的详细信息
+    @Override
     public String singleYuYue(YuYues model) {
         String booking_no = model.getNo();
         String id_card = model.getIdcard();
@@ -290,6 +293,7 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
     }
 
     // 取消预约
+    @Override
     public String cancelYuYue(YuYues model) {
         String booking_no = model.getNo();
         String id_card = model.getIdcard();
@@ -325,9 +329,8 @@ public class YuYuesServiceImpl extends GenericServiceImpl<YuYues, String>
         try {
             JSONObject json = new JSONObject(result);
             String code = json.get("code").toString();
-            YuYues yuYues = null;
             if ("1".equals(code)) {
-                yuYues = yuYuesDao.selectByNoAndIdCard(booking_no, id_card);
+                YuYues yuYues = yuYuesDao.selectByNoAndIdCard(booking_no, id_card);
                 if (yuYues != null) {
                     yuYues.setState("2");
                     yuYuesDao.modify(yuYues);

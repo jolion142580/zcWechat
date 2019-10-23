@@ -1,3 +1,5 @@
+/*
+
 package com.gdyiko.zcwx.timer;
 
 import com.gdyiko.tool.DateUtil;
@@ -46,4 +48,4 @@ public class TimedTask
         Date finalEndDate = DateUtil.strToDate(endDate, "yyyy-MM-dd HH:mm");
         return DateUtil.containCalendar(nowDate, finalBiginDate, finalEndDate);
     }
-}
+}*/
